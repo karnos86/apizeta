@@ -1,6 +1,7 @@
 {
-  "name": "controlAppZeta",
+  "name": "backend-zeta",
   "version": "1.0.0",
+  "private":true,
   "scripts": {
     "start": "forever ./bin/www",
     "dev": "nodemon ./bin/www",
