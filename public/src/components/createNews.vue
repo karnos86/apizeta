@@ -1,0 +1,73 @@
+<template>
+	 <div class="container">
+  		<div class="columns">
+  			<div class="column ">
+  				<form @submit.prevent="newspaper">
+            <div class="colums is-12"> <h3 class="title"> Ingresar nuevo semanario</h3></div>
+            <div class="columns">
+              <div class="column is-4 is-offset-1">
+                  <div class="field">
+                    <label class="label">Código Semanario</label>
+                    <div class="control">
+                      <input class="input" type="text" placeholder="ejemplo: A3241"  v-model="codigo">
+                    </div>
+                  </div>
+              </div>
+              <div class="column is-4">
+                <div class="field">
+                  <label class="label">Fecha Semanario</label>
+                    <div class="control">
+                      <input class="input" type="text" placeholder="ejemplo: 02-2019"  v-model="fecha">
+                    </div>
+                </div>
+              </div>
+              <div class="column is-2">
+                <p class="control">
+                  <button class="button is-primary crear">
+                    Crear
+                  </button>
+                </p>
+              </div>  
+            </div>
+  				</form>
+  			</div>
+  		</div>
+  	</div>
+</template>
+<script>
+  import axios from 'axios'
+  import url from '../url'
+  import bus from '../bus.js'
+export default{
+	data(){
+		return{
+			codigo: null,
+			fecha: null,
+		}
+	},
+  methods:{
+    newspaper(){
+      let data = {code:this.codigo, date:this.fecha}
+      axios.post(url+'/create/edition', data)
+      .then((done)=>{
+        this.$toastr.success('Operacion exitosa', 'Semanario creado');
+        this.refresh()
+      })
+      .catch((error)=>{
+        console.log(error)
+      })
+    },
+    refresh() {
+      this.codigo=null;
+      this.fecha=null;
+      bus.$emit("refresh");
+    }
+
+  }
+}
+</script>
+<style>
+  .crear{
+    margin-top:2rem ;
+  }
+</style>
