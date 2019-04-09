@@ -58,7 +58,7 @@ import url from '../url';
             let cookie = done.data.cookie
             localStorage.cookie=cookie
             console.log('cookie', cookie)
-            this.$router.push('/newspaper')
+            this.$router.push('/')
           }
       	})
       	.catch((err)=>{
