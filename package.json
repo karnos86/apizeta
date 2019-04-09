@@ -6,7 +6,7 @@
     "start": "forever ./bin/www",
     "dev": "nodemon ./bin/www",
     "test": "webpack --mode development --watch",
-    "build": "webpack --config webpack.config.js"
+    "build": "webpack --mode production"
   },
   "dependencies": {
     "async-request": "^1.2.0",
