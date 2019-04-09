@@ -86,7 +86,8 @@ module.exports={
       console.log('https://zetatijuana.com/api/user/validate_auth_cookie/?cookie='+cookie[1]);
       let data = await asyn_request('https://zetatijuana.com/api/user/validate_auth_cookie/?cookie='+cookie,{method: 'GET'})
       let info= JSON.parse(data.body)
-      if(info.status==="ok" && info.valid == true){
+      res.json(info)
+      if(info.status == 'ok' && info.valid == true){
         next()
       }else{
         res.status(401).json({message: 'no autorizado'})
