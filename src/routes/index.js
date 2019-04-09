@@ -33,7 +33,7 @@ router.post('/api/customer/login', ctrl.authy.loginApp);
 router.get('/api/plan/index', ctrl.plan.indexPlan);
 
 /* Get Feed transform Xml a Json */
-router.get('/api/feed',ctrl.authy.accessApp ,ctrl.external.feedZeta);
+router.get('/api/feed', ctrl.authy.accessApp ,ctrl.external.feedZeta);
 
 /*Get de clima de openweathermap */
 router.get('/api/widget',ctrl.authy.accessApp, ctrl.external.weatherZeta);
@@ -48,11 +48,11 @@ router.post('/api/notification/conekta', ctrl.external.hooksPaid);
 * Crud de edicciones
 */
 // web
-router.post('/create/edition', ctrl.newspaper.createNewspaper);
-router.get('/list/edition',  ctrl.newspaper.indexAll);
-router.get('/remove/edition/:code',  ctrl.newspaper.deleteNewspaper);
-router.get('/remove/front/:code', ctrl.newspaper.deleteFront)
-router.get('/remove/document/:code', ctrl.newspaper.deleteDocument)
+router.post('/create/edition', ctrl.authy.validateCookieWorpress, ctrl.newspaper.createNewspaper);
+router.get('/list/edition', ctrl.authy.validateCookieWorpress,  ctrl.newspaper.indexAll);
+router.get('/remove/edition/:code', ctrl.authy.validateCookieWorpress, ctrl.newspaper.deleteNewspaper);
+router.get('/remove/front/:code', ctrl.authy.validateCookieWorpress, ctrl.newspaper.deleteFront)
+router.get('/remove/document/:code', ctrl.authy.validateCookieWorpress, ctrl.newspaper.deleteDocument)
 
 
 // app
@@ -66,7 +66,7 @@ router.post('/api/search/month', ctrl.authy.accessApp, ctrl.newspaper.searchMont
 * Carga de Pdf e Imgenes
 */
 //web
-router.post('/uploadFile/:code',ctrl.file.uploadFile);
+router.post('/uploadFile/:code',ctrl.authy.validateCookieWorpress, ctrl.file.uploadFile);
 
 // ctrl.authy.accessApp,
 router.get('/api/downloadFile/:file',  ctrl.file.downloadFile)

@@ -79,12 +79,19 @@ module.exports={
   },
   async validateCookieWorpress(req, res, next){
     try{
+      if(req.headers["authorization"] == null){
+        res.status(401).send({message:"Operacion no permitida"})
+      }
       let cookie = req.headers["authorization"].split(" ");
       console.log('https://zetatijuana.com/api/user/validate_auth_cookie/?cookie='+cookie[1]);
       let data = await asyn_request('https://zetatijuana.com/api/user/validate_auth_cookie/?cookie='+cookie,{method: 'GET'})
-      res.json(data.body)
+      let info= JSON.parse(data.body)
+      if(info.status==="ok" && info.valid == true){
+        next()
+      }else{
+        res.status(401).json({message: 'no autorizado'})
+      }
     }catch(error){
-      console.log(error)
       res.status(500).json(error);
     }
   }
