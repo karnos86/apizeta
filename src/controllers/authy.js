@@ -84,7 +84,6 @@ module.exports={
       }
       let cookie = req.headers["authorization"].split(" ");
       let data = await asyn_request('https://zetatijuana.com/api/user/validate_auth_cookie/?cookie='+cookie[1],{method: 'GET'})
-      res.json(JSON.parse(data.body))
       if(info.status == 'ok' && info.valid == true){
         next()
       }else{
