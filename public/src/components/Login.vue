@@ -54,8 +54,8 @@ import url from '../url';
             this.error = true;
             this.message =done.data.message;
           }else{
-            let cookie = done.data.cookie.split("|")
-            localStorage.cookie=cookie.pop()
+            let cookie = done.data.cookie
+            localStorage.cookie=cookie
             this.$router.push('/newspaper')
           }
       	})

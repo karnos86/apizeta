@@ -105,7 +105,12 @@
 		methods: {
 			indexNews(){
 				console.log(url+'/list/edition')
-				axios.get(url+'/list/edition')
+				let config = {
+    				headers: {
+      					'Authorization': 'Bearer ' + localStorage.cookie
+    				}
+  				}
+				axios.get(url+'/list/edition', config)
 				.then((done)=>{
 					console.log(done.data);
 					this.newspapers=done.data;
