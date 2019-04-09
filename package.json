@@ -6,7 +6,7 @@
     "start": "forever ./bin/www",
     "dev": "nodemon ./bin/www",
     "test": "webpack --mode development --watch",
-    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
+    "build": "webpack --config webpack.config.js"
   },
   "dependencies": {
     "async-request": "^1.2.0",
