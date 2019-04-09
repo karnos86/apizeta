@@ -82,8 +82,8 @@ module.exports={
       if(req.headers["authorization"] == null){
         res.status(401).send({message:"Operacion no permitida"})
       }
-      let cookie = req.headers["authorization"].split(" ");
-      console.log('https://zetatijuana.com/api/user/validate_auth_cookie/?cookie='+cookie[1]);
+      let cookie = req.headers["authorization"];
+      console.log('https://zetatijuana.com/api/user/validate_auth_cookie/?cookie='+cookie);
       let data = await asyn_request('https://zetatijuana.com/api/user/validate_auth_cookie/?cookie='+cookie,{method: 'GET'})
       let info= JSON.parse(data.body)
       res.json(info)
@@ -93,6 +93,7 @@ module.exports={
         res.status(401).json({message: 'no autorizado'})
       }
     }catch(error){
+      console.log(error)
       res.status(500).json(error);
     }
   }
