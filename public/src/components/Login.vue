@@ -34,36 +34,39 @@
 </template>
 <script>
 import axios from 'axios';
-// import url from '../url'
-export default {
-  data () {
-    return {
-      username: '',
-      password: '',
-      error: false,
-      message:''
+import url from '../url';
+  export default {
+    data () {
+      return {
+        username: '',
+        password: '',
+        error: false,
+        message:''
+      }
+    },
+    methods: {
+      login () {
+        let data = {username:this.username, password: this.password}
+      	axios.post(url+'/ctl/login', data)
+      	.then((done)=>{
+      		console.log(done.data)
+          if(done.data.status === "error"){
+            this.error = true;
+            this.message =done.data.message;
+          }else{
+            localStorage.token='3212ewqweq'
+            this.$router.replace(this.$route.query.redirect || '/')
+          }
+      	})
+      	.catch((err)=>{
+          console.log(err);
+      		this.message =err.message;
+      		this.error = true;
+      		
+      	})
+      }
     }
-  },
-  methods: {
-    login () {
-    	let url = "https://zetatijuana.com/api/user/generate_auth_cookie/?username="+this.username+"&password="+this.password
-    	console.log(url);
-    	axios.get(url)
-    	.then((done)=>{
-    		console.log(done)
-    		localStorage.token='3212ewqweq'
-        this.$router.replace(this.$route.query.redirect || '/')
-    	})
-    	.catch((err)=>{
-            console.log(err);
-    		this.message =err.message;
-    		this.error = true;
-    		localStorage.token='3212ewqweq'
-        this.$router.replace(this.$route.query.redirect || '/')
-    	})
-    }
-  }
-}
+  };
 </script>
 <style>
 .error {
