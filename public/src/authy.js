@@ -20,21 +20,21 @@ export default {
     })
   },
 
-  getToken () {
-    return localStorage.token
+  getToken() {
+    return localStorage.cookie
   },
 
-  logout (cb) {
-    delete localStorage.token
+  logout(cb) {
+    delete localStorage.cookie
     if (cb) cb()
     this.onChange(false)
   },
 
-  loggedIn () {
-    return !!localStorage.token
+  loggedIn() {
+    return !!localStorage.cookie
   },
 
-  onChange () {}
+  onChange() {}
 }
 
 function pretendRequest (email, pass, cb) {

@@ -54,8 +54,9 @@ import url from '../url';
             this.error = true;
             this.message =done.data.message;
           }else{
-            localStorage.token='3212ewqweq'
-            this.$router.replace(this.$route.query.redirect || '/')
+            let cookie = done.data.cookie.split("|")
+            localStorage.cookie=cookie.pop()
+            this.$router.push('/newspaper')
           }
       	})
       	.catch((err)=>{

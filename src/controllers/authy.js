@@ -76,6 +76,17 @@ module.exports={
       console.log(error)
       res.status(500).json(error);
     } 
+  },
+  async validateCookieWorpress(req, res, next){
+    try{
+      let cookie = req.headers["authorization"].split(" ");
+      console.log('https://zetatijuana.com/api/user/validate_auth_cookie/?cookie='+cookie[1]);
+      let data = await asyn_request('https://zetatijuana.com/api/user/validate_auth_cookie/?cookie='+cookie,{method: 'GET'})
+      res.json(data.body)
+    }catch(error){
+      console.log(error)
+      res.status(500).json(error);
+    }
   }
 }
 async function validateSubscrition(array){
@@ -100,6 +111,7 @@ async function validateSubscrition(array){
         return false;
     }  
 }
+
 
 
 

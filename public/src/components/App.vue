@@ -53,9 +53,16 @@
       }
     },
     created () {
-     if(localStorage.token){
+     if(localStorage.cookie){
         this.loggedIn=true;
     }
+  },
+  methods:{
+    resfresh(){
+      bus.$on('refresh', ($event) => {
+        this.loggedIn=true //update todo
+      })
+    }
   }
-}
+};
 </script>
