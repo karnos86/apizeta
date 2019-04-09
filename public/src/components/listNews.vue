@@ -110,6 +110,7 @@
       					'Authorization': 'Bearer ' + localStorage.cookie
     				}
   				}
+  				console.log('config=',config)
 				axios.get(url+'/list/edition', config)
 				.then((done)=>{
 					console.log(done.data);
