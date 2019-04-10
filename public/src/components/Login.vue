@@ -59,7 +59,7 @@ import bus from '../bus.js'
             let cookie = done.data.cookie
             localStorage.cookie=cookie
             console.log('cookie', cookie)
-            bus.$emit("loggin");
+            bus.$emit("login");
             this.$router.push('/')
           }
       	})
