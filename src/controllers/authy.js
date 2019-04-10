@@ -69,6 +69,7 @@ module.exports={
   async loginControl(req, res){
     try {
       login = req.body;
+      console.log('https://zetatijuana.com/api/user/generate_auth_cookie/?username='+login.username+'&password='+login.password);
         var data = await asyn_request('https://zetatijuana.com/api/user/generate_auth_cookie/?username='+login.username+'&password='+login.password,{method: 'GET'});
         console.log(data)
         res.json(JSON.parse(data.body));    

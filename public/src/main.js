@@ -30,7 +30,7 @@ import Login from './components/Login.vue'
 import bus from './bus.js'
 
 function requireAuth (to, from, next) {
-  if (!auth.loggedIn()) {
+  if (!localStorage.cookie){
     next({
       path: '/login',
       query: { redirect: to.fullPath }
