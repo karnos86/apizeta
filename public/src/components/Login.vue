@@ -35,6 +35,7 @@
 <script>
 import axios from 'axios';
 import url from '../url';
+import bus from '../bus.js'
   export default {
     data () {
       return {
@@ -58,6 +59,7 @@ import url from '../url';
             let cookie = done.data.cookie
             localStorage.cookie=cookie
             console.log('cookie', cookie)
+            bus.$emit("loggin");
             this.$router.push('/')
           }
       	})

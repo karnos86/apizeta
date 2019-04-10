@@ -46,6 +46,7 @@
 </template>
 
 <script>
+  import bus from '../bus.js'
   export default {
     data () {
       return {
@@ -59,7 +60,7 @@
   },
   methods:{
     resfresh(){
-      bus.$on('refresh', ($event) => {
+      bus.$on('login', ($event) => {
         this.loggedIn=true //update todo
       })
     }
