@@ -58,16 +58,16 @@
       this.loggedIn();
   },
   methods:{
+    loggedIn(){
+      if(localStorage.cookie){
+        this.loggedIn=true;
+      }
+    },
     resfreshLogin(){
       bus.$on("login", ($event) => {
         this.loggedIn();
         console.log('Evento...')
       })
-    },
-    loggedIn(){
-      if(localStorage.cookie){
-        this.loggedIn=true;
-      }
     }
   }
 };
