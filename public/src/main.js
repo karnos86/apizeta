@@ -50,7 +50,7 @@ const router = new VueRouter({
     { path: '/login', component: Login },
     { path: '/logout',
       beforeEnter (to, from, next) {
-        auth.logout()
+        bus.$emit("logout");
         next('/')
       }
     }

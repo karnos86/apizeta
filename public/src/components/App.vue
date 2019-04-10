@@ -55,7 +55,8 @@
     },
     created () {
       this.dataLogin();
-      this.resfreshLogin();  
+      this.resfreshLogin();
+      this.resfreshlogout();
     },
     methods:{
       dataLogin(){
@@ -68,6 +69,15 @@
           this.dataLogin();
           console.log('Evento...')
         })
+      },
+      resfreshlogout() {
+        bus.$on("logout", ($event) => {
+          this.dataLogout();
+          console.log('Evento...')
+        })
+      }, 
+      dataLogout(){
+        delete localStorage.cookie
       }
     }
   };
