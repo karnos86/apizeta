@@ -56,7 +56,7 @@
     created () {
       this.dataLogin();
       this.resfreshLogin();
-      this.resfreshlogout();
+      this.resfreshLogout();
     },
     methods:{
       dataLogin(){
@@ -70,8 +70,8 @@
           console.log('Evento...')
         })
       },
-      resfreshlogout() {
-        bus.$on("logout", ($event) => {
+      resfreshLogout() {
+        bus.$on("out", ($event) => {
           this.dataLogout();
           console.log('Evento...')
         })
