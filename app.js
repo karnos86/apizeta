@@ -5,6 +5,7 @@ var logger = require('morgan');
 var dotenv = require('dotenv').config({})
 var fileUpload = require('express-fileupload')
 var cors = require('cors')
+require('events').EventEmitter.defaultMaxListeners = 25;
 
 var indexRouter = require('./src/routes/index');
 
