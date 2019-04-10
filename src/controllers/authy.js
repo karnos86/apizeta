@@ -71,11 +71,13 @@ module.exports={
       login = req.body;
         var data = await asyn_request('https://zetatijuana.com/api/user/generate_auth_cookie/?username='+login.username+'&password='+login.password,{method: 'GET', cookieJar: true});
         var done =JSON.parse(data.body)
-        if(!done.user.capabilities.subscriber){
-          res.json(done);
-        }else{
-          res.status(401).json({message: 'no autorizado'})
-        }
+        console.log(done)
+        // if(!done.user.capabilities.subscriber){
+        //   res.json(done);
+        // }else{
+        //   res.status(401).json({message: 'no autorizado'})
+        // }
+         res.json(done);
     } catch (error) {
       console.log(error)
       res.status(500).json(error);
