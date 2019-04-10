@@ -47,6 +47,7 @@ import bus from '../bus.js'
     },
     methods: {
       login () {
+        this.$toastr.info('Valiadando Información!', 'por favor espere ...!');
         let data = {username:this.username, password: this.password}
       	axios.post(url+'/ctl/login', data)
       	.then((done)=>{
@@ -58,8 +59,8 @@ import bus from '../bus.js'
             console.log('done',done.data.message)
             let cookie = done.data.cookie
             localStorage.cookie=cookie
-            console.log('cookie', cookie)
             bus.$emit("login");
+            this.$toastr.success('Valiación Exitosa!', 'Información de acceso correctos');
             this.$router.push('/')
           }
       	})

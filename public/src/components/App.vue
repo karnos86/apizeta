@@ -54,17 +54,20 @@
       }
     },
     created () {
-     if(localStorage.cookie){
-        this.loggedIn=true;
-    }
+      this.resfreshLogin();
+      this.loggedIn();
   },
   methods:{
-    resfresh(){
+    resfreshLogin(){
       bus.$on('login', ($event) => {
-        this.loggedIn=true //update todo
+        this.loggedIn()
         this.$forceUpdate();
-        console.log("refresacando....")
       })
+    },
+    loggedIn(){
+      if(localStorage.cookie){
+        this.loggedIn = true;
+      }
     }
   }
 };
