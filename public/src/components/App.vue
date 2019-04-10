@@ -59,14 +59,14 @@
   },
   methods:{
     resfreshLogin(){
-      bus.$on('login', ($event) => {
-        this.loggedIn()
-        this.$forceUpdate();
+      bus.$on("login", ($event) => {
+        this.loggedIn();
+        console.log('Evento...')
       })
     },
     loggedIn(){
       if(localStorage.cookie){
-        this.loggedIn = true;
+        this.loggedIn=true;
       }
     }
   }
