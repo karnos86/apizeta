@@ -78,6 +78,7 @@
       }, 
       dataLogout(){
         delete localStorage.cookie
+        this.loggedIn = false;
       }
     }
   };
