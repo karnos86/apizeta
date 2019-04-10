@@ -52,7 +52,7 @@ const router = new VueRouter({
     { path: '/logout',
       beforeEnter (to, from, next) {
         bus.$emit("out");
-        this.$router.push('/')
+        next({path: '/'})
       }
     }
   ]
