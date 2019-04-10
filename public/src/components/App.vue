@@ -54,21 +54,21 @@
       }
     },
     created () {
-      this.resfreshLogin();
-      this.loggedIn();
-  },
-  methods:{
-    loggedIn(){
-      if(localStorage.cookie){
-        this.loggedIn=true;
-      }
+      this.dataLogin();
+      this.resfreshLogin();  
     },
-    resfreshLogin(){
-      bus.$on("login", ($event) => {
-        this.loggedIn();
-        console.log('Evento...')
-      })
+    methods:{
+      dataLogin(){
+        if(localStorage.cookie){
+          this.loggedIn = true;
+        }
+      },
+      resfreshLogin(){
+        bus.$on("login", ($event) => {
+          this.dataLogin();
+          console.log('Evento...')
+        })
+      }
     }
-  }
-};
+  };
 </script>
