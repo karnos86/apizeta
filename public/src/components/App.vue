@@ -62,6 +62,8 @@
     resfresh(){
       bus.$on('login', ($event) => {
         this.loggedIn=true //update todo
+        this.$forceUpdate();
+        console.log("refresacando....")
       })
     }
   }
