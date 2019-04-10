@@ -79,6 +79,7 @@
       dataLogout(){
         delete localStorage.cookie
         this.loggedIn = false;
+        this.$forceUpdate()
       }
     }
   };
