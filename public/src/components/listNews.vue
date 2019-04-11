@@ -147,6 +147,7 @@
   				}
 				axios.get(url+'/remove/edition/'+id, config)
 				.then((done)=>{
+					this.delSemanario=null;
 					this.$toastr.success('Operacion exitosa', 'Se eliminio semanario con exito!');
 					this.indexNews();
 				})
