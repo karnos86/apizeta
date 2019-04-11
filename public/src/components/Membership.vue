@@ -19,7 +19,7 @@
   								<img src="../assets/imagen/oxxo.png">
 						</figure>
 						<figure class="image is-64x64" v-show="membership.method=='TDC'">
-  								<img src="../assets/imagen/oxxo.png">
+  								<img src="../assets/imagen/mastercard.png">
 						</figure>
 					</td>
 					<td>{{membership.subscription}}</td>
