@@ -14,15 +14,15 @@
 			<tbody>
 				<tr v-for="(membership, index) in memberships">
 					<td><span>{{membership.idConekt}}</span></td>
-					<td>{{membership.method}}</td>
 					<td>
-						<figure class="image is-64x64" v-show="membership.subscription='OXXO'">
+						<figure class="image is-64x64" v-show="membership.method='OXXO'">
   								<img src="../assets/imagen/oxxo.png">
 						</figure>
-						<figure class="image is-64x64" v-show="membership.subscription='TDC'">
+						<figure class="image is-64x64" v-show="membership.method='TDC'">
   								<img src="../assets/imagen/oxxo.png">
 						</figure>
 					</td>
+					<td>{{membership.subscription}}</td>
 					<td >{{ membership.start | moment("DD/MM/YYYY, h:mm:ss a") }}</td>
 					<td >{{ membership.end | moment("DD/MM/YYYY, h:mm:ss a") }}</td>
 					<td >{{membership.status}}</td>
