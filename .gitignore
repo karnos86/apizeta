@@ -6,4 +6,5 @@ node_modules/
 .htaccess
 .env
 yarn*
-/public/*
+folder_name/*
+

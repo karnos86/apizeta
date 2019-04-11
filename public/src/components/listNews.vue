@@ -11,12 +11,12 @@
 		<table class="table is-striped">
 			<thead>
 				<tr>
-					<td><b>N°</b></td>
-					<td><b>Semanario</b></td>
-					<td><b>Mes - Año</b></td>
-					<td><b>Portada</b></td>
-					<td><b>Semanario</b></td>
-					<td></td>
+					<td class="is-2"><b>N°</b></td>
+					<td class="is-2"><b>Semanario</b></td>
+					<td  class="is-3"><b>Mes - Año</b></td>
+					<td class="is-2" ><b>Portada</b></td>
+					<td   class="is-2"><b>Semanario</b></td>
+					<td  class="is-2" ></td>
 				</tr>
 			</thead>
 			<tbody>
