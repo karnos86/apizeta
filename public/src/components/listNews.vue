@@ -84,7 +84,7 @@
 						</div>
 					</td>
 					<td>
-  						<button class="is-small is-danger button" v-on:click="removeNewspaper(newspaper.code)"> Elliminar</button>
+  						<button class="is-small is-danger button" v-on:click="removeNewspaper(newspaper.code)"  v-bind:class="{'is-active': $route.path == '/newspaper'}"> Eliminar</button>
 					</td>
 				</tr>
 			</tbody>
@@ -106,12 +106,17 @@
 				document:[],
 				portada:[],
 				isvisible:null,
-				isvisibleD:null
+				isvisibleD:null, 
+				upFront:[],
+				upDocument:[],
+				delSemanario:[];
 			}
 		},
 		created: function(){
 			this.indexNews()
 			this.refreshIndex()
+			this.upFront = Array(newspapers.length).fill(false);
+			console.log(upFront)
 		},
 		methods: {
 			indexNews(){
