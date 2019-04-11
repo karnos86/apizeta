@@ -84,7 +84,7 @@
 						</div>
 					</td>
 					<td>
-  						<button class="is-small is-danger button" v-on:click="removeNewspaper(newspaper.code)"  v-bind:class="{'is-active': $route.path == '/newspaper'}"> Eliminar</button>
+  						<button class="is-small is-danger button" v-on:click="removeNewspaper(newspaper.code)"  v-bind:class="{'is-loading': delSemanario == true}"> Eliminar</button>
 					</td>
 				</tr>
 			</tbody>
@@ -115,8 +115,6 @@
 		created: function(){
 			this.indexNews()
 			this.refreshIndex()
-			this.upFront = Array(newspapers.length).fill(false);
-			console.log(upFront)
 		},
 		methods: {
 			indexNews(){
@@ -129,8 +127,11 @@
   				console.log('config=',config)
 				axios.get(url+'/list/edition', config)
 				.then((done)=>{
-					console.log(done.data);
 					this.newspapers=done.data;
+					this.upFront = Array(newspapers.length).fill(false);
+					this.upDocument = Array(newspapers.length).fill(false);
+					this.delSemanario = Array(newspapers.length).fill(false);
+	
 					this.portada = Array(done.data.length).fill(null);
 					this.document = Array(done.data.length).fill(null);
 			
@@ -141,6 +142,7 @@
 
 			},
 			removeNewspaper(id){
+				this.delSemanario[id]=true;
 				let config = {
     				headers: {
       					'Authorization': 'Bearer ' + localStorage.cookie
@@ -153,6 +155,7 @@
 				})
 				.catch((error)=>{
 					this.$toastr.error('Upss...', 'Problemas para eliminar semanario');
+					this.delSemanario[id]=false;
 					console.log(error);
 				})
 			},
