@@ -1,4 +1,12 @@
 <template>
+	<div class=" container separadorList">
+		<div class="columns ">
+        	<div class="column is-one-third is-offset-1">
+          		<div class="field">
+            		<label class="label">Semanario publicados</label>
+          		</div>
+    		</div>
+    	</div>
 	<div class="column  is-offset-2">
 		<table class="table is-striped">
 			<thead>
@@ -82,6 +90,9 @@
 			</tbody>
 		</table>	
 	</div>
+		
+	</div>
+	
 </template>
 <script>
 	import axios from 'axios'
@@ -238,6 +249,13 @@
 	figure{
 		padding-left: 0.3rem;
 	}
+	.separadorList{
+		margin-top: 1rem;
+		/*border-top: 1px solid black;*/
+	}
+	.separadorList .columns{
+			margin-top: 1rem;
+		}
 	
 </style>
 

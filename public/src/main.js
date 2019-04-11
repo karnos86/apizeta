@@ -30,7 +30,9 @@ import Login from './components/Login.vue'
 import bus from './bus.js'
 
 function requireAuth (to, from, next) {
-  if (!localStorage.cookie){
+  console.log(localStorage.cookie)
+
+  if (localStorage.cookie){
     next({
       path: '/login',
       query: { redirect: to.fullPath }
@@ -41,7 +43,7 @@ function requireAuth (to, from, next) {
 }
 
 const router = new VueRouter({
-  mode: 'history',
+  // mode: 'history',
   base: __dirname,
   routes: [
     { path: '/membership', component: Membership, beforeEnter: requireAuth  },
@@ -52,7 +54,7 @@ const router = new VueRouter({
     { path: '/logout',
       beforeEnter (to, from, next) {
         bus.$emit("out");
-        router.push('/');
+        router.push('/login');
       }
     }
   ]

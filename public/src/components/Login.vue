@@ -1,36 +1,36 @@
 <template>
-	<section>
-		<div class="container">
+		<div class="container separadorLogin ">
 			<div class="columns">
 				<div class="column is-one-third is-offset-one-third">
 					<form @submit.prevent="login">
 						<div class="field">
   							<label class="label">Username</label>
   							<div class="control">
-  							  <input class="input is-success" type="text" placeholder="Ingrese usuario"  v-model="username">
+                  <!-- is-success -->
+  							  <input class="input" type="text" placeholder="Ingrese usuario"  v-model="username">
   							</div>
-  							<p class="help is-success">This username is available</p>
+  							<!-- <p class="help is-success">This username is available</p> -->
 						</div>
 						<div class="field">
 						  	<label class="label">Password</label>
 						  	<div class="control">
-						    	<input class="input is-danger" type="password" placeholder="password" v-model="password">
+                  <!-- is-danger -->
+						    	<input class="input" type="password" placeholder="password" v-model="password">
 						 	</div>
-						 	<p class="help is-danger">This email is invalid</p>
+						 	<!-- <p class="help is-danger">This email is invalid</p> -->
 						</div>
 						<div class="field">
 		  					<p class="control">
-		  					  <button class="button is-primary">
+		  					  <button class="button is-info is-fullwidth"  :disabled="!password || !username">
 		  					    Login
 		  					  </button>
 		  					</p>
 		  				</div>
-		  				<p v-if="error" class="error">{{message}}</p>
+		  				<p v-if="error" class="help is-danger">{{message}}</p>
 					</form>
 				</div>
 			</div>
 		</div>
-	</section>
 </template>
 <script>
 import axios from 'axios';
@@ -51,10 +51,10 @@ import bus from '../bus.js'
         let data = {username:this.username, password: this.password}
       	axios.post(url+'/ctl/login', data)
       	.then((done)=>{
-      		console.log(done.data)
-          if(done.data.status === "error"){
+          if(done.data.status === 'error'){
+            this.$toastr.error('Upps !', 'Información de acceso incorrectos');
             this.error = true;
-            this.message =done.data.message;
+            this.message = done.data.message;
           }else{
             console.log('done',done.data.message)
             let cookie = done.data.cookie
@@ -65,9 +65,11 @@ import bus from '../bus.js'
           }
       	})
       	.catch((err)=>{
+          this.$toastr.error('Upps !', err.message);
           console.log(err);
       		this.message =err.message;
       		this.error = true;
+          setTimeout(()=>{ this.error = false; }, 6000);
       		
       	})
       }
@@ -78,4 +80,16 @@ import bus from '../bus.js'
 .error {
   color: red;
 }
+.separadorLogin{
+  margin-top: 6rem;
+ }
+ .is-background{
+    background: rgba(23,45,67, 0.8);
+    border-radius: 4px;
+
+ }
+ .is-color{
+    color:#fff;
+ }
+
 </style>
