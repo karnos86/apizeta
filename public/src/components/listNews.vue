@@ -136,7 +136,12 @@
 
 			},
 			removeNewspaper(id){
-				axios.get(url+'/remove/edition/'+id)
+				let config = {
+    				headers: {
+      					'Authorization': 'Bearer ' + localStorage.cookie
+    				}
+  				}
+				axios.get(url+'/remove/edition/'+id, config)
 				.then((done)=>{
 					this.$toastr.success('Operacion exitosa', 'Se eliminio semanario con exito!');
 					this.indexNews();
@@ -163,8 +168,7 @@
             uploadFront(code, i){
             	let formData = new FormData();
             	formData.append('file', this.portada[i]);
-            	console.log(formData)
-            	axios.post(url+'/uploadFile/'+code,formData, {headers:{'Content-Type': 'multipart/form-data'}})
+            	axios.post(url+'/uploadFile/'+code,formData, {headers:{'Content-Type': 'multipart/form-data',  'Authorization': 'Bearer ' + localStorage.cookie}})
             	.then((done)=>{
             		this.indexNews()
  					this.$toastr.success('Operacion exitosa', 'Se cargo archivo con exito!');
@@ -195,7 +199,7 @@
  
             	let formData = new FormData();
             	formData.append('file', this.document[i]);
-            	axios.post(url+'/uploadFile/'+code,formData, {headers:{'Content-Type': 'multipart/form-data'}})
+            	axios.post(url+'/uploadFile/'+code,formData, {headers:{'Content-Type': 'multipart/form-data', 'Authorization': 'Bearer ' + localStorage.cookie}})
             	.then((done)=>{
             		this.indexNews()
  					this.$toastr.success('Operacion exitosa', 'Se cargo archivo con exito!');
@@ -225,7 +229,12 @@
             	})
             },
             removeDocument(code){
-            	axios.get(url+'/remove/document/'+code)
+            	let config = {
+    				headers: {
+      					'Authorization': 'Bearer ' + localStorage.cookie
+    				}
+  				}
+            	axios.get(url+'/remove/document/'+code, config)
             	.then((done=>{
             		this.$toastr.success('Operacion exitosa', 'Se eliminio archivo con exito!');
             		this.indexNews()
