@@ -84,7 +84,7 @@
 						</div>
 					</td>
 					<td>
-  						<button class="is-small is-danger button" v-on:click="removeNewspaper(newspaper.code)"  v-bind:class="{'is-loading': delSemanario == true}"> Eliminar</button>
+  						<button class="is-small is-danger button" v-on:click="removeNewspaper(newspaper.code)"  v-bind:class="{'is-loading': delSemanario[index] == true}"> Eliminar</button>
 					</td>
 				</tr>
 			</tbody>
@@ -143,6 +143,7 @@
 			},
 			removeNewspaper(id){
 				this.delSemanario[id]=true;
+				console.log(this.delSemanario)
 				let config = {
     				headers: {
       					'Authorization': 'Bearer ' + localStorage.cookie
@@ -275,19 +276,3 @@
 		}
 	
 </style>
-
-
-<!-- 	<div class="container">
-		<div class="colums is-12"> <h3 class="title"> Lista de semanario</h3></div>
-		<div class="columns" v-for="newspaper in newspapers">
-			<div class="column is-2 "><span>{{newspaper.code}}</span></div>
-			<div class="column is-2"><span>{{newspaper.date}}</span></div>
-			<div class="column is-3">
-				<span v-show="newspaper.document == null">{{newspaper.front}}</span>
-				<button is-danger >Cargar</button>
-
-			</div>
-			<div class="column is-3"><span v-show="newspaper.document != null">Documento cargado</span></div>
-			<div class="column is-1" v-on:click="removeNewspaper(newspaper.code)">X</div>
-		</div>	
-	</div> -->
