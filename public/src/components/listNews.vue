@@ -149,16 +149,16 @@
       					'Authorization': 'Bearer ' + localStorage.cookie
     				}
   				}
-				axios.get(url+'/remove/edition/'+id, config)
-				.then((done)=>{
-					this.$toastr.success('Operacion exitosa', 'Se eliminio semanario con exito!');
-					this.indexNews();
-				})
-				.catch((error)=>{
-					this.$toastr.error('Upss...', 'Problemas para eliminar semanario');
-					this.delSemanario[id]=false;
-					console.log(error);
-				})
+				// axios.get(url+'/remove/edition/'+id, config)
+				// .then((done)=>{
+				// 	this.$toastr.success('Operacion exitosa', 'Se eliminio semanario con exito!');
+				// 	this.indexNews();
+				// })
+				// .catch((error)=>{
+				// 	this.$toastr.error('Upss...', 'Problemas para eliminar semanario');
+				// 	this.delSemanario[id]=false;
+				// 	console.log(error);
+				// })
 			},
 			refreshIndex() {
                 bus.$on('refresh', ($event) => {
