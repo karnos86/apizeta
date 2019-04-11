@@ -70,6 +70,7 @@ module.exports={
     try {
       login = req.body;
         var data = await asyn_request('https://zetatijuana.com/api/user/generate_auth_cookie/?username='+login.username+'&password='+login.password,{method: 'GET', cookieJar: true});
+        console.log(data)
         var done =JSON.parse(data.body)
         console.log(done)
         if(done.user.capabilities.administrator){
@@ -90,6 +91,7 @@ module.exports={
       }
       let cookie = req.headers["authorization"].split(" ");
       let data = await asyn_request('https://zetatijuana.com/api/user/validate_auth_cookie/?cookie='+cookie[1],{method: 'GET'})
+      console.log(data)
       let info = JSON.parse(data.body);
       if(info.status == 'ok' && info.valid == true){
         next()

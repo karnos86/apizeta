@@ -2,7 +2,7 @@
 	 <div class="container separadorNews">
       <div class="columns">
         <div class="column is-offset-1">
-          <div class="field">
+          <div class="title is-5">
             <label class="label">Nuevo semanario</label>
           </div>
         </div>
