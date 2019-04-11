@@ -84,7 +84,7 @@
 						</div>
 					</td>
 					<td>
-  						<button class="is-small is-danger button" v-on:click="removeNewspaper(newspaper.code)"  v-bind:class="{'is-loading': delSemanario[index] == true}"> Eliminar</button>
+  						<button class="is-small is-danger button" v-on:click="removeNewspaper(newspaper.code, index)"  v-bind:class="{'is-loading': delSemanario == index }"> Eliminar</button>
 					</td>
 				</tr>
 			</tbody>
@@ -107,9 +107,9 @@
 				portada:[],
 				isvisible:null,
 				isvisibleD:null, 
-				upFront:[],
-				upDocument:[],
-				delSemanario:[],
+				upFront:null,
+				upDocument:null,
+				delSemanario:null,
 			}
 		},
 		created: function(){
@@ -128,10 +128,6 @@
 				axios.get(url+'/list/edition', config)
 				.then((done)=>{
 					this.newspapers=done.data;
-					this.upFront = Array(newspapers.length).fill(false);
-					this.upDocument = Array(newspapers.length).fill(false);
-					this.delSemanario = Array(newspapers.length).fill(false);
-	
 					this.portada = Array(done.data.length).fill(null);
 					this.document = Array(done.data.length).fill(null);
 			
@@ -141,24 +137,24 @@
 				})
 
 			},
-			removeNewspaper(id){
-				this.delSemanario[id]=true;
-				console.log(this.delSemanario)
+			removeNewspaper(id, index){
+				this.delSemanario=index;
+				console.log(this.delSemanario);
 				let config = {
     				headers: {
       					'Authorization': 'Bearer ' + localStorage.cookie
     				}
   				}
-				// axios.get(url+'/remove/edition/'+id, config)
-				// .then((done)=>{
-				// 	this.$toastr.success('Operacion exitosa', 'Se eliminio semanario con exito!');
-				// 	this.indexNews();
-				// })
-				// .catch((error)=>{
-				// 	this.$toastr.error('Upss...', 'Problemas para eliminar semanario');
-				// 	this.delSemanario[id]=false;
-				// 	console.log(error);
-				// })
+				axios.get(url+'/remove/edition/'+id, config)
+				.then((done)=>{
+					this.$toastr.success('Operacion exitosa', 'Se eliminio semanario con exito!');
+					this.indexNews();
+				})
+				.catch((error)=>{
+					this.$toastr.error('Upss...', 'Problemas para eliminar semanario');
+					this.delSemanario[id]=false;
+					console.log(error);
+				})
 			},
 			refreshIndex() {
                 bus.$on('refresh', ($event) => {
