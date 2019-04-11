@@ -73,11 +73,16 @@ module.exports={
         console.log(data)
         var done =JSON.parse(data.body)
         console.log(done)
-        if(done.user.capabilities.administrator){
-          res.json(done);
+        if(done.status=='ok'){
+          if(done.user.capabilities.administrator){
+            res.json(done);
+          }else{
+            res.status(401).json({message: 'no autorizado'});
+          }
         }else{
-          res.status(401).json({message: 'no autorizado'})
+          res.status(402).json({message: done.message});
         }
+        
          
     } catch (error) {
       console.log(error)
