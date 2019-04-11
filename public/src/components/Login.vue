@@ -7,7 +7,7 @@
   							<label class="label">Username</label>
   							<div class="control">
                   <!-- is-success -->
-  							  <input class="input" type="text" placeholder="Ingrese usuario"  v-model="username">
+  							  <input class="input" type="text" placeholder="Escriba usuario adminstrador de wordprress"  v-model="username">
   							</div>
   							<!-- <p class="help is-success">This username is available</p> -->
 						</div>
@@ -15,7 +15,7 @@
 						  	<label class="label">Password</label>
 						  	<div class="control">
                   <!-- is-danger -->
-						    	<input class="input" type="password" placeholder="password" v-model="password">
+						    	<input class="input" type="password" placeholder="Escriba clave adminstrador de wordprress" v-model="password">
 						 	</div>
 						 	<!-- <p class="help is-danger">This email is invalid</p> -->
 						</div>

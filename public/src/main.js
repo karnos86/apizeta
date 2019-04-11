@@ -32,7 +32,7 @@ import bus from './bus.js'
 function requireAuth (to, from, next) {
   console.log(localStorage.cookie)
 
-  if (localStorage.cookie){
+  if (!localStorage.cookie){
     next({
       path: '/login',
       query: { redirect: to.fullPath }
