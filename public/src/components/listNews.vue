@@ -152,7 +152,7 @@
 				})
 				.catch((error)=>{
 					this.$toastr.error('Upss...', 'Problemas para eliminar semanario');
-					this.delSemanario[id]=false;
+					this.delSemanario=null;
 					console.log(error);
 				})
 			},

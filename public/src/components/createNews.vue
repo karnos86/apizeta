@@ -27,7 +27,7 @@
             </div>
             <div class="column is-1">
               <p class="control">
-                <button class="button is-primary crear">
+                <button class="button is-primary crear" v-bind:class="{'is-loading': create == true }">
                   Crear
                 </button>
               </p>
@@ -45,10 +45,12 @@ export default{
 		return{
 			codigo: null,
 			fecha: null,
+      create:false,
 		}
 	},
   methods:{
     newspaper(){
+      this.create=true;
       let config = {
         headers: {
           'Authorization': 'Bearer ' + localStorage.cookie
@@ -57,10 +59,12 @@ export default{
       let data = {code:this.codigo, date:this.fecha};
       axios.post(url+'/create/edition', data, config)
       .then((done)=>{
+        this.create=false;
         this.$toastr.success('Operacion exitosa', 'Semanario creado');
         this.refresh()
       })
       .catch((error)=>{
+        this.create=false;
         console.log(error)
       })
     },
