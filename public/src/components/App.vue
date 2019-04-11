@@ -27,7 +27,7 @@
           <div class="container">
             <ul>
               <!-- class="is-active" -->
-              <li ><router-link to="/users">Usuarios</router-link></li>
+              <li v-bind:class="{$route.path == '/users' ? 'active': '' }" ><router-link to="/users">Usuarios</router-link></li>
               <li><router-link to="/membership">Membresía</router-link></li>
               <!-- <li><router-link to="/pay">Pagos</router-link></li> -->
               <li><router-link to="/newspaper">Ediciones</router-link></li>
