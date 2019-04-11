@@ -109,7 +109,7 @@
 				isvisibleD:null, 
 				upFront:[],
 				upDocument:[],
-				delSemanario:[];
+				delSemanario:[],
 			}
 		},
 		created: function(){
