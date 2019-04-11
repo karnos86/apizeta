@@ -27,10 +27,10 @@
           <div class="container">
             <ul>
               <!-- class="is-active" -->
-              <li v-bind:class="{'active': $route.path == '/users'}" ><router-link to="/users">Usuarios</router-link></li>
-              <li><router-link to="/membership">Membresía</router-link></li>
+              <li v-bind:class="{'is-active': $route.path == '/users'}" ><router-link to="/users">Usuarios</router-link></li>
+              <li v-bind:class="{'is-active': $route.path == '/membership'}"><router-link to="/membership">Membresía</router-link></li>
               <!-- <li><router-link to="/pay">Pagos</router-link></li> -->
-              <li><router-link to="/newspaper">Ediciones</router-link></li>
+              <li v-bind:class="{'is-active': $route.path == '/users'}"><router-link to="/newspaper">Ediciones</router-link></li>
             </ul>
           </div>
         </nav>
