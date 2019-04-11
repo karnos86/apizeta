@@ -15,10 +15,10 @@
 				<tr v-for="(membership, index) in memberships">
 					<td><span>{{membership.idConekt}}</span></td>
 					<td>
-						<figure class="image is-64x64" v-show="membership.method==XXO">
+						<figure class="image is-64x64" v-show="membership.method=='OXXO'">
   								<img src="../assets/imagen/oxxo.png">
 						</figure>
-						<figure class="image is-64x64" v-show="membership.method==TDC">
+						<figure class="image is-64x64" v-show="membership.method=='TDC'">
   								<img src="../assets/imagen/oxxo.png">
 						</figure>
 					</td>
