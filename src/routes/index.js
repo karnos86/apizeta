@@ -24,7 +24,7 @@ router.post('/api/customer/renovate/oxxo', ctrl.authy.accessApp, ctrl.customer.r
 router.post('/api/customer/renovate/tdc', ctrl.authy.accessApp, ctrl.customer.renovarTdc);
 
 //web
-router.get('/subscription/index',  ctrl.customer.indexSubscription);
+router.get('/subscription/index', ctrl.authy.validateCookieWorpress, ctrl.customer.indexSubscription);
 
 /*Authy manejo de session*/
 router.post('/api/customer/login', ctrl.authy.loginApp);

@@ -52,8 +52,13 @@
 		},
 		methods:{
 			indexMemberships(){
+				let config = {
+    				headers: {
+      					'Authorization': 'Bearer ' + localStorage.cookie
+    				}
+  				}
 				console.log(url+'/subscription/index')
-				axios.get(url+'/subscription/index')
+				axios.get(url+'/subscription/index', config)
 				.then((done)=>{
 					console.log(done.data)
 					this.memberships=done.data

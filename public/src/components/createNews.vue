@@ -49,8 +49,13 @@ export default{
 	},
   methods:{
     newspaper(){
+      let config = {
+        headers: {
+          'Authorization': 'Bearer ' + localStorage.cookie
+        }
+      }, 
       let data = {code:this.codigo, date:this.fecha}
-      axios.post(url+'/create/edition', data)
+      axios.post(url+'/create/edition', data, config)
       .then((done)=>{
         this.$toastr.success('Operacion exitosa', 'Semanario creado');
         this.refresh()
