@@ -1,2 +1,2 @@
-module.exports = 'localhost:3000'
+module.exports = 'https://backendapp.zetatijuana.com'
 // https://backendapp.zetatijuana.com
