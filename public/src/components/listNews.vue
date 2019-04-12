@@ -24,7 +24,7 @@
 					<td><span>{{index+1}}</span></td>
 					<td>{{newspaper.code}}</td>
 					<td>{{newspaper.date}}</td>
-					<td class="is-width">
+					<td>
 						<div class ="front" v-show="newspaper.front != null">
   							<button class="delete is-small" v-on:click="removeFront(newspaper.code)"></button>
   							<figure class="image is-64x64 ">
@@ -54,7 +54,7 @@
 						</div>
 
 					</td>
-					<td class="is-width">
+					<td>
 						<div class="front" v-show="newspaper.document != null">
   							<button class="delete is-small"  v-on:click="removeDocument(newspaper.code)"></button>
   							<figure class="image is-64x64">

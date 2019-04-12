@@ -1,5 +1,6 @@
 const conekta = require('../../bin/conexion_conekta');
 const bcrypt = require('bcrypt');
+const asyn_request = require('async-request');
 const Customer = require('../models/Customer');
 const Subscription = require('../models/Subscription');
 const Access = require('../models/Access');
@@ -9,43 +10,31 @@ const Access = require('../models/Access');
 module.exports={
     async create(req, res){
         try {
-            let infoBack = new Object();
-            infoBack["username"]=req.body.username.toLowerCase()
-            infoBack["password"]=req.body.password.toLowerCase()
-            infoBack["name"]=req.body.name
-            infoBack["email"]= req.body.email
-           
-            let infoConekt = req.body;
-            infoConekt["phone"]="+52" + infoConekt["phone"];
-            delete infoConekt["username"];
-            delete infoConekt["password"];
-            /* busqueda en la base de datos del back de app */
-            let  search = await Customer.findOne({where:{'email': infoBack.email}})
-            if(search != null){
-                res.json({message:'Email Registrado'})
-            }else{
-                /* Creo el usuario en coneKta */
-                var customerConeckta =  await conekta.Customer.create(infoConekt);
-                infoBack["idConekt"] = customerConeckta._id;
-                /* Creo la suscripcion espero respuesta de conecta si pasa la tdc */
-                var subscriptionConeckt = await customerConeckta.createSubscription({plan: infoConekt.plan});
-                switch (subscriptionConeckt.status) {
-                    case "active":
-                        /* Encripto el password */
-                        let hash = bcrypt.hashSync(infoBack["password"], 10);
-                        infoBack["password"] = hash;
-                        infoBack["active"] = true;
-                        await Customer.create(infoBack);
-                        res.json(subscriptionConeckt);
-                        break;
-                    case "past_due":
-                        let result = await customerConeckta.delete();
-                        res.staus(422).json({message:"Pago no realizado, problemas con su TDC"});
-                        break;
-                    case "in_trial":
-                        break;
-                }
-            }  
+           var data = req.body;
+           console.log(data);
+           // let generar_nonce = await asyn_request(process.env.CNAME_EXTERNAL+'/api/get_nonce/?json=get_nonce&controller=user&method=register',{method: 'GET'});
+           // let nonce = JSON.parse(generar_nonce.body);
+           // if(nonce.status=="ok"){
+           //      var wordpress = await asyn_request(process.env.CNAME_EXTERNAL+'/api/user/register/?username='+data.username+'&email='+data.email+'&nonce='+nonce.nonce+'&display_name='+data.name+'&notify=both&user_pass='+data.password,{method: 'GET', cookieJar: true});
+           //      wordpress = JSON.parse(wordpress.body);
+           //      if(wordpress.status=="ok"){
+           //          let api_rest = await Customer.create({idWordPress:wordpress.user_id, email:data.email});
+           //          var customer_Conekta =  await conekta.Customer.create({
+           //              name: data.name,
+           //              email: data.email,
+           //              phone: '+52'+data.phone,
+           //              plan_id: data.plan,
+           //              payment_sources: [{
+           //                  token_id: ,
+           //                  type: 'card'
+           //              }]
+           //          });
+           //      }else{
+
+           //      }
+           // }else{
+
+           // }
         } catch (error) {
             switch (error.http_code) {
                 case 402:  
