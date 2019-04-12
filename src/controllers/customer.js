@@ -14,11 +14,14 @@ module.exports={
            console.log(data);
            let generar_nonce = await asyn_request(process.env.CNAME_EXTERNAL+'/api/get_nonce/?json=get_nonce&controller=user&method=register',{method: 'GET'});
            let nonce = JSON.parse(generar_nonce.body);
+           console.log(nonce);
            if(nonce.status=="ok"){
                 var wordpress = await asyn_request(process.env.CNAME_EXTERNAL+'/api/user/register/?username='+data.username+'&email='+data.email+'&nonce='+nonce.nonce+'&display_name='+data.name+'&notify=both&user_pass='+data.password,{method: 'GET', cookieJar: true});
                 wordpress = JSON.parse(wordpress.body);
+                console.log(wordpress)
                 if(wordpress.status=="ok"){
                     let api_rest = await Customer.create({idWordPress:wordpress.user_id, email:data.email});
+                    console.log(api_rest)
                     var customer_Conekta =  await conekta.Customer.create({
                         name: data.name,
                         email: data.email,
@@ -39,6 +42,7 @@ module.exports={
                     res.status(402).json(error.details[0].message);
                     break;
                 default:
+                console.log(error)
                     res.status(500).json(error)
                     break;
             }
