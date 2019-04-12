@@ -12,29 +12,27 @@ module.exports={
         try {
            var data = req.body;
            console.log(data);
-           // let generar_nonce = await asyn_request(process.env.CNAME_EXTERNAL+'/api/get_nonce/?json=get_nonce&controller=user&method=register',{method: 'GET'});
-           // let nonce = JSON.parse(generar_nonce.body);
-           // if(nonce.status=="ok"){
-           //      var wordpress = await asyn_request(process.env.CNAME_EXTERNAL+'/api/user/register/?username='+data.username+'&email='+data.email+'&nonce='+nonce.nonce+'&display_name='+data.name+'&notify=both&user_pass='+data.password,{method: 'GET', cookieJar: true});
-           //      wordpress = JSON.parse(wordpress.body);
-           //      if(wordpress.status=="ok"){
-           //          let api_rest = await Customer.create({idWordPress:wordpress.user_id, email:data.email});
-           //          var customer_Conekta =  await conekta.Customer.create({
-           //              name: data.name,
-           //              email: data.email,
-           //              phone: '+52'+data.phone,
-           //              plan_id: data.plan,
-           //              payment_sources: [{
-           //                  token_id: ,
-           //                  type: 'card'
-           //              }]
-           //          });
-           //      }else{
-
-           //      }
-           // }else{
-
-           // }
+           let generar_nonce = await asyn_request(process.env.CNAME_EXTERNAL+'/api/get_nonce/?json=get_nonce&controller=user&method=register',{method: 'GET'});
+           let nonce = JSON.parse(generar_nonce.body);
+           if(nonce.status=="ok"){
+                var wordpress = await asyn_request(process.env.CNAME_EXTERNAL+'/api/user/register/?username='+data.username+'&email='+data.email+'&nonce='+nonce.nonce+'&display_name='+data.name+'&notify=both&user_pass='+data.password,{method: 'GET', cookieJar: true});
+                wordpress = JSON.parse(wordpress.body);
+                if(wordpress.status=="ok"){
+                    let api_rest = await Customer.create({idWordPress:wordpress.user_id, email:data.email});
+                    var customer_Conekta =  await conekta.Customer.create({
+                        name: data.name,
+                        email: data.email,
+                        phone: '+52'+data.phone,
+                        plan_id: data.plan,
+                        payment_sources: payment_sources
+                    });
+                    res.json(customer_Conekta);
+                }else{
+                    res.status(400).json(wordpress)
+                }
+           }else{
+               res.status(400).json(nonce)
+           }
         } catch (error) {
             switch (error.http_code) {
                 case 402:  

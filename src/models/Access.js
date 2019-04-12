@@ -17,7 +17,7 @@ const Customer = require('./Customer');
     }
 
   })
-  Customer.hasMany(Access, {foreignKey: 'idConekt'});
-  Access.belongsTo(Customer,{foreignKey: 'idConekt'});
+  // Customer.hasMany(Access, {foreignKey: 'idConekt'});
+  // Access.belongsTo(Customer,{foreignKey: 'idConekt'});
   
   module.exports = Access;

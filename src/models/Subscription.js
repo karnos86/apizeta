@@ -38,8 +38,8 @@ const Customer = require('./Customer');
     },
   });
 
-  Customer.hasMany(Subcription, {foreignKey: 'idConekt'});
-  Subcription.belongsTo(Customer,{foreignKey: 'idConekt'});
+  // Customer.hasMany(Subcription, {foreignKey: 'idConekt'});
+  // Subcription.belongsTo(Customer,{foreignKey: 'idConekt'});
 
  
 module.exports=Subcription;
