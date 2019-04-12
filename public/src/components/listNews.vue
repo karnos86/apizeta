@@ -278,7 +278,7 @@
 		/*border-top: 1px solid black;*/
 	}
 	.separadorList .columns{
-			margin-top: 1rem;
-		}
+		margin-top: 1rem;
+	}
 	
 </style>
