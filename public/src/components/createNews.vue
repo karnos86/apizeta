@@ -65,6 +65,7 @@ export default{
       })
       .catch((error)=>{
         this.create=false;
+        this.$toastr.error('Upss...!', 'Problemas al crear semanario');
         console.log(error)
       })
     },

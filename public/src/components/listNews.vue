@@ -11,12 +11,12 @@
 		<table class="table is-striped">
 			<thead>
 				<tr>
-					<td class="is-2"><b>N°</b></td>
-					<td class="is-2"><b>Semanario</b></td>
-					<td  class="is-3"><b>Mes - Año</b></td>
-					<td class="is-2" ><b>Portada</b></td>
-					<td   class="is-2"><b>Semanario</b></td>
-					<td  class="is-2" ></td>
+					<td><b>N°</b></td>
+					<td><b>Semanario</b></td>
+					<td><b>Mes - Año</b></td>
+					<td><b>Portada</b></td>
+					<td><b>Semanario</b></td>
+					<td></td>
 				</tr>
 			</thead>
 			<tbody>
@@ -45,7 +45,7 @@
   							</label>
 						</div>
 						<div v-if="isvisible == index" class="botones">
-							<button class="button is-success is-small" v-on:click="uploadFront(newspaper.code, index)"  >
+							<button class="button is-success is-small" v-on:click="uploadFront(newspaper.code, index)"  v-bind:class="{'is-loading': upFront == index }"  >
 								Guardar
 							</button>
 							<button class="button is-info is-small" v-on:click="resetFront(index)" >
@@ -75,7 +75,7 @@
   							</label>
 						</div>
 						<div v-if="isvisibleD == index" class="botones">
-							<button class="button is-success is-small" v-on:click="uploadSemanario(newspaper.code, index)"  >
+							<button class="button is-success is-small" v-on:click="uploadSemanario(newspaper.code, index)" v-bind:class="{'is-loading': upDocument == index }"   >
 								Guardar
 							</button>
 							<button class="button is-info is-small" v-on:click="resetSemanario(index)" >
@@ -172,17 +172,18 @@
 
             },
             uploadFront(code, i){
+            	this.upFront = i;
             	let formData = new FormData();
             	formData.append('file', this.portada[i]);
             	axios.post(url+'/uploadFile/'+code,formData, {headers:{'Content-Type': 'multipart/form-data',  'Authorization': 'Bearer ' + localStorage.cookie}})
             	.then((done)=>{
+            		this.upFront = null;
             		this.indexNews()
  					this.$toastr.success('Operacion exitosa', 'Se cargo archivo con exito!');
- 					this.resetFront()
- 					
-
+ 					this.resetFront();
 				})
 				.catch((error)=>{
+					this.upFront = null;
 				 	this.$toastr.errpr('Upss...', 'Problemas para cargar archivo');
 				 	this.resetFront()
 				});
@@ -202,11 +203,13 @@
 
             },
             uploadSemanario(code, i){
+            	this.upDocument=i;
  
             	let formData = new FormData();
             	formData.append('file', this.document[i]);
             	axios.post(url+'/uploadFile/'+code,formData, {headers:{'Content-Type': 'multipart/form-data', 'Authorization': 'Bearer ' + localStorage.cookie}})
             	.then((done)=>{
+            		this.upDocument=null;
             		this.indexNews()
  					this.$toastr.success('Operacion exitosa', 'Se cargo archivo con exito!');
  					this.resetSemanario()
@@ -214,6 +217,7 @@
 
 				})
 				.catch((error)=>{
+					this.upDocument=null;
 				 	this.$toastr.error('Upss...', 'Problemas para cargar archivo');
 				 	this.resetSemanario()
 				});
