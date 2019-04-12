@@ -16,10 +16,10 @@ module.exports={
            let nonce = JSON.parse(generar_nonce.body);
            console.log(nonce);
            if(nonce.status=="ok"){
-                var wordpress = await asyn_request(process.env.CNAME_EXTERNAL+'/api/user/register/?username='+data.username+'&email='+data.email+'&nonce='+nonce.nonce+'&display_name='+data.name+'&notify=both&user_pass='+data.password,{method: 'GET', cookieJar: true});
-                wordpress = JSON.parse(wordpress.body);
+                var result = await asyn_request(process.env.CNAME_EXTERNAL+'/api/user/register/?username='+data.username+'&email='+data.email+'&nonce='+nonce.nonce+'&display_name='+data.name+'&notify=both&user_pass='+data.password,{method: 'GET', cookieJar: true});
+                wordpress = JSON.parse(result.body);
                 console.log(wordpress)
-                if(wordpress.status=="ok"){
+                if(wordpress.status =='ok'){
                     let api_rest = await Customer.create({idWordPress:wordpress.user_id, email:data.email});
                     console.log(api_rest)
                     var customer_Conekta =  await conekta.Customer.create({
