@@ -92,6 +92,7 @@ module.exports={
 		}
 	}, 
 	async deleteDocument(req,res){
+		console.log("controlador");
 		try{
 			let code= req.params.code
 			let newspaper = await Newspaper.findById(code)
