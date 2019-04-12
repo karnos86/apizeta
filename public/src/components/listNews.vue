@@ -244,6 +244,7 @@
             	})
             },
             removeDocument(code){
+            	console.log("aqui")
             	let config = {
     				headers: {
       					'Authorization': 'Bearer ' + localStorage.cookie
@@ -256,6 +257,7 @@
 
             	}))
             	.catch((error)=>{
+            		console.log(error)
             		this.$toastr.error('Upss...', 'Problemas para eliminar archivo');
             	})	
             }
