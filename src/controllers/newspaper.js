@@ -96,7 +96,7 @@ module.exports={
 		try{
 			let code= req.params.code
 			let newspaper = await Newspaper.findById(code)
-			if(newspaper.front != null){
+			if(newspaper.document != null){
 				var fileName = newspaper.document.split("/");
 				var file =  path.join(path.resolve("."), 'documents/semanario/',fileName.pop())
 				if(fileExists(file)) {
