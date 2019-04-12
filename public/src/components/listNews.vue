@@ -227,7 +227,12 @@
             	this.isvisibleD=null;
             },
             removeFront(code){
-            	axios.get(url+'/remove/front/'+code)
+            	let config = {
+    				headers: {
+      					'Authorization': 'Bearer ' + localStorage.cookie
+    				}
+  				};
+            	axios.get(url+'/remove/front/'+code, config)
             	.then((done=>{
             		this.indexNews()
             		this.$toastr.success('Operacion exitosa', 'Se eliminio archivo con exito!');
@@ -243,7 +248,7 @@
     				headers: {
       					'Authorization': 'Bearer ' + localStorage.cookie
     				}
-  				}
+  				};
             	axios.get(url+'/remove/document/'+code, config)
             	.then((done=>{
             		this.$toastr.success('Operacion exitosa', 'Se eliminio archivo con exito!');
