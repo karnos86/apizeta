@@ -42,7 +42,8 @@ module.exports={
         }
     },
     async hooksPaid(req, res){
-         let cancel
+         let cancel, notification;
+
         try{
             switch (req.body.type) {
                 case 'order.pending_payment':
@@ -103,6 +104,19 @@ module.exports={
                     res.json({status:200, message:"operacion exitosa"});
 
                     break;
+                case 'subscription.created':
+                    notification = req.body.data.object;
+                    var customer = await Customer.findOne({where:{idConekt:notification.customer_id}})
+                    let subscrition = new Object()
+                    subscrition["reference"] = notification.id
+                    subscrition["method"] = "TDC"
+                    subscrition["subscription"] = notification.plan_id
+
+                    await Subscription.create();
+                    res.json({status:200, message:"operacion exitosa"});
+
+
+                    break
                 default:
                     res.json({status:200, message:"operacion no tomada en cuenta"})
                     break;
