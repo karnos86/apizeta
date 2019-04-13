@@ -28,8 +28,9 @@ module.exports={
                         email: data.email,
                         phone: '+52'+data.phone,
                         plan_id: data.plan,
-                        payment_sources: payment_sources
+                        payment_sources: data.payment_sources
                     });
+                    await api_rest.update({idConekt:customer_Conekta._id , status: true})
                     res.json(customer_Conekta);
                 }else{
                     res.status(400).json(wordpress)
