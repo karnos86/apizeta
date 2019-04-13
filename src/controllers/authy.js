@@ -10,6 +10,7 @@ module.exports={
     try {
       login = req.body;
       let data = await asyn_request('https://zetatijuana.com/api/user/generate_auth_cookie/?username='+login.username+'&password='+login.password,{method: 'GET', cookieJar: true});
+      console.log(data)
       let done =JSON.parse(data.body);
       if(done.status=='ok'){
         let customer = await Customer.findOne({include:[{all: true}], where:{idWordPress: done.user.id}});
