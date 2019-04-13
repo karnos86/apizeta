@@ -113,6 +113,7 @@ module.exports={
                     subscrition["subscription"] = notification.plan_id
                     subscrition["status"] =notification.status 
                     subscrition["paid"] =false
+                    subscrition["idWordPress"] =customer.idWordPress;
 
                     await Subscription.create(subscrition);
                     res.json({status:200, message:"operacion exitosa"});
@@ -125,7 +126,7 @@ module.exports={
             console.log(error)
             res.status(500).json({status:500, message:"Ocurrio un Error", error:error})
         } 
-    }, 
+    },
     async listVideo(req, res){
         try{
             var data = await asyn_request('https://www.googleapis.com/youtube/v3/playlistItems?key=AIzaSyBYYx0g6DgwDeZYVM4dDuW9hq4b-VlIiYA&playlistId=UU-NHHkALnId41yENpdCuLKQ&part=snippet,id&maxResults=12',{method: 'GET'})
