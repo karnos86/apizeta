@@ -92,6 +92,7 @@ module.exports={
                 case 'subscription.payment_failed':
                     notification = req.body.data.object;
                     var renovate = await Subscription.findById(notification.id);
+                    subscrition = new Object()
                     subscrition["end"]      = notification.billing_cycle_end
                     subscrition["status"]   = notification.status
                     renovate.update(subscrition);
