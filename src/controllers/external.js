@@ -67,7 +67,7 @@ module.exports={
                     subscrition["start"]=notification.created_at
                     subscrition["end"]= await CalculeTimeSubcription(notification.line_items.data[0].name, notification.created_at)
                     subscrition["status"]='pending_payment'
-                    await renovate.update(data);
+                    await renovate.update(subscrition);
                     res.json({status:200, message:"operacion exitosa"})
                 break;
                 case 'order.paid':
