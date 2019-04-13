@@ -101,14 +101,14 @@ module.exports={
                     //     subscriptionBack["idConekt"] =req.body.data.object.customer_id 
 
                     // await Subscription.create(subscriptionBack);
-                    notificacion = req.body.data.object;
+                    notification = req.body.data.object;
                     console.log(notification.id)
-                    var renovate = await Subscription.findById(notification.id)
+                    var renovate = await Subscription.findById(notification.id);
                     subscrition = new Object()
-                    subscrition["start"]    = notificacion.billing_cycle_start
-                    subscrition["end"]      = notificacion.billing_cycle_end
+                    subscrition["start"]    = notification.billing_cycle_start
+                    subscrition["end"]      = notification.billing_cycle_end
                     subscrition["paid"]     = true 
-                    subscrition["status"]   = notificacion.status
+                    subscrition["status"]   = notification.status
 
                     renovate.update(subscrition);
 
