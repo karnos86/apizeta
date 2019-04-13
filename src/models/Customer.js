@@ -12,7 +12,7 @@ const db = require('../../bin/database');
     },
     idConekt:{
       type: Sequelize.STRING,
-      allowNull: false,
+      allowNull: true,
       unique: 'compositeIndex'
     },
     email: {
