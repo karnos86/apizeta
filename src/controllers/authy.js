@@ -25,12 +25,12 @@ module.exports={
                    await access.update({'authorized':true, 'idWordPress':customer.idWordPress});
                    res.json(true);
                }else{
-                   await Access.create({'uuii':data.UUII,'authorized':true, 'idWordPress':customer.idWordPress});
+                   await Access.create({'uuii':login.UUII,'authorized':true, 'idWordPress':customer.idWordPress});
                    res.json(true);
                }
                let listAccess = await Access.findAll({where:{idWordPress:customer.idWordPress}});
                for(let i in listAccess){
-                   if(listAccess[i].uuii != data.UUII){ 
+                   if(listAccess[i].uuii != login.UUII){ 
                        await listAccess[i].update({authorized:false});
                    }
                }
