@@ -29,7 +29,7 @@ module.exports={
                         plan_id: data.plan,
                         payment_sources: data.payment_sources
                     });
-                    await api_rest.update({idConekt:customer_Conekta._id , status: true})
+                    await api_rest.update({idConekt:customer_Conekta._id , active: true})
                     res.json(customer_Conekta);
                 }else{
                     res.status(400).json(wordpress)
@@ -52,8 +52,29 @@ module.exports={
     },
     async createOxxo(req, res){
         try {
-            console.log(req.body)
-            res.json()
+            var data = req.body
+            let generar_nonce = await asyn_request(process.env.CNAME_EXTERNAL+'/api/get_nonce/?json=get_nonce&controller=user&method=register',{method: 'GET'});
+            let nonce = JSON.parse(generar_nonce.body);
+            console.log(nonce);
+            if(nonce.status=="ok"){
+               console.log(process.env.CNAME_EXTERNAL+'/api/user/register/?username='+data.username+'&email='+data.email+'&nonce='+nonce.nonce+'&display_name='+data.name+'&notify=both&user_pass='+data.password)
+                var result = await asyn_request(process.env.CNAME_EXTERNAL+'/api/user/register/?username='+data.username+'&email='+data.email+'&nonce='+nonce.nonce+'&display_name='+data.name+'&notify=both&user_pass='+data.password,{method: 'GET'});
+                wordpress = JSON.parse(result.body);
+                console.log(wordpress)
+                if(wordpress.status =='ok'){
+                    let api_rest = await Customer.create({idWordPress:wordpress.user_id, email:data.email});
+                    let orden = await conekta.Order.create(data.oxxo)
+                    await api_rest.update({idConekt:orden.customer_info.customer_id , active: true})
+                    res.json(orden)
+
+                }else{
+
+                }
+            }else{
+
+            }
+            
+          
         } catch (error) {
             console.log(error);
             res.status(500).json(error);
