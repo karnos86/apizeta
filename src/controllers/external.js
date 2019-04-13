@@ -42,13 +42,13 @@ module.exports={
         }
     },
     async hooksPaid(req, res){
-         let cancel, notification, subscrition;
+         let cancel, notification, subscrition,customer;
 
         try{
             switch (req.body.type) {
                 case 'order.created':
                     notification = req.body.data.object;
-                    var customer = await Customer.findOne({where:{idConekt:notification.customer_info.customer_id}})
+                    customer = await Customer.findOne({where:{idConekt:notification.customer_info.customer_id}})
                     subscrition = new Object()
                     subscrition["reference"] = notification.id
                     subscrition["method"] = "OXXO"
@@ -71,7 +71,9 @@ module.exports={
                     res.json({status:200, message:"operacion exitosa"})
                 break;
                 case 'order.paid':
-                    cancel = await Subscription.findAll({where:{idConekt:req.body.data.object.customer_info.customer_id}})
+                    notification = req.body.data.object;
+                    customer = await Customer.findOne({where:{idConekt:notification.customer_info.customer_id}})
+                    cancel = await Subscription.findAll({where:{idWordPress:customer.idWordPress}})
                     cancel.forEach( function(elemento, indice, array) {
                     if(elemento.status == 'active'){
                          expired = elemento;
