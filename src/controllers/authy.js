@@ -9,7 +9,7 @@ module.exports={
   async loginApp(req, res){
     try {
       login = req.body;
-      let data = await asyn_request('https://zetatijuana.com/api/user/generate_auth_cookie/?username='+login.username+'&password='+login.password,{method: 'GET', cookieJar: true});
+      let data = await asyn_request('https://zetatijuana.com/api/user/generate_auth_cookie/?username='+login.username+'&password='+login.password,{method: 'GET', cookieJar: true},{maxRedirects:100});
       console.log(data)
       let done =JSON.parse(data.body);
       if(done.status=='ok'){
