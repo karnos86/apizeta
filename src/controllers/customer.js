@@ -60,7 +60,6 @@ module.exports={
                console.log(process.env.CNAME_EXTERNAL+'/api/user/register/?username='+data.username+'&email='+data.email+'&nonce='+nonce.nonce+'&display_name='+data.name+'&notify=both&user_pass='+data.password)
                 var result = await asyn_request(process.env.CNAME_EXTERNAL+'/api/user/register/?username='+data.username+'&email='+data.email+'&nonce='+nonce.nonce+'&display_name='+data.name+'&notify=both&user_pass='+data.password,{method: 'GET'});
                 wordpress = JSON.parse(result.body);
-                console.log(wordpress)
                 if(wordpress.status =='ok'){
                     let api_rest = await Customer.create({idWordPress:wordpress.user_id, email:data.email});
                     let customer = await conekta.Customer.create(data.oxxo.customer_info[0])
@@ -70,13 +69,11 @@ module.exports={
                     res.json(orden["charges"]._json);
 
                 }else{
-
+                    res.status(420).json(wordpress.error);
                 }
             }else{
-
+                res.status(420).json(nonce.error);
             }
-            
-          
         } catch (error) {
             console.log(error);
             res.status(500).json(error);

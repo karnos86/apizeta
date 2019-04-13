@@ -8,38 +8,41 @@ const asyn_request = require('async-request');
 module.exports={
   async loginApp(req, res){
     try {
-        let data = req.body;
-        data["username"]=req.body.username.toLowerCase()
-        data["password"]=req.body.password.toLowerCase()
-        let customer = await Customer.findOne({include:[{all: true}], where:{username:data.username}});
-         if(customer){
-            const match = await bcrypt.compareSync(data.password, customer.password);
-            if(match){
-                let subscription = await validateSubscrition(customer.subcriptions) ;
-                if(subscription){
-                    let access = await Access.findOne({where:{uuii:data.UUII}});
-                    if(access != null){
-                        await access.update({'authorized':true, 'idConekt':customer.idConekt});
-                        res.json(true);
-                    }else{
-                        await Access.create({'uuii':data.UUII,'authorized':true, 'idConekt':customer.idConekt});
-                        res.json(true);
-                    }
-                    let listAccess = await Access.findAll({where:{idConekt:customer.idConekt}});
-                    for(let i in listAccess){
-                        if(listAccess[i].uuii != data.UUII){ 
-                            await listAccess[i].update({authorized:false});
-                        }
-                    }
-                  }else{
-                      res.status(401).json({message:'No tiene suscripcion activa'});
-                  }  
-            }else{
-               res.status(401).json({message:'Usuario y/o contraseña incorrectos'});
-            }
+      login = req.body;
+      let data = await asyn_request('https://zetatijuana.com/api/user/generate_auth_cookie/?username='+login.username+'&password='+login.password,{method: 'GET', cookieJar: true});
+      let done =JSON.parse(data.body);
+      if(done.status=='ok'){
+        let customer = await Customer.findOne({include:[{all: true}], where:{idWordPress: done.user.id}});
+        if(customer){
+           const match = await bcrypt.compareSync(data.password, customer.password);
+           let subscription = await validateSubscrition(customer.subcriptions) ;
+           if(subscription){
+               let access = await Access.findOne({where:{uuii:data.UUII}});
+               if(access != null){
+                   await access.update({'authorized':true, 'idConekt':customer.idConekt});
+                   res.json(true);
+               }else{
+                   await Access.create({'uuii':data.UUII,'authorized':true, 'idConekt':customer.idConekt});
+                   res.json(true);
+               }
+               let listAccess = await Access.findAll({where:{idConekt:customer.idConekt}});
+               for(let i in listAccess){
+                   if(listAccess[i].uuii != data.UUII){ 
+                       await listAccess[i].update({authorized:false});
+                   }
+               }
+             }else{
+                 res.status(401).json({message:'No tiene suscripcion activa'});
+             }  
         }else{
             res.status(401).json({message:'Usuario y/o contraseña incorrectos'});
-        }    
+        } 
+
+      }else{
+        res.status(402).json({message: done.message});
+      }
+
+           
     } catch (error) {
         res.status(500).json(error);
     }
