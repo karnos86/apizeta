@@ -78,35 +78,46 @@ module.exports={
                     res.json()
                     break;
                 case 'subscription.paid':
-                    cancel = await Subscription.findAll({where:{idConekt:req.body.data.object.customer_id}})
-                    cancel.forEach( function(elemento, indice, array) {
-                        if(elemento.status == 'active'){
-                            expired = elemento;
-                            expired.update({status:'expired'})
-                        }
-                        if(elemento.reference === req.body.data.object.id){
-                            elemento.update({status:req.body.data.object.status, start:req.body.data.object.billing_cycle_start, end:req.body.data.object.billing_cycle_end});
-                            res.json({status:200, message:"operacion exitosa"});
-                        }
-                    });
+                    // cancel = await Subscription.findAll({where:{idConekt:req.body.data.object.customer_id}})
+                    // cancel.forEach( function(elemento, indice, array) {
+                    //     if(elemento.status == 'active'){
+                    //         expired = elemento;
+                    //         expired.update({status:'expired'})
+                    //     }
+                    //     if(elemento.reference === req.body.data.object.id){
+                    //         elemento.update({status:req.body.data.object.status, start:req.body.data.object.billing_cycle_start, end:req.body.data.object.billing_cycle_end});
+                    //         res.json({status:200, message:"operacion exitosa"});
+                    //     }
+                    // });
 
-                    let subscriptionBack = new Object()
-                        subscriptionBack["reference"] = req.body.data.object.id
-                        subscriptionBack["method"] = "TDC"
-                        subscriptionBack["subscription"] = req.body.data.object.plan_id
-                        subscriptionBack["start"] =  req.body.data.object.billing_cycle_start
-                        subscriptionBack["end"] = req.body.data.object.billing_cycle_end
-                        subscriptionBack["paid"] =true 
-                        subscriptionBack["status"] =req.body.data.object.status 
-                        subscriptionBack["idConekt"] =req.body.data.object.customer_id 
+                    // let subscriptionBack = new Object()
+                    //     subscriptionBack["reference"] = req.body.data.object.id
+                    //     subscriptionBack["method"] = "TDC"
+                    //     subscriptionBack["subscription"] = req.body.data.object.plan_id
+                    //     subscriptionBack["start"] =  req.body.data.object.billing_cycle_start
+                    //     subscriptionBack["end"] = req.body.data.object.billing_cycle_end
+                    //     subscriptionBack["paid"] =true 
+                    //     subscriptionBack["status"] =req.body.data.object.status 
+                    //     subscriptionBack["idConekt"] =req.body.data.object.customer_id 
 
-                    await Subscription.create(subscriptionBack);
+                    // await Subscription.create(subscriptionBack);
+                    notificacion = req.body.data.object;
+                    var renovate = await Subscription.findById(notification.id)
+                    let subscrition = new Object()
+                    subscrition["start"]    = notificacion.billing_cycle_start
+                    subscrition["end"]      = notificacion.billing_cycle_end
+                    subscrition["paid"]     = true 
+                    subscrition["status"]   = notificacion.status
+
+                    renovate.update(subscrition);
+
                     res.json({status:200, message:"operacion exitosa"});
 
                     break;
                 case 'subscription.created':
                     notification = req.body.data.object;
                     var customer = await Customer.findOne({where:{idConekt:notification.customer_id}})
+                    console.log(customer)
                     let subscrition = new Object()
                     subscrition["reference"] = notification.id
                     subscrition["method"] = "TDC"
