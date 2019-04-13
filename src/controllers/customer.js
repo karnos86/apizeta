@@ -63,9 +63,11 @@ module.exports={
                 console.log(wordpress)
                 if(wordpress.status =='ok'){
                     let api_rest = await Customer.create({idWordPress:wordpress.user_id, email:data.email});
+                    let customer = await conekta.Customer.create(data.oxo.customer_info[0])
+                    await api_rest.update({idConekt: customer._id , active: true});
+                    data.oxo["customer_info"] = {customer_id:customer._id};
                     let orden = await conekta.Order.create(data.oxxo)
-                    await api_rest.update({idConekt:orden.customer_info.customer_id , active: true})
-                    res.json(orden)
+                    res.json(orden["charges"]._json);
 
                 }else{
 
