@@ -16,15 +16,15 @@ module.exports={
         if(customer){
            let subscription = await validateSubscrition(customer.subcriptions) ;
            if(subscription){
-               let access = await Access.findOne({where:{uuii:data.UUII}});
+               let access = await Access.findOne({where:{uuii:login.UUII}});
                if(access != null){
-                   await access.update({'authorized':true, 'idConekt':customer.idConekt});
+                   await access.update({'authorized':true, 'idWordPress':customer.idWordPress});
                    res.json(true);
                }else{
-                   await Access.create({'uuii':data.UUII,'authorized':true, 'idConekt':customer.idConekt});
+                   await Access.create({'uuii':data.UUII,'authorized':true, 'idWordPress':customer.idWordPress});
                    res.json(true);
                }
-               let listAccess = await Access.findAll({where:{idConekt:customer.idConekt}});
+               let listAccess = await Access.findAll({where:{idWordPress:customer.idWordPress}});
                for(let i in listAccess){
                    if(listAccess[i].uuii != data.UUII){ 
                        await listAccess[i].update({authorized:false});
