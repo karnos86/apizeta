@@ -46,6 +46,20 @@ module.exports={
 
         try{
             switch (req.body.type) {
+                case 'order.created':
+                    notification = req.body.data.object;
+                    var customer = await Customer.findOne({where:{idConekt:notification.customer_id}})
+                    subscrition = new Object()
+                    subscrition["reference"] = notification.id
+                    subscrition["method"] = "OXXO"
+                    subscrition["subscription"] = notification.line_items.data[0].name
+                    // subscrition["status"] =notification.status 
+                    subscrition["paid"] =false
+                    subscrition["idWordPress"] =customer.idWordPress;
+                    await Subscription.create(subscrition);
+                    res.json({status:200, message:"operacion exitosa"});
+
+                    break;
                 case 'order.pending_payment':
                     let data = new Object();
                     data["reference"] = req.body.data.object.id
