@@ -23,7 +23,7 @@ const db = require('../../bin/database');
     active:{
       type: Sequelize.BOOLEAN,
       allowNull: false, 
-      defaultValue: false
+      defaultValue: true
     }
   });
 

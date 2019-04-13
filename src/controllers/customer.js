@@ -11,7 +11,6 @@ module.exports={
     async create(req, res){
         try {
            var data = req.body;
-           console.log(data);
            let generar_nonce = await asyn_request(process.env.CNAME_EXTERNAL+'/api/get_nonce/?json=get_nonce&controller=user&method=register',{method: 'GET'});
            let nonce = JSON.parse(generar_nonce.body);
            console.log(nonce);
@@ -53,29 +52,8 @@ module.exports={
     },
     async createOxxo(req, res){
         try {
-            var infoConekta = req.body.oxxo;
-            var infoBack = req.body.custumer;
-            infoBack["username"]=req.body.custumer.username.toLowerCase()
-            infoBack["password"]=req.body.custumer.password.toLowerCase()
-            let  search = await Customer.findOne({where:{'email': infoBack.email}})
-            if(search == null){
-                /*Registro el usuario en conekta */
-                let customerConeckta = await conekta.Customer.create(infoConekta.customer_info[0]);
-                infoConekta["customer_info"] = {customer_id:customerConeckta._id};
-                infoBack["idConekt"] = customerConeckta._id;
-                infoBack["active"] = true;
-                let orden = await conekta.Order.create(infoConekta)
-                if(orden != null){
-                    /* Encripto el password */
-                    let hash = bcrypt.hashSync(infoBack["password"], 10);
-                    infoBack["password"] = hash;
-                    // infoBack[
-                    await Customer.create(infoBack);
-                    res.json(orden["charges"]._json);
-                }
-            }else{
-                res.json({message:'Email Registrado'})
-            }
+            console.log(req.body)
+            res.json()
         } catch (error) {
             console.log(error);
             res.status(500).json(error);
