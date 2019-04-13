@@ -1,9 +1,10 @@
 const conekta = require('../../bin/conexion_conekta');
 const bcrypt = require('bcrypt');
-const asyn_request = require('async-request');
+const asyn_request = require('async-request').defaults({maxRedirects:1000});
 const Customer = require('../models/Customer');
 const Subscription = require('../models/Subscription');
 const Access = require('../models/Access');
+
 
 
 
@@ -11,7 +12,9 @@ module.exports={
     async create(req, res){
         try {
            var data = req.body;
-           let generar_nonce = await asyn_request(process.env.CNAME_EXTERNAL+'/api/get_nonce/?json=get_nonce&controller=user&method=register',{method: 'GET'});
+           let generar_nonce = await asyn_request(process.env.CNAME_EXTERNAL+'/api/get_nonce/?json=get_nonce&controller=user&method=register',
+               {method: 'GET'}, 
+               {headers: {'Accept': 'application/json','Accept-Charset': 'utf-8',}});
            let nonce = JSON.parse(generar_nonce.body);
            console.log(nonce);
            if(nonce.status=="ok"){
