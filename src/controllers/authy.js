@@ -14,7 +14,6 @@ module.exports={
       if(done.status=='ok'){
         let customer = await Customer.findOne({include:[{all: true}], where:{idWordPress: done.user.id}});
         if(customer){
-           const match = await bcrypt.compareSync(data.password, customer.password);
            let subscription = await validateSubscrition(customer.subcriptions) ;
            if(subscription){
                let access = await Access.findOne({where:{uuii:data.UUII}});
