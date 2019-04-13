@@ -62,7 +62,7 @@ module.exports={
                     break;
                 case 'order.pending_payment':
                     notification = req.body.data.object;
-                    var renovate = await Subscription.findById(notification.id);
+                    renovate = await Subscription.findById(notification.id);
                     subscrition = new Object()
                     subscrition["start"]=notification.created_at
                     subscrition["end"]= await CalculeTimeSubcription(notification.line_items.data[0].name, notification.created_at)
