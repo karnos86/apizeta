@@ -48,7 +48,7 @@ module.exports={
             switch (req.body.type) {
                 case 'order.created':
                     notification = req.body.data.object;
-                    var customer = await Customer.findOne({where:{idConekt:notification.customer_id}})
+                    var customer = await Customer.findOne({where:{idConekt:notification.customer_info.customer_id}})
                     subscrition = new Object()
                     subscrition["reference"] = notification.id
                     subscrition["method"] = "OXXO"
