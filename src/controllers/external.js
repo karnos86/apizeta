@@ -61,15 +61,13 @@ module.exports={
 
                     break;
                 case 'order.pending_payment':
-                    let data = new Object();
-                    data["reference"] = req.body.data.object.id
-                    data["method"]='OXXO'
-                    data["subscription"]=req.body.data.object.line_items.data[0].name
-                    data["start"]=req.body.data.object.created_at
-                    data["end"]= await CalculeTimeSubcription(req.body.data.object.line_items.data[0].name, req.body.data.object.created_at)
-                    data["status"]='pending_payment'
-                    data["idConekt"]= req.body.data.object.customer_info.customer_id
-                    await Subscription.create(data);
+                    notification = req.body.data.object;
+                    var renovate = await Subscription.findById(notification.id);
+                    subscrition = new Object()
+                    subscrition["start"]=notification.created_at
+                    subscrition["end"]= await CalculeTimeSubcription(notification.line_items.data[0].name, notification.created_at)
+                    subscrition["status"]='pending_payment'
+                    await renovate.update(data);
                     res.json({status:200, message:"operacion exitosa"})
                 break;
                 case 'order.paid':
