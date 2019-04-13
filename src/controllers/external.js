@@ -42,7 +42,7 @@ module.exports={
         }
     },
     async hooksPaid(req, res){
-         let cancel, notification, subscrition,customer;
+         let cancel, notification, subscrition, customer, renovate;
 
         try{
             switch (req.body.type) {
@@ -92,7 +92,7 @@ module.exports={
                     break;
                 case 'subscription.created':
                     notification = req.body.data.object;
-                    var customer = await Customer.findOne({where:{idConekt:notification.customer_id}})
+                    customer = await Customer.findOne({where:{idConekt:notification.customer_id}})
                     subscrition = new Object()
                     subscrition["reference"] = notification.id
                     subscrition["method"] = "TDC"
@@ -105,7 +105,7 @@ module.exports={
                     break
                 case 'subscription.payment_failed':
                     notification = req.body.data.object;
-                    var renovate = await Subscription.findById(notification.id);
+                    renovate = await Subscription.findById(notification.id);
                     subscrition = new Object()
                     subscrition["end"]      = notification.billing_cycle_end
                     subscrition["status"]   = notification.status
@@ -115,7 +115,7 @@ module.exports={
                     break;
                 case 'subscription.paid':
                     notification = req.body.data.object;
-                    var renovate = await Subscription.findById(notification.id);
+                    renovate = await Subscription.findById(notification.id);
                     subscrition = new Object()
                     subscrition["start"]    = notification.billing_cycle_start
                     subscrition["end"]      = notification.billing_cycle_end
