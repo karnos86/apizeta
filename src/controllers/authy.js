@@ -15,6 +15,7 @@ module.exports={
       if(done.status=='ok'){
         console.log(done.user.id)
         let customer = await Customer.findOne({include:[{all: true}], where:{idWordPress: done.user.id}});
+        console.log(customer)
         if(customer){
            let subscription = await validateSubscrition(customer.subcriptions) ;
            console.log(subscription)
