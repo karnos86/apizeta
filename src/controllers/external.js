@@ -111,11 +111,11 @@ module.exports={
                     subscrition["reference"] = notification.id
                     subscrition["method"] = "TDC"
                     subscrition["subscription"] = notification.plan_id
+                    subscrition["status"] =notification.status 
+                    subscrition["paid"] =false
 
-                    await Subscription.create();
+                    await Subscription.create(subscrition);
                     res.json({status:200, message:"operacion exitosa"});
-
-
                     break
                 default:
                     res.json({status:200, message:"operacion no tomada en cuenta"})
