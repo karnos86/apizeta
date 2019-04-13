@@ -9,12 +9,15 @@ module.exports={
   async loginApp(req, res){
     try {
       login = req.body;
+      console.log(login)
       let data = await asyn_request('https://zetatijuana.com/api/user/generate_auth_cookie/?username='+login.username+'&password='+login.password,{method: 'GET', cookieJar: true});
       let done =JSON.parse(data.body);
       if(done.status=='ok'){
+        console.log(done.user.id)
         let customer = await Customer.findOne({include:[{all: true}], where:{idWordPress: done.user.id}});
         if(customer){
            let subscription = await validateSubscrition(customer.subcriptions) ;
+           console.log(subscription)
            if(subscription){
                let access = await Access.findOne({where:{uuii:login.UUII}});
                if(access != null){
