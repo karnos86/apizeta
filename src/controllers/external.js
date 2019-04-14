@@ -126,7 +126,7 @@ module.exports={
                     break;
                 
                 default:
-                    res.status(404).json({status:404, message:"operacion no tomada en cuenta"})
+                    res.status(404).json({status:201, message:"operacion no tomada en cuenta"})
                     break;
             }
         }catch(error){
