@@ -37,7 +37,7 @@ module.exports={
         }else{
           let conekt = await conekta.Customer.create({name:done.user.nicename, email:done.user.email});
           console.log(done.user.id)
-          await Customer.create({idWordPress: done.user.id, idConekt: conekt.id, email:customer.user.email});
+          await Customer.create({idWordPress: done.user.id, idConekt: conekt.id, email:done.user.email});
           res.status(402).json({message:'Usuario y/o contraseña incorrectos'});
         } 
 
