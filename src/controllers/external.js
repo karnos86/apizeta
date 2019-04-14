@@ -48,14 +48,14 @@ module.exports={
             switch (req.body.type) {
                 case 'order.created':
                     notification = req.body.data.object;
-                    // customer = await Customer.findOne({where:{idConekt:notification.customer_info.customer_id}})
+                    customer = await Customer.findOne({where:{idConekt:notification.customer_info.customer_id}})
                     subscrition = new Object()
                     subscrition["reference"] = notification.id
                     subscrition["method"] = "OXXO"
                     subscrition["subscription"] = notification.line_items.data[0].name
                     // subscrition["status"] =notification.status 
                     subscrition["paid"] =false
-                    subscrition["idConekt"] =customer.idWordPress;
+                    subscrition["idWordPress"] =customer.idWordPress;
                     await Subscription.create(subscrition);
                     res.json({status:200, message:"operacion exitosa"});
 
@@ -99,7 +99,7 @@ module.exports={
                     subscrition["subscription"] = notification.plan_id
                     subscrition["status"] =notification.status 
                     subscrition["paid"] =false
-                    subscrition["idConekt"] =notification.customer_id;
+                    subscrition["idWordPress"] =customer.idWordPress;
                     await Subscription.create(subscrition);
                     res.json({status:200, message:"operacion exitosa"});
                     break
