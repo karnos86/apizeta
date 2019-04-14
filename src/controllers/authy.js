@@ -35,7 +35,7 @@ module.exports={
                 res.status(402).json({message:'No tiene suscripcion activa'});
              }  
         }else{
-          let conekt = await conekta.Customer.create({name:customer.user.nicename, email:customer.user.email});
+          let conekt = await conekta.Customer.create({name:done.user.nicename, email:done.user.email});
           await Customer.create({idWordPress: customer.idWordPress, idConekt: conekt.id, email:customer.user.email});
           res.status(402).json({message:'Usuario y/o contraseña incorrectos'});
         } 
