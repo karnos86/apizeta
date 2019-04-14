@@ -125,7 +125,7 @@ module.exports={
                     res.json({status:200, message:"operacion exitosa"});
                     break;
                 default:
-                     res.status(201)//.json({status:201, message:"operacion no tomada en cuenta"})
+                     res.json({status:200, message:"operacion no tomada en cuenta"})
                     break;
             }
         }catch(error){
