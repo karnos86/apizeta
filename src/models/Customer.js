@@ -4,13 +4,13 @@ const db = require('../../bin/database');
     
 
   const Customer= db.define('customer', {
-    idWordPress:{
+    idConekt:{
       type: Sequelize.INTEGER,
       primaryKey: true,
       allowNull: true,
       unique: 'compositeIndex'
     },
-    idConekt:{
+    idWordPress:{
       type: Sequelize.STRING,
       allowNull: true,
       unique: 'compositeIndex'
