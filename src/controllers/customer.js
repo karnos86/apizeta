@@ -33,7 +33,7 @@ module.exports={
                         payment_sources: data.payment_sources
                     });
                     await api_rest.update({idConekt:customer_Conekta._id , active: true})
-                    res.json(customer_Conekta._json);
+                    res.json(customer_Conekta.subscription);
                 }else{
                     res.status(400).json(wordpress)
                 }
