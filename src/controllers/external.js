@@ -109,7 +109,7 @@ module.exports={
                     subscrition = new Object()
                     subscrition["end"]      = notification.billing_cycle_end
                     subscrition["status"]   = notification.status
-                    renovate.update(subscrition);
+                    await renovate.update(subscrition);
                     res.json({status:200, message:"operacion exitosa"});
 
                     break;
@@ -121,10 +121,9 @@ module.exports={
                     subscrition["end"]      = notification.billing_cycle_end
                     subscrition["paid"]     = true 
                     subscrition["status"]   = notification.status
-                    renovate.update(subscrition);
+                    await renovate.update(subscrition);
                     res.json({status:200, message:"operacion exitosa"});
                     break;
-                
                 default:
                      res.status(201)//.json({status:201, message:"operacion no tomada en cuenta"})
                     break;
