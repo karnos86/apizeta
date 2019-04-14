@@ -32,13 +32,13 @@ module.exports={
                    }
                }
              }else{
-                res.status(402).json({message:'No tiene suscripcion activa'});
+                res.status(402).json({message:'No tiene suscripcion activa', idConekt:customer.idConekt});
              }  
         }else{
           let conekt = await conekta.Customer.create({name:done.user.nicename, email:done.user.email});
           console.log(done.user.id)
           await Customer.create({idWordPress: done.user.id, idConekt: conekt.id, email:done.user.email});
-          res.status(402).json({message:'Usuario y/o contraseña incorrectos'});
+          res.status(402).json({message:'No tiene suscripcion activa', idConekt:conekt.id});
         } 
 
       }else{
