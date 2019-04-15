@@ -42,7 +42,7 @@ module.exports={
         } 
 
       }else{
-        res.status(401).json({message:done.error});
+        res.status(401).json({message:"Usuario y/o contraseña incorrectos"});
       }
 
            
