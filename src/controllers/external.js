@@ -105,24 +105,33 @@ module.exports={
                     break
                 case 'subscription.payment_failed':
                     notification = req.body.data.object;
-                    renovate = await Subscription.findById(notification.id);
+                    var payment_failed = await Subscription.findById(notification.id);
                     subscrition = new Object()
                     subscrition["end"]      = notification.billing_cycle_end
                     subscrition["status"]   = notification.status
-                    await renovate.update(subscrition);
+                    await payment_failed.update(subscrition);
                     res.json({status:200, message:"operacion exitosa"});
 
                     break;
                 case 'subscription.paid':
                     notification = req.body.data.object;
-                    renovate = await Subscription.findById(notification.id);
+                    var paid = await Subscription.findById(notification.id);
                     subscrition = new Object()
                     subscrition["start"]    = notification.billing_cycle_start
                     subscrition["end"]      = notification.billing_cycle_end
                     subscrition["paid"]     = true 
                     subscrition["status"]   = notification.status
-                    await renovate.update(subscrition);
+                    await paid.update(subscrition);
                     res.json({status:200, message:"operacion exitosa"});
+                    break;
+                case 'subscription.canceled':
+                    notification = req.body.data.object;
+                    var canceled = await Subscription.findById(notification.id);
+                    subscrition = new Object()
+                     subscrition["end"]      = notification.billing_cycle_end
+                    subscrition["status"]   = notification.status
+                    await canceled.update(subscrition);
+
                     break;
                 default:
                      res.json({status:200, message:"operacion no tomada en cuenta"})
