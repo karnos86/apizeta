@@ -83,15 +83,19 @@ module.exports={
         }
     },
     async personalOxxo(req, res){
-       let data = req.body;
-       console.log(data)
-       res.json(data)
-       // let orden = await conekta.Order.create(data.oxxo)
-       // // let conekt = await conekta.Customer.create({name:done.user.nicename, email:done.user.email});
-       // // console.log(done.user.id)
-       // // await Customer.create({idWordPress: done.user.id, idConekt: conekt.id, email:done.user.email});
-       // res.json(orden["charges"]._json);
+        try{
+           let data = req.body;
+           let conekt = await conekta.Customer.create(data.customer_info[0]);
+           await Customer.create({idWordPress: data.wordpress, idConekt: conekt.id, email:data.customer_info[0].email});
+           data["customer_info"] = {customer_id: conekt._id};
+           delete data["wordpress"];
+           let orden = await conekta.Order.create(data);
+           res.json(orden["charges"]._json);
 
+        }catch(error){
+            console.log(error)
+            res.status(500).json(error)
+        }
     },
     async ckeckUsename(req, res){
        try {
