@@ -84,13 +84,35 @@
 						</div>
 					</td>
 					<td>
-  						<button class="is-small is-danger button" v-on:click="removeNewspaper(newspaper.code, index)"  v-bind:class="{'is-loading': delSemanario == index }"> Eliminar</button>
+  						<button class="is-small is-danger button" v-on:click="show(newspaper.code, index)"  v-bind:class="{'is-loading': delSemanario == index }"> Eliminar</button>
 					</td>
 				</tr>
 			</tbody>
 		</table>	
 	</div>
-		
+		<modal name="dialog">
+			<div class="notification">
+				<button class="delete" v-on:click="close()"></button> 
+				<div class="columns">
+					<div class="column 	is-12 ">
+  						<span class="is-6"> Debes escibir la palabra <b> ELIMINAR </b> para continuar con el procedimiento</span>		
+					</div>
+				</div>
+				<div class="columns">
+					<div class="column 	is-10 is-offset-1">
+                    	<input class="input" type="text" placeholder="Escriba la palabra ELIMINAR " v-model="confirmar" >
+                  	</div>
+				</div>
+				<div class="columns">
+					<div class="column 	is-2 is-offset-4">
+                    	<button class="is-danger button" v-on:click="close()"> Cancelar</button>
+                  	</div>
+                  	<div class="column 	is-2">
+                    	<button class="is-info button" v-on:click="removeNewspaper(semanario, posicion)" :disabled="confirmar !='ELIMINAR'" v-bind:class="{'is-loading': delSemanario == posicion }"> Acceptar</button>
+                  	</div>
+				</div>
+			</div>
+		</modal>
 	</div>
 	
 </template>
@@ -110,6 +132,10 @@
 				upFront:null,
 				upDocument:null,
 				delSemanario:null,
+				confirmar:null,
+				senamario:null,
+				posicion:null,
+
 			}
 		},
 		created: function(){
@@ -147,9 +173,13 @@
   				}
 				axios.get(url+'/remove/edition/'+id, config)
 				.then((done)=>{
+					this.semanario =null;
+					this.posicion=null;
 					this.delSemanario=null;
+					this.confirmar = null;
 					this.$toastr.success('Operacion exitosa', 'Se eliminio semanario con exito!');
 					this.indexNews();
+					this.$modal.hide('dialog');
 				})
 				.catch((error)=>{
 					this.$toastr.error('Upss...', 'Problemas para eliminar semanario');
@@ -204,7 +234,6 @@
             },
             uploadSemanario(code, i){
             	this.upDocument=i;
- 
             	let formData = new FormData();
             	formData.append('file', this.document[i]);
             	axios.post(url+'/uploadFile/'+code,formData, {headers:{'Content-Type': 'multipart/form-data', 'Authorization': 'Bearer ' + localStorage.cookie}})
@@ -212,14 +241,12 @@
             		this.upDocument=null;
             		this.indexNews()
  					this.$toastr.success('Operacion exitosa', 'Se cargo archivo con exito!');
- 					this.resetSemanario()
- 					
-
+ 					this.resetSemanario();
 				})
 				.catch((error)=>{
 					this.upDocument=null;
 				 	this.$toastr.error('Upss...', 'Problemas para cargar archivo');
-				 	this.resetSemanario()
+				 	this.resetSemanario();
 				});
             },
             resetSemanario(i){
@@ -260,7 +287,15 @@
             		console.log(error)
             		this.$toastr.error('Upss...', 'Problemas para eliminar archivo');
             	})	
-            }
+            },
+            show(id, index){
+            	this.semanario =id;
+            	this.posicion = index
+				this.$modal.show('dialog');
+			},
+			close(){
+				this.$modal.hide('dialog');
+			}
 		}
 	};
 </script>
@@ -284,6 +319,9 @@
 	}
 	.is-width{
 		width: 15rem;
+	}
+	.notification{
+		background: #fff !important;
 	}
 	
 </style>

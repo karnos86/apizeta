@@ -57,6 +57,7 @@ export default{
         }
       }; 
       let data = {code:this.codigo, date:this.fecha};
+      console.log(url+'/create/edition')
       axios.post(url+'/create/edition', data, config)
       .then((done)=>{
         this.create=false;

@@ -50,10 +50,11 @@ router.post('/api/notification/conekta', ctrl.external.hooksPaid);
 * Crud de edicciones
 */
 // web
-router.post('/create/edition', ctrl.authy.validateCookieWorpress, ctrl.newspaper.createNewspaper);
-router.get('/list/edition', ctrl.authy.validateCookieWorpress,  ctrl.newspaper.indexAll);
-router.get('/remove/edition/:code', ctrl.authy.validateCookieWorpress, ctrl.newspaper.deleteNewspaper);
-router.get('/remove/front/:code', ctrl.authy.validateCookieWorpress, ctrl.newspaper.deleteFront)
+// ctrl.authy.validateCookieWorpress
+router.post('/create/edition', ctrl.authy.validateCookieWorpress,  ctrl.newspaper.createNewspaper);
+router.get('/list/edition', ctrl.authy.validateCookieWorpress, ctrl.newspaper.indexAll);
+router.get('/remove/edition/:code', ctrl.authy.validateCookieWorpress,  ctrl.newspaper.deleteNewspaper);
+router.get('/remove/front/:code',ctrl.authy.validateCookieWorpress,  ctrl.newspaper.deleteFront)
 router.get('/remove/document/:code', ctrl.authy.validateCookieWorpress, ctrl.newspaper.deleteDocument)
 
 

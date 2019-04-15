@@ -65,6 +65,7 @@ import bus from '../bus.js'
           }
       	})
       	.catch((err)=>{
+          localStorage.cookie='asdnasdu32423eygqwdbas'
           this.$toastr.error('Upps !', err.message);
           console.log(err);
       		this.message =err.message;
