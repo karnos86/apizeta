@@ -85,6 +85,9 @@ module.exports={
     async personalOxxo(req, res){
        let data = req.body;
        let orden = await conekta.Order.create(data.oxxo)
+       // let conekt = await conekta.Customer.create({name:done.user.nicename, email:done.user.email});
+       // console.log(done.user.id)
+       // await Customer.create({idWordPress: done.user.id, idConekt: conekt.id, email:done.user.email});
        res.json(orden["charges"]._json);
 
     },

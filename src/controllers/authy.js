@@ -37,10 +37,7 @@ module.exports={
                 res.status(402).json({message:'Suscripción no debitada! Seleccione un metodo de pago', idConekt:customer.idConekt});
              }  
         }else{
-          let conekt = await conekta.Customer.create({name:done.user.nicename, email:done.user.email});
-          console.log(done.user.id)
-          await Customer.create({idWordPress: done.user.id, idConekt: conekt.id, email:done.user.email});
-          res.status(404).json({message:'No tiene subscripción, seleccione una!', idConekt:customer.idConekt});
+          res.status(404).json({message:'No tiene subscripción, seleccione una!', idWordPress:done.user});
         } 
 
       }else{
