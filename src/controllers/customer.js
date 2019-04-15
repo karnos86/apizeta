@@ -237,6 +237,34 @@ module.exports={
             res.status(500).json(error)
         }
     },
+    async changeOxxo(req, res){
+        try{
+            let data = req.body
+            let customer = await conekta.Customer.find(data.customer_id) 
+            if(Object.keys(data).length != 0){
+                await customer.subscription.cancel()
+                await customer.payment_sources.get(0).delete()
+            }
+            let api_rest = await Customer.findOne({where:{idConekt:data.customer_id}});
+            let subscription = await Subscription.find({where:{idWordPress:api_rest.idWordPress}});
+            let plan = await conekta.Plan.find(subscription.subscription);
+            let customer = await conekta.Customer.find(data.customer_id)
+            let oxxo = new Object();
+            oxxo["customer_info"] = {"customer_id":data.customer_id}
+            oxxo["line_items"] = [{
+                "name": plan._id,
+                "unit_price": plan._json.amount,
+                "quantity": 1
+            }]
+            oxxo["currency"] =  plan._json.currency
+            oxxo["charges"] = [{"payment_method": {"type": "oxxo_cash"}}]
+            let orden = await conekta.Order.create(oxxo)
+            res.json(orden["charges"]._json);
+        }catch(error){
+            console.log(error)
+            res.status(500).json(error)
+        }
+    },
     async indexSubscription(req, res){
         try{
             let index = await Subscription.findAll({include:[{all: true}], where:{status:'active'}})
