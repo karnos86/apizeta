@@ -42,7 +42,7 @@ module.exports={
         } 
 
       }else{
-        res.status(401).json("usuario y/o clave invalido");
+        res.status(401).json({message:done.error});
       }
 
            
