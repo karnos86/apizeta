@@ -224,6 +224,14 @@ module.exports={
             }
         }
     }, 
+    async changeTdc(req, res){
+        try{
+            console.log(req.body)
+
+        }catch(error){
+
+        }
+    },
     async indexSubscription(req, res){
         try{
             let index = await Subscription.findAll({include:[{all: true}], where:{status:'active'}})
