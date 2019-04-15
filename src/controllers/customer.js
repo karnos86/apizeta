@@ -53,6 +53,30 @@ module.exports={
             
         }
     },
+    async personalTdc(req, res){
+        try{
+            let data = req.body;
+            console.log(data);
+            res.json(data)
+            // let api_rest = await Customer.create({idWordPress:wordpress.user_id, email:data.email});
+            //         console.log(api_rest)
+            //         var customer_Conekta =  await conekta.Customer.create({
+            //             name: data.name,
+            //             email: data.email,
+            //             phone: '+52'+data.phone,
+            //             plan_id: data.plan,
+            //             payment_sources: data.payment_sources
+            //         });
+            //         await api_rest.update({idConekt:customer_Conekta._id , active: true})
+            //         res.json(customer_Conekta.subscription._json);
+
+
+
+        }catch(error){
+            console.log(error)
+            res.status(500).json(error)
+        }
+    },
     async createOxxo(req, res){
         try {
             var data = req.body
