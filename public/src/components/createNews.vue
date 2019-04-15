@@ -57,7 +57,6 @@ export default{
         }
       }; 
       let data = {code:this.codigo, date:this.fecha};
-      console.log(url+'/create/edition')
       axios.post(url+'/create/edition', data, config)
       .then((done)=>{
         this.create=false;
@@ -65,9 +64,9 @@ export default{
         this.refresh()
       })
       .catch((error)=>{
+        console.log(error)
         this.create=false;
         this.$toastr.error('Upss...!', 'Problemas al crear semanario');
-        console.log(error)
       })
     },
     refresh() {
