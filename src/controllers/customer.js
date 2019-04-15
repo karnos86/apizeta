@@ -114,7 +114,7 @@ module.exports={
             let customer = await conekta.Customer.find(api_rest.idConekt);  
             let info = new Object();
             if(customer.payment_sources==null){
-                let oxxo = await Subscription.find({where:{idConekt: api_rest.idConekt, status:'active'}});
+                let oxxo = await Subscription.find({where:{idWordPress:result.idWordPress, status:'active'}});
                 info["method"]=oxxo.method
                 info["subscription"]=oxxo.subscription
                 info["end"]=oxxo.end
