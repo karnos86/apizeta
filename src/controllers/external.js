@@ -131,6 +131,7 @@ module.exports={
                      subscrition["end"]      = notification.billing_cycle_end
                     subscrition["status"]   = notification.status
                     await canceled.update(subscrition);
+                    res.json({status:200, message:"operacion exitosa"});
 
                     break;
                 default:
