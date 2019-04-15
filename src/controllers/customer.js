@@ -198,23 +198,9 @@ module.exports={
             let api_rest = await Customer.findOne({where:{idWordPress:result.idWordPress}})
             let subscription = await Subscription.find({where:{idWordPress:result.idWordPress}});
             let customer =  await conekta.Customer.find(api_rest.idConekt);
-
             await customer.createPaymentSource({ type: "card", token_id: req.body.token })
-
-            let subscriptionConeckt = await customer.createSubscription({plan:subscription.subscription});
-                switch (subscriptionConeckt.status) {
-                    case "active":
-                        subscriptionConeckt["hide"]=true;
-                        res.json(subscriptionConeckt);
-                        break;
-                    case "past_due":
-                        let result = await customer.payment_sources.get(0).delete();
-                        res.staus(422).json({message:"Pago no realizado, problemas con su TDC"});
-                        break;
-                    case "in_trial":
-                        break;
-                }
-            res.json(respuesta)
+            let subscriptionConeckt = await customer.createSubscription({plan:subscription.subscription});  
+            res.json(subscriptionConeckt);      
         }catch(error){
             console.log(error)
             switch (error.http_code) {
