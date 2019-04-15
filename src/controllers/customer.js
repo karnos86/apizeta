@@ -248,7 +248,6 @@ module.exports={
             let api_rest = await Customer.findOne({where:{idConekt:data.customer_id}});
             let subscription = await Subscription.find({where:{idWordPress:api_rest.idWordPress}});
             let plan = await conekta.Plan.find(subscription.subscription);
-            let customer = await conekta.Customer.find(data.customer_id)
             let oxxo = new Object();
             oxxo["customer_info"] = {"customer_id":data.customer_id}
             oxxo["line_items"] = [{
