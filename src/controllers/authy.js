@@ -38,7 +38,7 @@ module.exports={
           let conekt = await conekta.Customer.create({name:done.user.nicename, email:done.user.email});
           console.log(done.user.id)
           await Customer.create({idWordPress: done.user.id, idConekt: conekt.id, email:done.user.email});
-          res.status(402).json({message:'No tiene suscripcion activa', idConekt:conekt.id});
+          res.status(402).json({message:'Suscripción no debitada!', idConekt:conekt.id});
         } 
 
       }else{
