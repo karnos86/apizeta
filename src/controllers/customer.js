@@ -110,10 +110,11 @@ module.exports={
         try{
             let data = req.headers["authorization"].split(" ");
             let result = await Access.findOne({where:{uuii:data[1]}})
-            let customer = await conekta.Customer.find(result.idConekt);  
+            let api_rest = await Customer.findOne({where:{idWordPress:result.idWordPress}})
+            let customer = await conekta.Customer.find(api_rest.idConekt);  
             let info = new Object();
             if(customer.payment_sources==null){
-                let oxxo = await Subscription.find({where:{idConekt: result.idConekt, status:'active'}});
+                let oxxo = await Subscription.find({where:{idConekt: api_rest.idConekt, status:'active'}});
                 info["method"]=oxxo.method
                 info["subscription"]=oxxo.subscription
                 info["end"]=oxxo.end
