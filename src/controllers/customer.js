@@ -33,7 +33,7 @@ module.exports={
                         payment_sources: data.payment_sources
                     });
                     await api_rest.update({idConekt:customer_Conekta._id , active: true})
-                    res.json(customer_Conekta.subscription);
+                    res.json(customer_Conekta.subscription._json);
                 }else{
                     res.status(400).json(wordpress)
                 }
@@ -226,10 +226,15 @@ module.exports={
     }, 
     async changeTdc(req, res){
         try{
-            console.log(req.body)
-
+            let data = req.body
+            let customer =  await conekta.Customer.find(data.customer_id);
+            await customer.payment_sources.get(0).delete()
+            await customer.createPaymentSource({ type: "card", token_id: data.token})
+            let susbscrition = await customer.createSubscription({plan: customer._json.subscription.plan_id});
+            res.json(susbscrition)
         }catch(error){
-
+            console.log(error)
+            res.status(500).json(error)
         }
     },
     async indexSubscription(req, res){
