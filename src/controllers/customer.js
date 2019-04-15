@@ -82,6 +82,12 @@ module.exports={
             res.status(500).json(error);
         }
     },
+    async personalOxxo(req, res){
+       let data = req.body;
+       let orden = await conekta.Order.create(data.oxxo)
+       res.json(orden["charges"]._json);
+
+    },
     async ckeckUsename(req, res){
        try {
            let result = await Customer.find({attributes: ['username'],where:{'username':req.body.username}});

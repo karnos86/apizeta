@@ -40,7 +40,7 @@ module.exports={
           let conekt = await conekta.Customer.create({name:done.user.nicename, email:done.user.email});
           console.log(done.user.id)
           await Customer.create({idWordPress: done.user.id, idConekt: conekt.id, email:done.user.email});
-          res.status(404).json({message:'No tiene subscripción, seleccione una!', idConekt:conekt.id});
+          res.status(404).json({message:'No tiene subscripción, seleccione una!', idConekt:customer.idConekt});
         } 
 
       }else{
