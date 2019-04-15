@@ -160,9 +160,10 @@ module.exports={
         try{
             let data = req.headers["authorization"].split(" ");
             let result = await Access.findOne({where:{uuii:data[1]}})
-            let subscription = await Subscription.find({where:{idConekt:result.idConekt}});
+            let api_rest = await Customer.findOne({where:{idWordPress:result.idWordPress}})
+            let subscription = await Subscription.find({where:{idConekt:api_rest.idConekt}});
             let plan = await conekta.Plan.find(subscription.subscription);
-            let customer = await conekta.Customer.find(result.idConekt) 
+            let customer = await conekta.Customer.find(api_rest.idConekt) 
             if(Object.keys(data).length != 0){
                 await customer.subscription.cancel()
                 await customer.payment_sources.get(0).delete()
@@ -194,8 +195,9 @@ module.exports={
         try{
             let data = req.headers["authorization"].split(" ");
             let result = await Access.findOne({where:{uuii:data[1]}})
-            let subscription = await Subscription.find({where:{idConekt:result.idConekt}});
-            let customer =  await conekta.Customer.find(result.idConekt);
+            let api_rest = await Customer.findOne({where:{idWordPress:result.idWordPress}})
+            let subscription = await Subscription.find({where:{idConekt:api_rest.idConekt}});
+            let customer =  await conekta.Customer.find(api_rest.idConekt);
 
             await customer.createPaymentSource({ type: "card", token_id: req.body.token })
 
