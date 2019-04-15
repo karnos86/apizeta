@@ -169,7 +169,7 @@ module.exports={
                 await customer.payment_sources.get(0).delete()
             }
             let oxxo = new Object();
-            oxxo["customer_info"] = {"customer_id":result.idConekt}
+            oxxo["customer_info"] = {"customer_id":api_rest.idConekt}
             oxxo["line_items"] = [{
                 "name": plan._id,
                 "unit_price": plan._json.amount,
