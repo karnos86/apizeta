@@ -98,6 +98,7 @@ module.exports={
     async personalOxxo(req, res){
         try{
            let data = req.body;
+           console.log(data)
            let conekt = await conekta.Customer.create(data.customer_info[0]);
            console.log(conekt)
            console.log(conekt._id);
