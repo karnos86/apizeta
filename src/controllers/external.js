@@ -46,6 +46,13 @@ module.exports={
 
         try{
             switch (req.body.type) {
+                 case 'customer.created':
+                    notification = req.body.data.object;
+                    customer = await Customer.findOne({where:{email:notification.email}});
+                    await customer.update({idConekt: notification.id , active: true});
+                     res.json({status:200, message:"operacion exitosa"});
+
+                    break;
                 case 'order.created':
                     notification = req.body.data.object;
                     customer = await Customer.findOne({where:{idConekt:notification.customer_info.customer_id}})
