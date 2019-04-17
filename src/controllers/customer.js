@@ -56,8 +56,6 @@ module.exports={
     async personalTdc(req, res){
         try{
             let data = req.body;
-            console.log(data);
-            res.json(data)  
             let api_rest = await Customer.create({idWordPress:wordpress.user_id, email:data.email})
             var customer_Conekta =  await conekta.Customer.create(data);
             await api_rest.update({idConekt:customer_Conekta._id , active: true})
