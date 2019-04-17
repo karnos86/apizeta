@@ -24,7 +24,7 @@ router.post('/api/customer/renovate/oxxo', ctrl.authy.accessApp, ctrl.customer.r
 router.post('/api/customer/renovate/tdc', ctrl.authy.accessApp, ctrl.customer.renovarTdc);
 router.post('/api/customer/change/tdc', ctrl.customer.changeTdc);
 router.post('/api/customer/change/oxxo', ctrl.customer.changeOxxo);
-router.post('/api/customer/personal/tdc', ctrl.customer.changeTdc);
+router.post('/api/customer/personal/tdc', ctrl.customer.personalOxxo);
 router.post('/api/customer/personal/oxxo', ctrl.customer.personalOxxo);
 
 //web
