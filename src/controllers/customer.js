@@ -32,6 +32,7 @@ module.exports={
                         plan_id: data.plan,
                         payment_sources: data.payment_sources
                     });
+                    await api_rest.update({idConekt:customer_Conekta._id , active: true})
                     res.json(customer_Conekta.subscription._json);
                 }else{
                     res.status(400).json(wordpress)
@@ -54,10 +55,12 @@ module.exports={
     },
     async personalTdc(req, res){
         try{
-            let data = req.body  
-            let api_rest = await Customer.create({idWordPress:data.wordpress, email:data.email});
-            delete data["wordpress"];
+            let data = req.body;
+            console.log(data);
+            res.json(data)  
+            let api_rest = await Customer.create({idWordPress:wordpress.user_id, email:data.email})
             var customer_Conekta =  await conekta.Customer.create(data);
+            await api_rest.update({idConekt:customer_Conekta._id , active: true})
             res.json(customer_Conekta.subscription._json);
         }catch(error){
             console.log(error)
@@ -77,6 +80,7 @@ module.exports={
                 if(wordpress.status =='ok'){
                     let api_rest = await Customer.create({idWordPress:wordpress.user_id, email:data.email});
                     let customer = await conekta.Customer.create(data.oxxo.customer_info[0])
+                    await api_rest.update({idConekt: customer._id , active: true});
                     data.oxxo["customer_info"] = {customer_id:customer._id};
                     let orden = await conekta.Order.create(data.oxxo)
                     res.json(orden["charges"]._json);
