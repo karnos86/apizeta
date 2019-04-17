@@ -25,7 +25,7 @@ router.post('/api/customer/renovate/tdc', ctrl.authy.accessApp, ctrl.customer.re
 router.post('/api/customer/change/tdc', ctrl.customer.changeTdc);
 router.post('/api/customer/change/oxxo', ctrl.customer.changeOxxo);
 router.post('/api/customer/personal/tdc', ctrl.customer.personalOxxo);
-router.post('/api/customer/personal/oxxo', ctrl.customer.personalOxxo);
+router.post('/api/customer/personal/oxxo', ctrl.customer.personalTdc);
 
 //web
 router.get('/subscription/index', ctrl.authy.validateCookieWorpress, ctrl.customer.indexSubscription);
