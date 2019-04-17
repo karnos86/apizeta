@@ -22,7 +22,7 @@ module.exports={
                let access = await Access.findOne({where:{uuii:login.UUII}});
                if(access != null){
                    await access.update({'authorized':true, 'idWordPress':customer.idWordPress});
-                   res.json(true);
+                   res.json({status:200, authorized:true});
                }else{
                    await Access.create({'uuii':login.UUII,'authorized':true, 'idWordPress':customer.idWordPress});
                    res.json(true);
@@ -34,10 +34,10 @@ module.exports={
                    }
                }
              }else{
-                res.status(402).json({message:'Suscripción no debitada! Seleccione un metodo de pago', idConekt:customer.idConekt});
+                res.json({status: 402, message:'Suscripción no debitada! Seleccione un metodo de pago', idConekt:customer.idConekt, authorized:false});
              }  
         }else{
-          res.status(404).json({message:'No tiene subscripción, seleccione una!', idWordPress:done.user});
+          res.json({status: 404, message:'No tiene subscripción, seleccione una!', idWordPress:done.user, authorized:false});
         } 
 
       }else{
