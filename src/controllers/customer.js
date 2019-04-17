@@ -111,8 +111,8 @@ module.exports={
            let data = req.body;
            let conekt = await conekta.Customer.create(data.customer_info[0]);
            console.log(conekt)
-           console.log(conekt.id);
-           await Customer.create({idWordPress: data.wordpress, idConekt: conekt.id, email:data.customer_info[0].email});
+           console.log(conekt._id);
+           await Customer.create({idWordPress: data.wordpress, idConekt: conekt._id, email:data.customer_info[0].email});
            data["customer_info"] = {customer_id: conekt._id};
            delete data["wordpress"];
            let orden = await conekta.Order.create(data);
