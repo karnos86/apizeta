@@ -102,7 +102,7 @@ module.exports={
                         from: process.env.USER_MAIL,
                         to: customer.email,
                         subject: 'Comprobante de Pago',
-                        text: notification
+                        text: JSON.stringify(notification)
                     }
                     console.log(mailOptions)
                     let done = await transporter.sendMail(mailOptions)
