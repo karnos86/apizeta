@@ -9,7 +9,7 @@ module.exports={
   async loginApp(req, res){
     try {
       login = req.body;
-      var data = await asyn_request('https://zetatijuana.com/wp-json/jwt-auth/v1/token',{method: 'POST', login});
+      var data = await asyn_request('https://zetatijuana.com/wp-json/jwt-auth/v1/token',{method: 'POST', data: login});
       console.log(data)
       res.json(data);
       // let customer = await Customer.findOne({include:[{all: true}], where:{email: login.user_email}});
