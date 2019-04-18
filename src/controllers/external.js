@@ -1,4 +1,5 @@
 const conekta = require('../../bin/conexion_conekta');
+const transporter = require('../../bin/conexion_mailer')
 const asyn_request = require('async-request');
 const xml2js  = require('xml2js');
 const Customer = require('../models/Customer')
@@ -94,8 +95,16 @@ module.exports={
                     res.json({status:200, message:"operacion exitosa"})
                     break;
                 case 'charge.paid':
-                    console.log("eniar el coprovante por node mail",req.body.data);
-                    res.json()
+                    notification = req.body.data.object;
+                    customer = await Customer.findOne({where:{idConekt:notification.customer_id}});
+                    var mailOptions = {
+                        from: process.env.MAIL,
+                        to: customer.email,
+                        subject: 'Comprobante de Pago',
+                        text: notification
+                    }
+                    let done = await transporter.sendMail(mailOptions)
+                    res.json(done);
                     break;
                 case 'subscription.created':
                     notification = req.body.data.object;
@@ -158,7 +167,22 @@ module.exports={
         }catch(error){
             res.status(500).json(error)
         }
+    },
+    async resendMail(req, res){
+        try{
+          var mailOptions = {
+         from: 'noreply@zetatijuana.com',
+         to: 'ronald.penaloza08@gmail.com',
+         subject: 'prueba',
+         text: 'Contenido del email'
+      }
+      let done = await transporter.sendMail(mailOptions)
+      res.json(done)
+    }catch(error){
+      console.log(error)
+      res.status(500).json(error)
     }
+ } 
  
 }
 

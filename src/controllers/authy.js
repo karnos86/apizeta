@@ -1,5 +1,4 @@
 const conekta = require('../../bin/conexion_conekta');
-const transporter = require('../../bin/conexion_mailer')
 const Customer = require('../models/Customer');
 const Subscription = require('../models/Subscription');
 const User = require('../models/User');
@@ -114,22 +113,8 @@ module.exports={
       console.log(error)
       res.status(500).json(error);
     }
-  },
-  async prueba(req, res){
-    try{
-      var mailOptions = {
-         from: 'noreply@zetatijuana.com',
-         to: 'ronald.penaloza08@gmail.com',
-         subject: 'prueba',
-         text: 'Contenido del email'
-      }
-      let reult = await transporter.sendMail(mailOptions)
-      res.json(reult)
-    }catch(error){
-      console.log(error)
-      res.status(500).json(error)
-    }
- }   
+  }
+
 }
 async function validateSubscrition(array){
     let active
