@@ -9,14 +9,8 @@ module.exports={
   async loginApp(req, res){
     try {
       login = req.body;
-      let data = await asyn_request('https://zetatijuana.com/api/user/generate_auth_cookie/?username='+login.username+'&password='+login.password,{method: 'GET'}, 
-               {headers: {'Accept': 'application/json','Accept-Charset': 'utf-8',}},
-               {maxRedirects:100000});
-      console.log(data)
-      let done =JSON.parse(data.body);
-      if(done.status=='ok'){
-        let customer = await Customer.findOne({include:[{all: true}], where:{idWordPress: done.user.id}});
-        if(customer){
+      let customer = await Customer.findOne({include:[{all: true}], where:{email: done.user_email}});
+      if(customer){
            let subscription = await validateSubscrition(customer.subcriptions) ;
            if(subscription){
                let access = await Access.findOne({where:{uuii:login.UUII}});
@@ -36,15 +30,9 @@ module.exports={
              }else{
                 res.json({status: 402, message:'Suscripción no debitada! Seleccione un metodo de pago', idConekt:customer.idConekt, authorized:false});
              }  
-        }else{
-          res.json({status: 404, message:'No tiene subscripción, seleccione una!', idWordPress:done.user, authorized:false});
-        } 
-
       }else{
-        res.status(401).json({message:"Usuario y/o contraseña incorrectos"});
+        res.json({status: 404, message:'No tiene subscripción, seleccione una!', idWordPress:done.user, authorized:false});
       }
-
-           
     } catch (error) {
         console.log(error)
         res.status(500).json(error);
