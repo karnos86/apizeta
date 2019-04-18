@@ -7,7 +7,7 @@ router.get('/', function (req, res, next) {
   res.sendfile('./public/index.html')
 })
 
-router.get('/ctl/mail', ctrl.authy.prueba);
+// router.get('/ctl/mail', ctrl.authy.prueba);
 
 
 
