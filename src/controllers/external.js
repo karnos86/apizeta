@@ -99,7 +99,7 @@ module.exports={
                     console.log(notification)
                     customer = await Customer.findOne({where:{idConekt:notification.customer_id}});
                     var mailOptions = {
-                        from: process.env.MAIL,
+                        from: process.env.USER_MAIL,
                         to: customer.email,
                         subject: 'Comprobante de Pago',
                         text: notification
