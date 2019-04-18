@@ -118,12 +118,13 @@ module.exports={
   async prueba(req, res){
     try{
       var mailOptions = {
-         from: 'Remitente',
-         to: 'destinatario@gmail.com',
-         subject: 'Asunto',
+         from: 'noreply@zetatijuana.com',
+         to: 'ronald.penaloza08@gmail.com',
+         subject: 'prueba',
          text: 'Contenido del email'
       }
       let reult = await transporter.sendMail(mailOptions)
+      res.json(reult)
     }catch(error){
       console.log(error)
       res.status(500).json(error)
