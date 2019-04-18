@@ -9,7 +9,7 @@ module.exports={
   async loginApp(req, res){
     try {
       login = req.body;
-      let customer = await Customer.findOne({include:[{all: true}], where:{email: done.user_email}});
+      let customer = await Customer.findOne({include:[{all: true}], where:{email: login.user_email}});
       if(customer){
            let subscription = await validateSubscrition(customer.subcriptions) ;
            if(subscription){
