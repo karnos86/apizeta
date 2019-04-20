@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 const db = require('../../bin/database');
-const Subcription = require('./Subcription');
+const Customer = require('./Customer');
 
 
   const Mail= db.define('mail', {
