@@ -8,8 +8,9 @@ const asyn_request = require('async-request');
 module.exports={
   async loginApp(req, res){
     try {
-      login = req.body;
+      var login = req.body;
       var data = await asyn_request('https://zetatijuana.com/wp-json/jwt-auth/v1/token',{method: 'POST', data: login});
+      console.log(data)
       data=JSON.parse(data.body);
       res.json(data);
   
