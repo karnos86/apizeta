@@ -97,7 +97,6 @@ module.exports={
                     break;
                 case 'charge.created':
                     notification = req.body.data.object;
-                    console.log(notification)
                     subscription = await Subscription.findOne({where:{reference:notification.order_id}});
                     customer = await Customer.findOne({where:{idWordPress:subscription.idWordPress}})
                     var mailOptions = {
