@@ -191,10 +191,10 @@ module.exports={
             let plan = await conekta.Plan.find(subscription.subscription);
             let customer = await conekta.Customer.find(api_rest.idConekt) 
             console.log(customer)
-            if(custumer.subscription.status =='active'){
+            if(custumer._json.subscription.status =='active'){
                 await customer.subscription.cancel()
             }
-            if(customer.payment_sources.length !=0){
+            if(customer._json.payment_sources.length !=0){
                 await customer.payment_sources.get(0).delete()
             }
             let oxxo = new Object();
