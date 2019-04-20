@@ -190,7 +190,7 @@ module.exports={
             let subscription = await Subscription.find({where:{idWordPress:result.idWordPress}});
             let plan = await conekta.Plan.find(subscription.subscription);
             let customer = await conekta.Customer.find(api_rest.idConekt) 
-            console.log(data)
+            console.log(customer)
             // if(Object.keys(customer).length != 0){
             //     await customer.subscription.cancel()
             //     await customer.payment_sources.get(0).delete()
