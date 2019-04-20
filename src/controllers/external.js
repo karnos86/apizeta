@@ -95,6 +95,22 @@ module.exports={
                     });
                     res.json({status:200, message:"operacion exitosa"})
                     break;
+                case 'charge.created':
+                    notification = req.body.data.object;
+                    console.log(notification)
+                    subscription = await subscription.findOne({where:{reference:notification.order_id}});
+                    customer = Customer.findOne({where:{idConekt:subscription.idConekt}})
+                    var mailOptions = {
+                        from: process.env.USER_MAIL,
+                        to: customer.email,
+                        subject: 'Cargo Oxxo',
+                        text: JSON.stringify(notification)
+                    }
+                
+                    let done = await transporter.sendMail(mailOptions);
+                    let mail = await Mail.create({id:done.messageId, status:done.response, message:JSON.stringify(notification),idWordPress:customer.idWordPress})
+                    res.json(done);
+                    break;
                 case 'charge.paid':
                     notification = req.body.data.object;
                     console.log(notification)
