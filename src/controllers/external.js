@@ -44,7 +44,7 @@ module.exports={
         }
     },
     async hooksPaid(req, res){
-         let cancel, notification, subscrition, customer, renovate,done;
+         let cancel, notification, subscrition, customer, renovate,done, mail;
 
         try{
             switch (req.body.type) {
@@ -108,7 +108,7 @@ module.exports={
                     }
                 
                     done = await transporter.sendMail(mailOptions);
-                    let mail = await Mail.create({id:done.messageId, status:done.response, message:JSON.stringify(notification),idWordPress:customer.idWordPress})
+                    mail = await Mail.create({id:done.messageId, status:done.response, message:JSON.stringify(notification),idWordPress:customer.idWordPress})
                     res.json(done);
                     break;
                 case 'charge.paid':
@@ -124,7 +124,7 @@ module.exports={
                 
                     done = await transporter.sendMail(mailOptions);
                     customer = Customer.findOne({where:{idConekt:notification.customer_id}})
-                    let mail = await Mail.create({id:done.messageId, status:done.response, message:JSON.stringify(notification),idWordPress:customer.idWordPress})
+                    mail = await Mail.create({id:done.messageId, status:done.response, message:JSON.stringify(notification),idWordPress:customer.idWordPress})
                     res.json(done);
                     break;
                 case 'subscription.created':
