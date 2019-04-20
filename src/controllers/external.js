@@ -99,7 +99,7 @@ module.exports={
                     notification = req.body.data.object;
                     console.log(notification)
                     subscription = await Subscription.findOne({where:{reference:notification.order_id}});
-                    customer = Customer.findOne({where:{idWordPress:subscription.idWordPress}})
+                    customer = await Customer.findOne({where:{idWordPress:subscription.idWordPress}})
                     var mailOptions = {
                         from: process.env.USER_MAIL,
                         to: customer.email,
