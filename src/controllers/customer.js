@@ -194,7 +194,7 @@ module.exports={
             if(customer._json.subscription.status =='active'){
                 await customer.subscription.cancel()
             }
-            if(customer._json.payment_sources.length !=0){
+            if(customer._json.payment_sources){
                 await customer.payment_sources.get(0).delete()
             }
             let oxxo = new Object();
