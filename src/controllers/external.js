@@ -98,7 +98,7 @@ module.exports={
                 case 'charge.created':
                     notification = req.body.data.object;
                     console.log(notification)
-                    subscription = await subscription.findOne({where:{reference:notification.order_id}});
+                    subscription = await Subscription.findOne({where:{reference:notification.order_id}});
                     customer = Customer.findOne({where:{idConekt:subscription.idConekt}})
                     var mailOptions = {
                         from: process.env.USER_MAIL,
