@@ -191,7 +191,7 @@ module.exports={
             let plan = await conekta.Plan.find(subscription.subscription);
             let customer = await conekta.Customer.find(api_rest.idConekt) 
             console.log(customer)
-            if(custumer._json.subscription.status =='active'){
+            if(customer._json.subscription.status =='active'){
                 await customer.subscription.cancel()
             }
             if(customer._json.payment_sources.length !=0){
