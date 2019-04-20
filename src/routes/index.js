@@ -45,7 +45,7 @@ router.get('/api/feed', ctrl.authy.accessApp ,ctrl.external.feedZeta);
 router.get('/api/widget',ctrl.authy.accessApp, ctrl.external.weatherZeta);
 router.get('/api/money', ctrl.authy.accessApp,ctrl.external.moneyZeta);
 router.get('/api/multimedia',ctrl.authy.accessApp, ctrl.external.listVideo);
-// router.post('/api/loginWorpress', ctrl.external.loginWordpress);
+router.get('/api/resendMail',ctrl.authy.accessApp, ctrl.external.resendMail);
 
 /*Escucha de eventtos de conekta*/
 router.post('/api/notification/conekta', ctrl.external.hooksPaid);

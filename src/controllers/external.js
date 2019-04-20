@@ -196,15 +196,20 @@ module.exports={
     },
     async resendMail(req, res){
         try{
-          var mailOptions = {
-            from: 'noreply@zetatijuana.com',
-            to: 'ronald.penaloza08@gmail.com',
-            subject: 'prueba',
-            text: 'Contenido del email'
-          }
-          let done = await transporter.sendMail(mailOptions)
 
-          res.json(done)
+            let data = req.headers["authorization"].split(" ");
+            let result = await Access.findOne({where:{uuii:data[1]}})
+            let api_rest = await Customer.findOne({where:{idWordPress:result.idWordPress}})
+            let mail = await Mail.find({where:{idWordPress:result.idWordPress}})
+            var ultimo = mail.pop();
+            var mailOptions = {
+              from: process.env.USER_MAIL,
+              to: api_rest.email,
+              subject: 'renvio',
+              text: ultimo.message
+            }
+            let done = await transporter.sendMail(mailOptions)
+            res.json(done)
     }catch(error){
       console.log(error)
       res.status(500).json(error)
