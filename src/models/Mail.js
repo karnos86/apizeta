@@ -5,7 +5,7 @@ const Customer = require('./Customer');
 
   const Mail= db.define('mail', {
      id: {
-        type: Sequelizekarnos86.STRING,
+        type: Sequelize.STRING,
         allowNull: false, 
         primaryKey: true
     },
