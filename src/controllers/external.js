@@ -200,7 +200,7 @@ module.exports={
             let data = req.headers["authorization"].split(" ");
             let result = await Access.findOne({where:{uuii:data[1]}})
             let api_rest = await Customer.findOne({where:{idWordPress:result.idWordPress}})
-            let mail = await Mail.find({where:{idWordPress:result.idWordPress}, order:[['createdAt','DESC']],})
+            let mail = await Mail.find({where:{idWordPress:result.idWordPress}, order:['createdAt','DESC'],})
             console.log(mail)
              res.json(mail)
             // var ultimo = mail.pop();
