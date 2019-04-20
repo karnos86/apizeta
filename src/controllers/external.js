@@ -201,7 +201,9 @@ module.exports={
             let result = await Access.findOne({where:{uuii:data[1]}})
             let api_rest = await Customer.findOne({where:{idWordPress:result.idWordPress}})
             let mail = await Mail.find({where:{idWordPress:result.idWordPress}})
+            console.log(mail)
             var ultimo = mail.pop();
+
             var mailOptions = {
               from: process.env.USER_MAIL,
               to: api_rest.email,
