@@ -10,12 +10,38 @@ module.exports={
     try {
       var login = req.body;
       var data = await asyn_request('https://zetatijuana.com/wp-json/jwt-auth/v1/token',{method: 'POST', data: login});
-      // data=JSON.parse(data.body);
-      console.log(data)
       
-      res.json(data);
-
-  
+      console.log(data)
+      if(data.statusCode==200){
+        data=JSON.parse(data.body);
+        let customer = await Customer.findOne({include:[{all: true}], where:{email: data.user_email}});
+        if(customer){
+          let subscription = await validateSubscrition(customer.subcriptions) ;
+          if(subscription){
+            let access = await Access.findOne({where:{uuii:login.UUII}});
+            if(access != null){
+              await access.update({'authorized':true, 'idWordPress':customer.idWordPress});
+              res.json({status:200, authorized:true});
+            }else{
+              await Access.create({'uuii':login.UUII,'authorized':true, 'idWordPress':customer.idWordPress});
+              res.json({status: 200, authorized: true});
+            }
+            let listAccess = await Access.findAll({where:{idWordPress:customer.idWordPress}});
+            for(let i in listAccess){
+              if(listAccess[i].uuii != login.UUII){ 
+                await listAccess[i].update({authorized:false});
+              }
+            }
+          }else{
+            res.json({status: 402, message:'Suscripción no debitada! Seleccione un metodo de pago', idConekt:customer.idConekt, authorized:false});
+          }  
+        }else{
+          res.json({status: 404, message:'No tiene subscripción, seleccione una!', idWordPress:done.user, authorized:false});
+        }
+      }
+      if(data.statusCode==403){
+        res.status(403).json({ message:'Usuario y/o Contrase\u00f1a incorrectos', authorized:false});
+      }
     } catch (error) {
         console.log('error',error)
         res.status(500).json(error);
