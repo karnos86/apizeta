@@ -12,12 +12,17 @@ const Subcription = require('./Subcription');
     status:{
         type: Sequelize.STRING,
         allowNull: false
+    }, 
+    message:{
+      type: Sequelize.STRING,
+       allowNull: false
     }
 
   })
 
-Subcription.hasMany(Mail,{foreignKey: 'reference'});
- Mail.belongsTo(Subcription, {foreignKey: 'reference'});
+Customer.hasMany(Mail, {foreignKey: 'idWordPress'});
+ Mail.belongsTo(Customer,{foreignKey: 'idWordPress'});
+
 
  
 module.exports=Mail;

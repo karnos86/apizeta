@@ -4,6 +4,7 @@ const asyn_request = require('async-request');
 const xml2js  = require('xml2js');
 const Customer = require('../models/Customer')
 const Subscription = require('../models/Subscription')
+const Mail = require('../models/Mail')
 const nodemailer = require('nodemailer');
 const https = require('https');
 
@@ -104,8 +105,9 @@ module.exports={
                         subject: 'Comprobante de Pago',
                         text: JSON.stringify(notification)
                     }
-                    console.log(mailOptions)
+                
                     let done = await transporter.sendMail(mailOptions)
+                    let mail = await Mail.create({id:done.messageId, status:done.response, message:JSON.stringify(notification),idConekt:notification.customer_id})
                     res.json(done);
                     break;
                 case 'subscription.created':
@@ -173,13 +175,14 @@ module.exports={
     async resendMail(req, res){
         try{
           var mailOptions = {
-         from: 'noreply@zetatijuana.com',
-         to: 'ronald.penaloza08@gmail.com',
-         subject: 'prueba',
-         text: 'Contenido del email'
-      }
-      let done = await transporter.sendMail(mailOptions)
-      res.json(done)
+            from: 'noreply@zetatijuana.com',
+            to: 'ronald.penaloza08@gmail.com',
+            subject: 'prueba',
+            text: 'Contenido del email'
+          }
+          let done = await transporter.sendMail(mailOptions)
+
+          res.json(done)
     }catch(error){
       console.log(error)
       res.status(500).json(error)
