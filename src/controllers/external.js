@@ -44,7 +44,7 @@ module.exports={
         }
     },
     async hooksPaid(req, res){
-         let cancel, notification, subscrition, customer, renovate;
+         let cancel, notification, subscrition, customer, renovate,done;
 
         try{
             switch (req.body.type) {
@@ -107,7 +107,7 @@ module.exports={
                         text: JSON.stringify(notification)
                     }
                 
-                    let done = await transporter.sendMail(mailOptions);
+                    done = await transporter.sendMail(mailOptions);
                     let mail = await Mail.create({id:done.messageId, status:done.response, message:JSON.stringify(notification),idWordPress:customer.idWordPress})
                     res.json(done);
                     break;
@@ -122,7 +122,7 @@ module.exports={
                         text: JSON.stringify(notification)
                     }
                 
-                    let done = await transporter.sendMail(mailOptions);
+                    done = await transporter.sendMail(mailOptions);
                     customer = Customer.findOne({where:{idConekt:notification.customer_id}})
                     let mail = await Mail.create({id:done.messageId, status:done.response, message:JSON.stringify(notification),idWordPress:customer.idWordPress})
                     res.json(done);
