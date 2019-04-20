@@ -5,7 +5,7 @@ const Customer = require('./Customer');
 
   const Mail= db.define('mail', {
      id: {
-        type: Sequelize.STRING,
+        type: Sequelizekarnos86.STRING,
         allowNull: false, 
         primaryKey: true
     },
@@ -14,7 +14,7 @@ const Customer = require('./Customer');
         allowNull: false
     }, 
     message:{
-      type: Sequelize.STRING,
+      type: Sequelize.TEXT,
        allowNull: false
     }
 
