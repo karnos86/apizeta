@@ -201,7 +201,7 @@ module.exports={
             let result = await Access.findOne({where:{uuii:data[1]}})
             let api_rest = await Customer.findOne({where:{idWordPress:result.idWordPress}})
             let mail = await Mail.findAll({where:{idWordPress:result.idWordPress}, order:[['createdAt','DESC']],})
-            var ultimo = mail.first();
+            var ultimo = mail[0];
             var mailOptions = {
               from: process.env.USER_MAIL,
               to: api_rest.email,
