@@ -10,12 +10,14 @@ module.exports={
     try {
       var login = req.body;
       var data = await asyn_request('https://zetatijuana.com/wp-json/jwt-auth/v1/token',{method: 'POST', data: login});
+      // data=JSON.parse(data.body);
       console.log(data)
-      data=JSON.parse(data.body);
+      
       res.json(data);
+
   
     } catch (error) {
-        console.log(error)
+        console.log('error',error)
         res.status(500).json(error);
     }
   },
