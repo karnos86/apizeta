@@ -191,22 +191,23 @@ module.exports={
             let plan = await conekta.Plan.find(subscription.subscription);
             let customer = await conekta.Customer.find(api_rest.idConekt) 
             console.log(customer)
-            // if(Object.keys(customer).length != 0){
-            //     await customer.subscription.cancel()
-            //     await customer.payment_sources.get(0).delete()
-            // }
-            // let oxxo = new Object();
-            // oxxo["customer_info"] = {"customer_id":api_rest.idConekt}
-            // oxxo["line_items"] = [{
-            //     "name": plan._id,
-            //     "unit_price": plan._json.amount,
-            //     "quantity": 1
-            // }]
-            // oxxo["currency"] =  plan._json.currency
-            // oxxo["charges"] = [{"payment_method": {"type": "oxxo_cash"}}]
-            // let orden = await conekta.Order.create(oxxo)
-            // res.json(orden["charges"]._json);
-            res.json()
+            if(custumer.subscription.status =='active'){
+                await customer.subscription.cancel()
+            }
+            if(customer.payment_sources.length !=0){
+                await customer.payment_sources.get(0).delete()
+            }
+            let oxxo = new Object();
+            oxxo["customer_info"] = {"customer_id":api_rest.idConekt}
+            oxxo["line_items"] = [{
+                "name": plan._id,
+                "unit_price": plan._json.amount,
+                "quantity": 1
+            }]
+            oxxo["currency"] =  plan._json.currency
+            oxxo["charges"] = [{"payment_method": {"type": "oxxo_cash"}}]
+            let orden = await conekta.Order.create(oxxo)
+            res.json(orden["charges"]._json);
         }catch(error){
             console.log(error)
             switch (error.http_code) {
