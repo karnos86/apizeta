@@ -114,7 +114,13 @@ module.exports={
                 case 'charge.paid':
                     notification = req.body.data.object;
                     console.log(notification)
-                    customer = await Customer.findOne({where:{idConekt:notification.customer_id}});
+                    if(notification.customer_id != ''){
+                        customer = await Customer.findOne({where:{idConekt:notification.customer_id}});
+                    }else{
+                        subscription = await Subscription.findOne({where:{reference:notification.order_id}});
+                        customer = await Customer.findOne({where:{idWordPress:subscription.idWordPress}});
+                    }
+                    
                     var mailOptions = {
                         from: process.env.USER_MAIL,
                         to: customer.email,
@@ -123,7 +129,6 @@ module.exports={
                     }
                 
                     done = await transporter.sendMail(mailOptions);
-                    customer = Customer.findOne({where:{idConekt:notification.customer_id}})
                     mail = await Mail.create({id:done.messageId, status:done.response, message:JSON.stringify(notification),idWordPress:customer.idWordPress})
                     res.json(done);
                     break;
