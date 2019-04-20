@@ -5,6 +5,7 @@ const xml2js  = require('xml2js');
 const Customer = require('../models/Customer')
 const Subscription = require('../models/Subscription')
 const Mail = require('../models/Mail')
+const Access = require('../models/Access')
 const nodemailer = require('nodemailer');
 const https = require('https');
 
