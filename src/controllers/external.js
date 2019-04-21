@@ -73,7 +73,10 @@ module.exports={
                     break;
                 case 'order.pending_payment':
                     let info_pending_payment = req.body.data.object;
-                    const timer = setIntervalAsync( async () => { let order_pending_payment = await Subscription.findById(info_pending_payment.id); }, 2000)
+                    let order_pending_payment
+                    const timer = setIntervalAsync( async () => { order_pending_payment = await Subscription.findById(info_pending_payment.id); }, 2000)
+                    console.log(order_pending_payment)
+                    console.log(timer)
                     if(order_pending_payment != null){
                         await clearIntervalAsync(timer)
                         let pending_payment = new Object()
@@ -82,10 +85,8 @@ module.exports={
                         pending_payment["status"]='pending_payment'
                     await order_pending_payment.update(pending_payment);
                     res.json({status:200, message:"operacion exitosa"})
-                   }else{
-                       res.json(order_pending_payment) 
                    }
-                    
+                    console.log('fuera del if')
                     
                 break;
                 case 'order.paid':
