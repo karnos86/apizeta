@@ -8,6 +8,7 @@ const Mail = require('../models/Mail')
 const Access = require('../models/Access')
 const nodemailer = require('nodemailer');
 const https = require('https');
+const {  setIntervalAsync,  clearIntervalAsync } = require('set-interval-async/dynamic')
 
 
 module.exports={
@@ -72,8 +73,9 @@ module.exports={
                     break;
                 case 'order.pending_payment':
                     let info_pending_payment = req.body.data.object;
-                    let order_pending_payment = await Subscription.findById(info_pending_payment.id);
+                    const timer = setIntervalAsync( async () => { let order_pending_payment = await Subscription.findById(info_pending_payment.id); }, 2000)
                     if(order_pending_payment != null){
+                        await clearIntervalAsync(timer)
                         let pending_payment = new Object()
                         pending_payment["start"]=info_pending_payment.created_at
                         pending_payment["end"]= await CalculeTimeSubcription(info_pending_payment.line_items.data[0].name, info_pending_payment.created_at)

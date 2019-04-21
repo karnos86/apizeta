@@ -1,7 +1,7 @@
 {
   "name": "backend-zeta",
   "version": "1.0.0",
-  "private":true,
+  "private": true,
   "scripts": {
     "start": "forever ./bin/www",
     "dev": "nodemon ./bin/www",
@@ -34,6 +34,7 @@
     "pg": "^7.8.1",
     "pg-hstore": "^2.3.2",
     "sequelize": "^4.42.0",
+    "set-interval-async": "^1.0.23",
     "toastr": "^2.1.4",
     "vue": "^2.6.10",
     "vue-axios": "^2.1.4",
