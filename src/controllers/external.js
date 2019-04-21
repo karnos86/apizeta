@@ -132,12 +132,12 @@ module.exports={
                     
                     var mailOptions_charge_paid = {
                         from: process.env.USER_MAIL,
-                        to: customer.email,
+                        to: customer_charge_paid.email,
                         subject: 'Comprobante de Pago',
                         text: JSON.stringify(notification)
                     }
                 
-                    let done_charge_paid = await transporter.sendMail(mailOptions);
+                    let done_charge_paid = await transporter.sendMail(mailOptions_charge_paid);
                     await Mail.create({id:done_charge_paid.messageId, status:done_charge_paid.response, message:JSON.stringify(notification),idWordPress:customer.idWordPress})
                     res.json(done_charge_paid);
                     break;
