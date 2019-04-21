@@ -72,17 +72,17 @@ module.exports={
                     break;
                 case 'order.pending_payment':
                     let info_pending_payment = req.body.data.object;
-                    setInterval(function(){ let order_pending_payment = await Subscription.findById(info_pending_payment.id);}, 2000);
+                    let order_pending_payment = await Subscription.findById(info_pending_payment.id);
                     if(order_pending_payment != null){
-                        clearInterval();
-                        console.log(order_pending_payment)
                         let pending_payment = new Object()
                         pending_payment["start"]=info_pending_payment.created_at
                         pending_payment["end"]= await CalculeTimeSubcription(info_pending_payment.line_items.data[0].name, info_pending_payment.created_at)
                         pending_payment["status"]='pending_payment'
-                        await order_pending_payment.update(pending_payment);
-                        res.json({status:200, message:"operacion exitosa"})
-                    }
+                    await order_pending_payment.update(pending_payment);
+                    res.json({status:200, message:"operacion exitosa"})
+                   }else{
+                       res.json(order_pending_payment) 
+                   }
                     
                     
                 break;
