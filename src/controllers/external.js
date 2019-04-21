@@ -138,7 +138,7 @@ module.exports={
                     }
                 
                     let done_charge_paid = await transporter.sendMail(mailOptions_charge_paid);
-                    await Mail.create({id:done_charge_paid.messageId, status:done_charge_paid.response, message:JSON.stringify(notification),idWordPress:customer_charge_paid.idWordPress})
+                    await Mail.create({id:done_charge_paid.messageId, status:done_charge_paid.response, message:JSON.stringify(info_charge_paid),idWordPress:customer_charge_paid.idWordPress})
                     res.json(done_charge_paid);
                     break;
                 case 'subscription.created':
