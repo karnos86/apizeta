@@ -260,8 +260,10 @@ module.exports={
         try{
             let data = req.body
             let customer = await conekta.Customer.find(data.customer_id) 
-            if(Object.keys(data).length != 0){
+            if(customer._json.subscription.status =='active'){
                 await customer.subscription.cancel()
+            }
+            if(customer._json.payment_sources){
                 await customer.payment_sources.get(0).delete()
             }
             let api_rest = await Customer.findOne({where:{idConekt:data.customer_id}});
