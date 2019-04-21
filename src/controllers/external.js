@@ -127,7 +127,7 @@ module.exports={
                         customer_charge_paid = await Customer.findOne({where:{idConekt:info_charge_paid.customer_id}});
                     }else{
                         let subscription_charge_paid = await Subscription.findOne({where:{reference:info_charge_paid.order_id}});
-                        customer_charge_paid = await Customer.findOne({where:{idWordPress:subscription.idWordPress}});
+                        customer_charge_paid = await Customer.findOne({where:{idWordPress:subscription_charge_paid.idWordPress}});
                     }
                     
                     var mailOptions_charge_paid = {
