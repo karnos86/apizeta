@@ -72,13 +72,19 @@ module.exports={
                     break;
                 case 'order.pending_payment':
                     let info_pending_payment = req.body.data.object;
-                    let order_pending_payment = await Subscription.findById(info_pending_payment.id);
-                    let pending_payment = new Object()
-                    pending_payment["start"]=info_pending_payment.created_at
-                    pending_payment["end"]= await CalculeTimeSubcription(info_pending_payment.line_items.data[0].name, info_pending_payment.created_at)
-                    pending_payment["status"]='pending_payment'
-                    await order_pending_payment.update(pending_payment);
-                    res.json({status:200, message:"operacion exitosa"})
+                    setInterval(function(){ let order_pending_payment = await Subscription.findById(info_pending_payment.id);}, 2000);
+                    if(order_pending_payment != null){
+                        clearInterval();
+                        console.log(order_pending_payment)
+                        let pending_payment = new Object()
+                        pending_payment["start"]=info_pending_payment.created_at
+                        pending_payment["end"]= await CalculeTimeSubcription(info_pending_payment.line_items.data[0].name, info_pending_payment.created_at)
+                        pending_payment["status"]='pending_payment'
+                        await order_pending_payment.update(pending_payment);
+                        res.json({status:200, message:"operacion exitosa"})
+                    }
+                    
+                    
                 break;
                 case 'order.paid':
                     let expired_order_paid, active_order_paid;
@@ -100,6 +106,7 @@ module.exports={
                 case 'charge.created':
                     let info_charge_created = req.body.data.object;
                     let subscription_charge_created = await Subscription.findOne({where:{reference:info_charge_created.order_id}});
+                    console.log(subscription_charge_created )
                     let customer_charge_created = await Customer.findOne({where:{idWordPress:subscription_charge_created.idWordPress}})
                     var mailOptions_charge_created= {
                         from: process.env.USER_MAIL,
@@ -107,9 +114,8 @@ module.exports={
                         subject: 'Cargo Oxxo',
                         text: JSON.stringify(info_charge_created)
                     }
-                
                     let done_charge_created = await transporter.sendMail(mailOptions_charge_created);
-                    await Mail.create({id:done.messageId, status:done.response, message:JSON.stringify(info_charge_created),idWordPress:customer_charge_created.idWordPress})
+                    await Mail.create({id:done_charge_created.messageId, status:done_charge_created.response, message:JSON.stringify(info_charge_created),idWordPress:customer_charge_created.idWordPress})
                     res.json(done_charge_created);
                     break;
                 case 'charge.paid':
@@ -130,7 +136,7 @@ module.exports={
                     }
                 
                     let done_charge_paid = await transporter.sendMail(mailOptions);
-                    await Mail.create({id:done.messageId, status:done.response, message:JSON.stringify(notification),idWordPress:customer.idWordPress})
+                    await Mail.create({id:done_charge_paid.messageId, status:done_charge_paid.response, message:JSON.stringify(notification),idWordPress:customer.idWordPress})
                     res.json(done_charge_paid);
                     break;
                 case 'subscription.created':
