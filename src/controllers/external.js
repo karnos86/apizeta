@@ -50,87 +50,88 @@ module.exports={
         try{
             switch (req.body.type) {
                  case 'customer.created':
-                    notification = req.body.data.object;
-                    customer = await Customer.findOne({where:{email:notification.email}});
-                    await customer.update({idConekt: notification.id , active: true});
+                    info_customer_created = req.body.data.object;
+                    customer_created = await Customer.findOne({where:{email:info_customer_created.email}});
+                    await customer_created.update({idConekt: info_customer_created.id , active: true});
                      res.json({status:200, message:"operacion exitosa"});
 
                     break;
                 case 'order.created':
-                    notification = req.body.data.object;
-                    customer = await Customer.findOne({where:{idConekt:notification.customer_info.customer_id}})
-                    subscrition = new Object()
-                    subscrition["reference"] = notification.id
-                    subscrition["method"] = "OXXO"
-                    subscrition["subscription"] = notification.line_items.data[0].name
+                    let info_Order_created = req.body.data.object;
+                    let customer_Order_created = await Customer.findOne({where:{idConekt:info_Order_created.customer_info.customer_id}})
+                    let order_created= new Object()
+                    order_created["reference"] = info_Order_created.id
+                    order_created["method"] = "OXXO"
+                    order_created["subscription"] = info_Order_created.line_items.data[0].name
                     // subscrition["status"] =notification.status 
-                    subscrition["paid"] =false
-                    subscrition["idWordPress"] =customer.idWordPress;
-                    await Subscription.create(subscrition);
+                    order_created["paid"] =false
+                    order_created["idWordPress"] =customer_Order_created.idWordPress;
+                    await Subscription.create(order_created);
                     res.json({status:200, message:"operacion exitosa"});
 
                     break;
                 case 'order.pending_payment':
-                    notification = req.body.data.object;
-                    renovate = await Subscription.findById(notification.id);
-                    subscrition = new Object()
-                    subscrition["start"]=notification.created_at
-                    subscrition["end"]= await CalculeTimeSubcription(notification.line_items.data[0].name, notification.created_at)
-                    subscrition["status"]='pending_payment'
-                    await renovate.update(subscrition);
+                    let info_pending_payment = req.body.data.object;
+                    let order_pending_payment = await Subscription.findById(info_pending_payment.id);
+                    let pending_payment = new Object()
+                    pending_payment["start"]=info_pending_payment.created_at
+                    pending_payment["end"]= await CalculeTimeSubcription(info_pending_payment.line_items.data[0].name, info_pending_payment.created_at)
+                    pending_payment["status"]='pending_payment'
+                    await order_pending_payment.update(pending_payment);
                     res.json({status:200, message:"operacion exitosa"})
                 break;
                 case 'order.paid':
-                    notification = req.body.data.object;
-                    customer = await Customer.findOne({where:{idConekt:notification.customer_info.customer_id}})
-                    cancel = await Subscription.findAll({where:{idWordPress:customer.idWordPress}})
-                    cancel.forEach( function(elemento, indice, array) {
+                    let expired_order_paid, active_order_paid;
+                    let info_order_paid = req.body.data.object;
+                    let customer_order_paid = await Customer.findOne({where:{idConekt:info_order_paid.customer_info.customer_id}})
+                    let cancel_order_paid = await Subscription.findAll({where:{idWordPress:customer_order_paid.idWordPress}})
+                    cancel_order_paid.forEach( function(elemento, indice, array) {
                     if(elemento.status == 'active'){
-                         expired = elemento;
-                         expired.update({status:'expired'})
+                         expired_order_paid = elemento;
+                         expired_order_paid.update({status:'expired'})
                         }
                         if( elemento.status == 'pending_payment'){
-                            active = elemento;
-                            active.update({status:'active', paid:true})
+                            active_order_paid = elemento;
+                            active_order_paid.update({status:'active', paid:true})
                         }
                     });
                     res.json({status:200, message:"operacion exitosa"})
                     break;
                 case 'charge.created':
-                    notification = req.body.data.object;
-                    subscription = await Subscription.findOne({where:{reference:notification.order_id}});
-                    customer = await Customer.findOne({where:{idWordPress:subscription.idWordPress}})
-                    var mailOptions = {
+                    let info_charge_created = req.body.data.object;
+                    let subscription_charge_created = await Subscription.findOne({where:{reference:info_charge_created.order_id}});
+                    let customer_charge_created = await Customer.findOne({where:{idWordPress:subscription_charge_created.idWordPress}})
+                    var mailOptions_charge_created= {
                         from: process.env.USER_MAIL,
-                        to: customer.email,
+                        to: customer_charge_created.email,
                         subject: 'Cargo Oxxo',
-                        text: JSON.stringify(notification)
+                        text: JSON.stringify(info_charge_created)
                     }
                 
-                    done = await transporter.sendMail(mailOptions);
-                    mail = await Mail.create({id:done.messageId, status:done.response, message:JSON.stringify(notification),idWordPress:customer.idWordPress})
-                    res.json(done);
+                    let done_charge_created = await transporter.sendMail(mailOptions_charge_created);
+                    await Mail.create({id:done.messageId, status:done.response, message:JSON.stringify(info_charge_created),idWordPress:customer_charge_created.idWordPress})
+                    res.json(done_charge_created);
                     break;
                 case 'charge.paid':
-                    notification = req.body.data.object;
-                    console.log(notification)
-                    if(notification.customer_id != ''){
-                        customer = await Customer.findOne({where:{idConekt:notification.customer_id}});
+                    let info_charge_paid = req.body.data.object;
+                    let customer_charge_paid
+                    if(info_charge_paid.customer_id != ''){
+                        customer_charge_paid = await Customer.findOne({where:{idConekt:info_charge_paid.customer_id}});
                     }else{
-                        subscription = await Subscription.findOne({where:{reference:notification.order_id}});
-                        customer = await Customer.findOne({where:{idWordPress:subscription.idWordPress}});
+                        let subscription_charge_paid = await Subscription.findOne({where:{reference:info_charge_paid.order_id}});
+                        customer_charge_paid = await Customer.findOne({where:{idWordPress:subscription.idWordPress}});
                     }
                     
-                    var mailOptions = {
+                    var mailOptions_charge_paid = {
                         from: process.env.USER_MAIL,
                         to: customer.email,
                         subject: 'Comprobante de Pago',
                         text: JSON.stringify(notification)
                     }
                 
-                    done = await transporter.sendMail(mailOptions);
-                    mail = await Mail.create({id:done.messageId, status:done.response, message:JSON.stringify(notification),idWordPress:customer.idWordPress})
-                    res.json(done);
+                    let done_charge_paid = await transporter.sendMail(mailOptions);
+                    await Mail.create({id:done.messageId, status:done.response, message:JSON.stringify(notification),idWordPress:customer.idWordPress})
+                    res.json(done_charge_paid);
                     break;
                 case 'subscription.created':
                     notification = req.body.data.object;
