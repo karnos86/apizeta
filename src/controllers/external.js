@@ -90,20 +90,7 @@ module.exports={
                             res.json({status:200, message:"operacion exitosa"})
                        }
                        
-                    }, 1000)
-
-                    // console.log(order_pending_payment)
-                    // if(order_pending_payment != null){
-                       
-                    //     let pending_payment = new Object()
-                    //     pending_payment["start"]=info_pending_payment.created_at
-                    //     pending_payment["end"]= await CalculeTimeSubcription(info_pending_payment.line_items.data[0].name, info_pending_payment.created_at)
-                    //     pending_payment["status"]='pending_payment'
-                    // await order_pending_payment.update(pending_payment);
-                    // res.json({status:200, message:"operacion exitosa"})
-                   // }
-                   //  console.log('fuera del if')
-                    
+                    }, 1000)                    
                 break;
                 case 'order.paid':
                     console.log('order.paid',  new Date())                    
@@ -126,18 +113,22 @@ module.exports={
                 case 'charge.created':
                     console.log('charge.created',  new Date())
                     let info_charge_created = req.body.data.object;
-                    let subscription_charge_created = await Subscription.findOne({where:{reference:info_charge_created.order_id}});
-                    console.log(subscription_charge_created )
-                    let customer_charge_created = await Customer.findOne({where:{idWordPress:subscription_charge_created.idWordPress}})
-                    var mailOptions_charge_created= {
-                        from: process.env.USER_MAIL,
-                        to: customer_charge_created.email,
-                        subject: 'Cargo Oxxo',
-                        text: JSON.stringify(info_charge_created)
-                    }
-                    let done_charge_created = await transporter.sendMail(mailOptions_charge_created);
-                    await Mail.create({id:done_charge_created.messageId, status:done_charge_created.response, message:JSON.stringify(info_charge_created),idWordPress:customer_charge_created.idWordPress})
-                    res.json(done_charge_created);
+                    interval(async (iteration, stop) => {
+                        let subscription_charge_created = await Subscription.findOne({where:{reference:info_charge_created.order_id}});
+                        if(subscription_charge_created  != null){
+                            stop()
+                            let customer_charge_created = await Customer.findOne({where:{idWordPress:subscription_charge_created.idWordPress}})
+                            var mailOptions_charge_created= {
+                                from: process.env.USER_MAIL,
+                                to: customer_charge_created.email,
+                                subject: 'Cargo Oxxo',
+                                text: JSON.stringify(info_charge_created)
+                            }
+                            let done_charge_created = await transporter.sendMail(mailOptions_charge_created);
+                            await Mail.create({id:done_charge_created.messageId, status:done_charge_created.response, message:JSON.stringify(info_charge_created),idWordPress:customer_charge_created.idWordPress})
+                            res.json(done_charge_created);
+                        } 
+                    }, 1000) 
                     break;
                 case 'charge.paid':
                     console.log('charge.paid',  new Date())
