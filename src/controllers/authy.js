@@ -35,7 +35,7 @@ module.exports={
             res.json({status: 402, message:'Suscripción no debitada! Seleccione un metodo de pago', idConekt:customer.idConekt, authorized:false});
           }  
         }else{
-          res.json({status: 404, message:'No tiene subscripción, seleccione una!', idWordPress:done.user, authorized:false});
+          res.json({status: 404, message:'No tiene subscripción, seleccione una!', idWordPress:data, authorized:false});
         }
       }
       if(data.statusCode==403){

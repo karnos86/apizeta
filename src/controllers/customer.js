@@ -161,8 +161,9 @@ module.exports={
     },
     async updateCustomer(req, res){
         try{
-            let data = req.headers["authorization"].split(" ");
-            let result = await Access.findOne({where:{uuii:data[1]}})
+            let UUII = req.headers["UUII"];
+            let data = req.headers["authorization"]
+            let result = await Access.findOne({where:{uuii:UUII}})
             let customerback = await Customer.find({where:{idConekt:result.idConekt}});
             let customerConekta = await conekta.Customer.find(result.idConekt);
             let info = req.body;
