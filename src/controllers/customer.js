@@ -75,7 +75,7 @@ module.exports={
             if(nonce.status=="ok"){
                 var name = data.name.replace(" ", "%20");
                console.log(process.env.CNAME_EXTERNAL+'/api/user/register/?username='+data.username+'&email='+data.email+'&nonce='+nonce.nonce+'&display_name='+name+'&notify=both&user_pass='+data.password)
-                var result = await asyn_request(process.env.CNAME_EXTERNAL+'/api/user/register/?username='+data.username+'&email='+data.email+'&nonce='+nonce.nonce+'&display_name='+data.name+'&notify=both&user_pass='+data.password,{method: 'GET'});
+                var result = await asyn_request(process.env.CNAME_EXTERNAL+'/api/user/register/?username='+data.username+'&email='+data.email+'&nonce='+nonce.nonce+'&display_name='+name+'&notify=both&user_pass='+data.password,{method: 'GET'});
                 wordpress = JSON.parse(result.body);
                 if(wordpress.status =='ok'){
                     let api_rest = await Customer.create({idWordPress:wordpress.user_id, email:data.email, username:data.username});
