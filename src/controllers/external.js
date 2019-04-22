@@ -51,6 +51,7 @@ module.exports={
         try{
             switch (req.body.type) {
                  case 'customer.created':
+                 console.log('customer.created',  new Date())
                     info_customer_created = req.body.data.object;
                     customer_created = await Customer.findOne({where:{email:info_customer_created.email}});
                     await customer_created.update({idConekt: info_customer_created.id , active: true});
@@ -58,6 +59,7 @@ module.exports={
 
                     break;
                 case 'order.created':
+                console.log('order.created', new Date())
                     let info_Order_created = req.body.data.object;
                     let customer_Order_created = await Customer.findOne({where:{idConekt:info_Order_created.customer_info.customer_id}})
                     let order_created= new Object()
@@ -72,6 +74,7 @@ module.exports={
 
                     break;
                 case 'order.pending_payment':
+                    console.log('order.pending_payment',  new Date())
                     let info_pending_payment = req.body.data.object;
                     let order_pending_payment = await Subscription.findById(info_pending_payment.id)
                     console.log(order_pending_payment)
@@ -88,6 +91,7 @@ module.exports={
                     
                 break;
                 case 'order.paid':
+                    console.log('order.paid',  new Date())                    
                     let expired_order_paid, active_order_paid;
                     let info_order_paid = req.body.data.object;
                     let customer_order_paid = await Customer.findOne({where:{idConekt:info_order_paid.customer_info.customer_id}})
@@ -105,6 +109,7 @@ module.exports={
                     res.json({status:200, message:"operacion exitosa"})
                     break;
                 case 'charge.created':
+                    console.log('charge.created',  new Date())
                     let info_charge_created = req.body.data.object;
                     let subscription_charge_created = await Subscription.findOne({where:{reference:info_charge_created.order_id}});
                     console.log(subscription_charge_created )
@@ -120,6 +125,7 @@ module.exports={
                     res.json(done_charge_created);
                     break;
                 case 'charge.paid':
+                    console.log('charge.paid',  new Date())
                     let info_charge_paid = req.body.data.object;
                     let customer_charge_paid
                     if(info_charge_paid.customer_id != ''){
