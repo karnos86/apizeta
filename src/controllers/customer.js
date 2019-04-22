@@ -11,7 +11,7 @@ const Access = require('../models/Access');
 module.exports={
     async create(req, res){
         try {
-                      var data = req.body;
+            var data = req.body;
            let generar_nonce = await asyn_request(process.env.CNAME_EXTERNAL+'/api/get_nonce/?json=get_nonce&controller=user&method=register',
                {method: 'GET'}, 
                {headers: {'Accept': 'application/json','Accept-Charset': 'utf-8',}},
@@ -19,7 +19,8 @@ module.exports={
            let nonce = JSON.parse(generar_nonce.body);
            console.log(nonce);
            if(nonce.status=="ok"){
-               console.log(process.env.CNAME_EXTERNAL+'/api/user/register/?username='+data.username+'&email='+data.email+'&nonce='+nonce.nonce+'&display_name='+data.name+'&notify=both&user_pass='+data.password)
+               var name = data.name.replace(" ", "%20");
+               console.log(process.env.CNAME_EXTERNAL+'/api/user/register/?username='+data.username+'&email='+data.email+'&nonce='+nonce.nonce+'&display_name='+name+'&notify=both&user_pass='+data.password)
                 var result = await asyn_request(process.env.CNAME_EXTERNAL+'/api/user/register/?username='+data.username+'&email='+data.email+'&nonce='+nonce.nonce+'&display_name='+data.name+'&notify=both&user_pass='+data.password,{method: 'GET'});
                 wordpress = JSON.parse(result.body);
                 if(wordpress.status =='ok'){
