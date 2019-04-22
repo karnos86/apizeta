@@ -76,6 +76,7 @@ module.exports={
   // },
   async accessApp(req, res, next){
     try{
+      console.log(req.headers)
       if(req.headers["UUII"] == null){
         res.status(401).send({message:"Operacion no permitida"})
       }
