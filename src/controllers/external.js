@@ -74,11 +74,10 @@ module.exports={
                 case 'order.pending_payment':
                     let info_pending_payment = req.body.data.object;
                     let order_pending_payment
-                    const timer = setIntervalAsync( async () => { order_pending_payment = await Subscription.findById(info_pending_payment.id); }, 2000)
+                    order_pending_payment = await Subscription.findById(info_pending_payment.id)
                     console.log(order_pending_payment)
-                    console.log(timer)
                     if(order_pending_payment != null){
-                        await clearIntervalAsync(timer)
+                       console.log("del if")
                         let pending_payment = new Object()
                         pending_payment["start"]=info_pending_payment.created_at
                         pending_payment["end"]= await CalculeTimeSubcription(info_pending_payment.line_items.data[0].name, info_pending_payment.created_at)
