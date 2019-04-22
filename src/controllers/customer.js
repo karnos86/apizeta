@@ -24,7 +24,7 @@ module.exports={
                 var result = await asyn_request(process.env.CNAME_EXTERNAL+'/api/user/register/?username='+data.username+'&email='+data.email+'&nonce='+nonce.nonce+'&display_name='+data.name+'&notify=both&user_pass='+data.password,{method: 'GET'});
                 wordpress = JSON.parse(result.body);
                 if(wordpress.status =='ok'){
-                    let api_rest = await Customer.create({idWordPress:wordpress.user_id, email:data.email});
+                    let api_rest = await Customer.create({idWordPress:wordpress.user_id, email:data.email, username:data.username});
                     console.log(api_rest)
                     var customer_Conekta =  await conekta.Customer.create({
                         name: data.name,
@@ -57,7 +57,7 @@ module.exports={
     async personalTdc(req, res){
         try{
             let data = req.body;
-            let api_rest = await Customer.create({idWordPress:data.wordpress, email:data.email})
+            let api_rest = await Customer.create({idWordPress:data.wordpress, email:data.email, username:data.username})
             var customer_Conekta =  await conekta.Customer.create(data);
             await api_rest.update({idConekt:customer_Conekta._id , active: true})
             res.json(customer_Conekta.subscription._json);
@@ -77,7 +77,7 @@ module.exports={
                 var result = await asyn_request(process.env.CNAME_EXTERNAL+'/api/user/register/?username='+data.username+'&email='+data.email+'&nonce='+nonce.nonce+'&display_name='+data.name+'&notify=both&user_pass='+data.password,{method: 'GET'});
                 wordpress = JSON.parse(result.body);
                 if(wordpress.status =='ok'){
-                    let api_rest = await Customer.create({idWordPress:wordpress.user_id, email:data.email});
+                    let api_rest = await Customer.create({idWordPress:wordpress.user_id, email:data.email, username:data.username});
                     let customer = await conekta.Customer.create(data.oxxo.customer_info[0])
                     await api_rest.update({idConekt: customer._id , active: true});
                     data.oxxo["customer_info"] = {customer_id:customer._id};

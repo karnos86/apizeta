@@ -15,6 +15,11 @@ const db = require('../../bin/database');
       allowNull: true,
       unique: 'compositeIndex'
     },
+    username: {
+      type: Sequelize.STRING,  
+      allowNull: true,
+      unique: 'compositeIndex'
+    },
     email: {
       type: Sequelize.STRING,  
       allowNull: true,
