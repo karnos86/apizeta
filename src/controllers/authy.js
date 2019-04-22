@@ -20,7 +20,7 @@ module.exports={
             let access = await Access.findOne({where:{uuii:login.UUII}});
             if(access != null){
               await access.update({'authorized':true, 'idWordPress':customer.idWordPress});
-              res.json({status:200, authorized:true});
+              res.json({status:200, authorized:true, token:data.token});
             }else{
               await Access.create({'uuii':login.UUII,'authorized':true, 'idWordPress':customer.idWordPress});
               res.json({status: 200, authorized: true});
