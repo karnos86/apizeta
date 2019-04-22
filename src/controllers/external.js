@@ -8,7 +8,8 @@ const Mail = require('../models/Mail')
 const Access = require('../models/Access')
 const nodemailer = require('nodemailer');
 const https = require('https');
-const {  setIntervalAsync,  clearIntervalAsync } = require('set-interval-async/dynamic')
+const interval = require('interval-promise')
+
 
 
 module.exports={
@@ -76,18 +77,32 @@ module.exports={
                 case 'order.pending_payment':
                     console.log('order.pending_payment',  new Date())
                     let info_pending_payment = req.body.data.object;
-                    let order_pending_payment = await Subscription.findById(info_pending_payment.id)
-                    console.log(order_pending_payment)
-                    if(order_pending_payment != null){
-                       console.log("del if")
-                        let pending_payment = new Object()
-                        pending_payment["start"]=info_pending_payment.created_at
-                        pending_payment["end"]= await CalculeTimeSubcription(info_pending_payment.line_items.data[0].name, info_pending_payment.created_at)
-                        pending_payment["status"]='pending_payment'
-                    await order_pending_payment.update(pending_payment);
-                    res.json({status:200, message:"operacion exitosa"})
-                   }
-                    console.log('fuera del if')
+                    let order_pending_payment 
+                    interval(async (iteration, stop) => {
+                        order_pending_payment = await Subscription.findById(info_pending_payment.id)
+                        if(order_pending_payment != null){
+                            stop()
+                            let pending_payment = new Object()
+                            pending_payment["start"]=info_pending_payment.created_at
+                            pending_payment["end"]= await CalculeTimeSubcription(info_pending_payment.line_items.data[0].name, info_pending_payment.created_at)
+                            pending_payment["status"]='pending_payment'
+                            await order_pending_payment.update(pending_payment);
+                            res.json({status:200, message:"operacion exitosa"})
+                       }
+                       
+                    }, 1000)
+
+                    // console.log(order_pending_payment)
+                    // if(order_pending_payment != null){
+                       
+                    //     let pending_payment = new Object()
+                    //     pending_payment["start"]=info_pending_payment.created_at
+                    //     pending_payment["end"]= await CalculeTimeSubcription(info_pending_payment.line_items.data[0].name, info_pending_payment.created_at)
+                    //     pending_payment["status"]='pending_payment'
+                    // await order_pending_payment.update(pending_payment);
+                    // res.json({status:200, message:"operacion exitosa"})
+                   // }
+                   //  console.log('fuera del if')
                     
                 break;
                 case 'order.paid':
