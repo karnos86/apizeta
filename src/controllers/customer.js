@@ -54,6 +54,7 @@ module.exports={
             
         }
     },
+    //ojo revisar
     async personalTdc(req, res){
         try{
             let data = req.body;
@@ -136,8 +137,8 @@ module.exports={
     },
     async searchCustomer(req, res){
         try{
-            let data = req.headers["authorization"].split(" ");
-            let result = await Access.findOne({where:{uuii:data[1]}})
+            let data = req.headers["UUII"];
+            let result = await Access.findOne({where:{uuii:data}})
             let api_rest = await Customer.findOne({where:{idWordPress:result.idWordPress}})
             let customer = await conekta.Customer.find(api_rest.idConekt);  
             let info = new Object();
@@ -187,8 +188,8 @@ module.exports={
     },
     async renovarOxxo(req, res){
         try{
-            let data = req.headers["authorization"].split(" ");
-            let result = await Access.findOne({where:{uuii:data[1]}})
+            let data = req.headers["UUII"];
+            let result = await Access.findOne({where:{uuii:data}})
             let api_rest = await Customer.findOne({where:{idWordPress:result.idWordPress}})
             let subscription = await Subscription.find({where:{idWordPress:result.idWordPress}});
             let plan = await conekta.Plan.find(subscription.subscription);
@@ -225,8 +226,8 @@ module.exports={
     }, 
     async renovarTdc(req, res){
         try{
-            let data = req.headers["authorization"].split(" ");
-            let result = await Access.findOne({where:{uuii:data[1]}})
+            let data = req.headers["UUII"];
+            let result = await Access.findOne({where:{uuii:data}})
             let api_rest = await Customer.findOne({where:{idWordPress:result.idWordPress}})
             let subscription = await Subscription.find({where:{idWordPress:result.idWordPress}});
             let customer =  await conekta.Customer.find(api_rest.idConekt);

@@ -48,7 +48,6 @@ module.exports={
     },
     async hooksPaid(req, res){
          let cancel, notification, subscrition, customer, renovate,done, mail;
-
         try{
             switch (req.body.type) {
                  case 'customer.created':
@@ -217,8 +216,8 @@ module.exports={
     async resendMail(req, res){
         try{
 
-            let data = req.headers["authorization"].split(" ");
-            let result = await Access.findOne({where:{uuii:data[1]}})
+            let data = req.headers["UUII"];
+            let result = await Access.findOne({where:{uuii:data}})
             let api_rest = await Customer.findOne({where:{idWordPress:result.idWordPress}})
             let mail = await Mail.findAll({where:{idWordPress:result.idWordPress}, order:[['createdAt','DESC']],})
             var ultimo = mail[0];
@@ -230,11 +229,11 @@ module.exports={
             }
             let done = await transporter.sendMail(mailOptions)
             res.json(done)
-    }catch(error){
-      console.log(error)
-      res.status(500).json(error)
-    }
- } 
+        }catch(error){
+          console.log(error)
+          res.status(500).json(error)
+        }
+    } 
  
 }
 
