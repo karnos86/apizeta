@@ -112,22 +112,27 @@ module.exports={
                 case 'charge.created':
                     console.log('charge.created',  new Date())
                     let info_charge_created = req.body.data.object;
-                    interval(async (iteration, stop) => {
-                        let subscription_charge_created = await Subscription.findOne({where:{reference:info_charge_created.order_id}});
-                        if(subscription_charge_created  != null){
-                            stop()
-                            let customer_charge_created = await Customer.findOne({where:{idWordPress:subscription_charge_created.idWordPress}})
-                            var mailOptions_charge_created= {
-                                from: process.env.USER_MAIL,
-                                to: customer_charge_created.email,
-                                subject: 'Cargo Oxxo',
-                                text: JSON.stringify(info_charge_created)
-                            }
-                            let done_charge_created = await transporter.sendMail(mailOptions_charge_created);
-                            await Mail.create({id:done_charge_created.messageId, status:done_charge_created.response, message:JSON.stringify(info_charge_created),idWordPress:customer_charge_created.idWordPress})
-                            res.json(done_charge_created);
-                        } 
-                    }, 1000) 
+                    if(info_charge_created.payment_method.service_name=='OxxoPay'){
+                        interval(async (iteration, stop) => {
+                            let subscription_charge_created = await Subscription.findOne({where:{reference:info_charge_created.order_id}});
+                            if(subscription_charge_created  != null){
+                                stop()
+                                let customer_charge_created = await Customer.findOne({where:{idWordPress:subscription_charge_created.idWordPress}})
+                                var mailOptions_charge_created= {
+                                    from: process.env.USER_MAIL,
+                                    to: customer_charge_created.email,
+                                    subject: 'Cargo Oxxo',
+                                    text: JSON.stringify(info_charge_created)
+                                }
+                                let done_charge_created = await transporter.sendMail(mailOptions_charge_created);
+                                await Mail.create({id:done_charge_created.messageId, status:done_charge_created.response, message:JSON.stringify(info_charge_created),idWordPress:customer_charge_created.idWordPress})
+                                res.json(done_charge_created);
+                            } 
+                        }, 1000);
+                    }else{
+                        res.json({status:200, message:"operacion exitosa"})
+                    }
+                    
                     break;
                 case 'charge.paid':
                     console.log('charge.paid',  new Date())
@@ -152,16 +157,17 @@ module.exports={
                     res.json(done_charge_paid);
                     break;
                 case 'subscription.created':
-                    notification = req.body.data.object;
-                    customer = await Customer.findOne({where:{idConekt:notification.customer_id}})
-                    subscrition = new Object()
-                    subscrition["reference"] = notification.id
-                    subscrition["method"] = "TDC"
-                    subscrition["subscription"] = notification.plan_id
-                    subscrition["status"] =notification.status 
-                    subscrition["paid"] =false
-                    subscrition["idWordPress"] =customer.idWordPress;
-                    await Subscription.create(subscrition);
+                    let info_subscription_created = req.body.data.object;
+                    console.log('subscription.created',  new Date())
+                    let customer_subscription_created = await Customer.findOne({where:{idConekt:info_subscription_created.customer_id}})
+                    let subscription_created = new Object()
+                    subscription_created["reference"] = info_subscription_created.id
+                    subscription_created["method"] = "TDC"
+                    subscription_created["subscription"] = info_subscription_created.plan_id
+                    subscription_created["status"] =info_subscription_created.status 
+                    subscription_created["paid"] =false
+                    subscription_created["idWordPress"] =customer_subscription_created.idWordPress;
+                    await Subscription.create(subscription_created);
                     res.json({status:200, message:"operacion exitosa"});
                     break
                 case 'subscription.payment_failed':
