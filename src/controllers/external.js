@@ -172,33 +172,52 @@ module.exports={
                     break
                 case 'subscription.payment_failed':
                     notification = req.body.data.object;
-                    var payment_failed = await Subscription.findById(notification.id);
-                    subscrition = new Object()
-                    subscrition["end"]      = notification.billing_cycle_end
-                    subscrition["status"]   = notification.status
-                    await payment_failed.update(subscrition);
-                    res.json({status:200, message:"operacion exitosa"});
+                    console.log('subscription.payment_failed',  new Date())
+                    interval(async (iteration, stop) => {
+                        var payment_failed = await Subscription.findById(notification.id);
+                        if(payment_failed != null){
+                            stop()
+                            subscrition = new Object()
+                            subscrition["end"]      = notification.billing_cycle_end
+                            subscrition["status"]   = notification.status
+                            await payment_failed.update(subscrition);
+                            res.json({status:200, message:"operacion exitosa"});
+                        }
+                    }, 1000);
+
 
                     break;
                 case 'subscription.paid':
                     notification = req.body.data.object;
-                    var paid = await Subscription.findById(notification.id);
-                    subscrition = new Object()
-                    subscrition["start"]    = notification.billing_cycle_start
-                    subscrition["end"]      = notification.billing_cycle_end
-                    subscrition["paid"]     = true 
-                    subscrition["status"]   = notification.status
-                    await paid.update(subscrition);
-                    res.json({status:200, message:"operacion exitosa"});
+                    console.log('subscription.paid',  new Date())
+                    interval(async (iteration, stop) => {
+                        var paid = await Subscription.findById(notification.id);
+                        if(paid != null){
+                            stop()
+                            subscrition = new Object()
+                            subscrition["start"]    = notification.billing_cycle_start
+                            subscrition["end"]      = notification.billing_cycle_end
+                            subscrition["paid"]     = true 
+                            subscrition["status"]   = notification.status
+                            await paid.update(subscrition);
+                            res.json({status:200, message:"operacion exitosa"});
+                        } 
+                    }, 1000);
                     break;
                 case 'subscription.canceled':
                     notification = req.body.data.object;
+                    console.log('subscription.canceled',  new Date())
+                    interval(async (iteration, stop) => {
                     var canceled = await Subscription.findById(notification.id);
-                    subscrition = new Object()
-                     subscrition["end"]      = notification.billing_cycle_end
-                    subscrition["status"]   = notification.status
-                    await canceled.update(subscrition);
-                    res.json({status:200, message:"operacion exitosa"});
+                        if(canceled != null){
+                            stop()
+                            subscrition = new Object()
+                            subscrition["end"]      = notification.billing_cycle_end
+                            subscrition["status"]   = notification.status
+                            await canceled.update(subscrition);
+                            res.json({status:200, message:"operacion exitosa"});
+                        }
+                    }, 1000);
 
                     break;
                 default:
