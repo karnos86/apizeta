@@ -49,30 +49,42 @@ import bus from '../bus.js'
       login () {
         this.$toastr.info('Valiadando Información!', 'por favor espere ...!');
         let data = {username:this.username, password: this.password}
-      	axios.post(url+'/ctl/login', data)
-      	.then((done)=>{
-          if(done.data.status === 'error'){
-            this.$toastr.error('Upps !', 'Información de acceso incorrectos');
-            this.error = true;
-            this.message = done.data.message;
-          }else{
-            console.log('done',done.data.message)
-            let cookie = done.data.cookie
-            localStorage.cookie=cookie
-            bus.$emit("login");
-            this.$toastr.success('Valiación Exitosa!', 'Información de acceso correctos');
-            this.$router.push('/')
-          }
-      	})
-      	.catch((err)=>{
-          localStorage.cookie='asdnasdu32423eygqwdbas'
-          this.$toastr.error('Upps !', err.message);
-          console.log(err);
-      		this.message =err.message;
-      		this.error = true;
-          setTimeout(()=>{ this.error = false; }, 6000);
-      		
-      	})
+        axios.get('https://zetatijuana.com//api/user/generate_auth_cookie/?username='+this.username+'&password'+this.password)
+        .then(done=>{
+          console.log(done)
+
+        })
+        .catch(error=>{
+          console.log(error)
+
+        })
+
+
+
+
+
+      	// axios.post(url+'/ctl/login', data)
+      	// .then((done)=>{
+       //    if(done.data.status === 'error'){
+       //      this.$toastr.error('Upps !', 'Información de acceso incorrectos');
+       //      this.error = true;
+       //      this.message = done.data.message;
+       //    }else{
+       //      console.log('done',done.data.message)
+       //      let cookie = done.data.cookie
+       //      localStorage.cookie=cookie
+       //      bus.$emit("login");
+       //      this.$toastr.success('Valiación Exitosa!', 'Información de acceso correctos');
+       //      this.$router.push('/')
+       //    }
+      	// })
+      	// .catch((err)=>{
+       //    this.$toastr.error('Upps !', err.message);
+       //    console.log(err);
+      	// 	this.message =err.message;
+      	// 	this.error = true;
+       //    setTimeout(()=>{ this.error = false; }, 6000);	
+      	// })
       }
     }
   };

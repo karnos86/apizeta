@@ -35,7 +35,9 @@ module.exports={
             res.json({status: 402, message:'Suscripción no debitada! Seleccione un metodo de pago', idConekt:customer.idConekt, authorized:false});
           }  
         }else{
-          res.json({status: 404, message:'No tiene subscripción, seleccione una!', idWordPress:data, authorized:false});
+          var info = await asyn_request('https://zetatijuana.com//api/user/generate_auth_cookie/?username='+login.username+'&password'+login.password,{method: 'GET'});
+          info=JSON.parse(info.body);
+          res.json({status: 404, message:'No tiene subscripción, seleccione una!', idWordPress:info, authorized:false});
         }
       }
       if(data.statusCode==403){

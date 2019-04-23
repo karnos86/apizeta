@@ -163,24 +163,16 @@ module.exports={
     async updateCustomer(req, res){
         try{
             let UUII = req.headers["uuii"];
-            let data = req.headers["authorization"]
+            let auth = req.headers["authorization"]
             let result = await Access.findOne({where:{uuii:UUII}})
-            let customerback = await Customer.find({where:{idConekt:result.idConekt}});
-            let customerConekta = await conekta.Customer.find(result.idConekt);
-            let info = req.body;
-            if(info.password){
-                let hash = bcrypt.hashSync(info["password"], 10);
-                info["password"]=hash
-            }
-            console.log(info)
-           let rebac= await customerback.update(info);
-           let recon= await customerConekta.update(info);
-           console.log(rebac)
-           console.log(recon)
-
-
+            let data = req.body
+            let wordpress = await asyn_request('https://zetatijuana.com/wp-json/wp/v2/users/'+result.idWordPress,{method: 'POST', data:data,
+                headers:{'Content-Type':'application/json', 'Authorization':auth}})
+            let rest_api = await Customer.find({where:{idWordPress:result.idWordPress}});
+            let conekt = await conekta.Customer.find(result.idConekt);           
+            let rebac= await rest_api.update(data);
+            let recon= await conekt.update(data);
             res.json(true);
-
         }catch(error){
             console.log(error)
             res.status(500).json(error);
