@@ -35,7 +35,7 @@ module.exports={
           }  
         }else{
           console.log(login)
-          var info = await asyn_request('https://zetatijuana.com//api/user/generate_auth_cookie/?username='+login.username+'&password'+login.password,{method: 'GET'});
+          var info = await asyn_request('https://zetatijuana.com//api/user/generate_auth_cookie/?username='+login.username+'&password='+login.password,{method: 'GET'});
           info=JSON.parse(info.body);
           res.json({status: 404, message:'No tiene subscripción, seleccione una!', idWordPress:info, authorized:false});
         }
