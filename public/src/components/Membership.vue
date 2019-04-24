@@ -48,6 +48,7 @@
 			return{
 				memberships:[],
 				index:null,
+				details:null
 
 			}
 		},
@@ -89,7 +90,8 @@
   				}
 				axios.get(url+'/customer/search/worpress/'+id, config)
 				.then(done=>{
-					console.log(done)
+					this.details= done;
+					console.log(this.details)
 					this.$modal.show('dialog');
 				})
 				.catch(error=>console.log(error))

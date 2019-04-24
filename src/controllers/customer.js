@@ -300,10 +300,10 @@ module.exports={
             {method: 'GET'}, 
             {headers: {'Accept': 'application/json','Accept-Charset': 'utf-8',}});
             if(user_Wordpress.statusCode == 200){
-                let result =JSON.parse(user_Wordpress.body)
-                res.json(result)
+                let result =JSON.parse(user_Wordpress.body);
+                res.json(result.data);
             }else{
-                res.status(500).json({message:'Problemas de conxion con worpress'});
+                res.status(500).json({message:'Problemas de conexión con worpress'});
             }
             
         } catch (error) {
