@@ -190,7 +190,6 @@ module.exports={
             let subscription = await Subscription.find({where:{idWordPress:result.idWordPress}});
             let plan = await conekta.Plan.find(subscription.subscription);
             let customer = await conekta.Customer.find(api_rest.idConekt) 
-            console.log(customer)
             if(customer._json.subscription.status =='active'){
                 await customer.subscription.cancel()
             }
@@ -300,6 +299,11 @@ module.exports={
             let user_Wordpress = await asyn_request(process.env.CNAME_EXTERNAL+'/api/user/get_userinfo/?user_id='+id,
             {method: 'GET'}, 
             {headers: {'Accept': 'application/json','Accept-Charset': 'utf-8',}});
+            if(user_Wordpress.statusCode == 200){
+                res.json(JSON.parse(user_Wordpress.body))
+            }else{
+                res.status(500).json({message:'Problemas de conxion con worpress'});
+            }
             
         } catch (error) {
             

@@ -81,12 +81,13 @@
 				this.$modal.hide('dialog');
 			},
 			customer(id){
+				console.log("if");
 				let config = {
     				headers: {
       					'Authorization': 'Bearer ' + localStorage.cookie
     				}
   				}
-				axios.get('/customer/search/worpress/'+id, config)
+				axios.get(url+'/customer/search/worpress/'+id, config)
 				.then(done=>{
 					console.log(done)
 					this.$modal.show('dialog');
