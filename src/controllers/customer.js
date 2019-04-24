@@ -301,7 +301,8 @@ module.exports={
             {headers: {'Accept': 'application/json','Accept-Charset': 'utf-8',}});
             if(user_Wordpress.statusCode == 200){
                 let result =JSON.parse(user_Wordpress.body);
-                res.json(result.data);
+                console.log(result)
+                res.json(result);
             }else{
                 res.status(500).json({message:'Problemas de conexión con worpress'});
             }
