@@ -20,27 +20,24 @@ module.exports={
            console.log(nonce);
            if(nonce.status=="ok"){
                var name = data.name.split(' ').join('%20')
-            
-               console.log(name)
-               res.json()
-            //    console.log(process.env.CNAME_EXTERNAL+'/api/user/register/?username='+data.username+'&email='+data.email+'&nonce='+nonce.nonce+'&display_name='+name+'&notify=both&user_pass='+data.password)
-            //     var result = await asyn_request(process.env.CNAME_EXTERNAL+'/api/user/register/?username='+data.username+'&email='+data.email+'&nonce='+nonce.nonce+'&display_name='+data.name+'&notify=both&user_pass='+data.password,{method: 'GET'});
-            //     wordpress = JSON.parse(result.body);
-            //     if(wordpress.status =='ok'){
-                //     let api_rest = await Customer.create({idWordPress:wordpress.user_id, email:data.email, username:data.username});
-                //     console.log(api_rest)
-                //     var customer_Conekta =  await conekta.Customer.create({
-                //         name: data.name,
-                //         email: data.email,
-                //         phone: '+52'+data.phone,
-                //         plan_id: data.plan,
-                //         payment_sources: data.payment_sources
-                //     });
-                //     await api_rest.update({idConekt:customer_Conekta._id , active: true})
-                //     res.json(customer_Conekta.subscription._json);
-                // }else{
-                //     res.status(400).json(wordpress)
-                // }
+               console.log(process.env.CNAME_EXTERNAL+'/api/user/register/?username='+data.username+'&email='+data.email+'&nonce='+nonce.nonce+'&display_name='+name+'&notify=both&user_pass='+data.password)
+                var result = await asyn_request(process.env.CNAME_EXTERNAL+'/api/user/register/?username='+data.username+'&email='+data.email+'&nonce='+nonce.nonce+'&display_name='+data.name+'&notify=both&user_pass='+data.password,{method: 'GET'});
+                wordpress = JSON.parse(result.body);
+                if(wordpress.status =='ok'){
+                    let api_rest = await Customer.create({idWordPress:wordpress.user_id, email:data.email, username:data.username});
+                    console.log(api_rest)
+                    var customer_Conekta =  await conekta.Customer.create({
+                        name: data.name,
+                        email: data.email,
+                        phone: '+52'+data.phone,
+                        plan_id: data.plan,
+                        payment_sources: data.payment_sources
+                    });
+                    await api_rest.update({idConekt:customer_Conekta._id , active: true})
+                    res.json(customer_Conekta.subscription._json);
+                }else{
+                    res.status(400).json(wordpress)
+                }
            }else{
               res.status(400).json(nonce)
            }
@@ -77,7 +74,7 @@ module.exports={
             let nonce = JSON.parse(generar_nonce.body);
             console.log(nonce);
             if(nonce.status=="ok"){
-                var name = data.name.replace(" ", "%20");
+                var name = data.name.split(' ').join('%20');
                console.log(process.env.CNAME_EXTERNAL+'/api/user/register/?username='+data.username+'&email='+data.email+'&nonce='+nonce.nonce+'&display_name='+name+'&notify=both&user_pass='+data.password)
                 var result = await asyn_request(process.env.CNAME_EXTERNAL+'/api/user/register/?username='+data.username+'&email='+data.email+'&nonce='+nonce.nonce+'&display_name='+name+'&notify=both&user_pass='+data.password,{method: 'GET'});
                 wordpress = JSON.parse(result.body);
