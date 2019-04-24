@@ -4,15 +4,14 @@ module.exports={
     async searchSubscritions(req, res){
         console.log(req.body);
         let data = req.body
-        if(data.method=='OXXO'){
-            let oxxo = await conekta.Orden.find(data.reference)
-            console.log(oxxo);
-            res.json(oxxo)
-        }else{
+        if(data.method=='TDC'){
             let customer = await Customer.findById(data.idWordPress);
             let tdc = await conekta.Customer.find(customer.idConekt);
             res.json(tdc)
-
+        }else{
+            let oxxo = await conekta.Orden.find(data.reference)
+            console.log(oxxo);
+            res.json(oxxo)
         }
     }
 
