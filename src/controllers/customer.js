@@ -12,6 +12,7 @@ module.exports={
     async create(req, res){
         try {
             var data = req.body;
+            console.log(data)
             let generar_nonce = await asyn_request(process.env.CNAME_EXTERNAL+'/api/get_nonce/?json=get_nonce&controller=user&method=register',
                {method: 'GET'}, 
                {headers: {'Accept': 'application/json','Accept-Charset': 'utf-8',}},
