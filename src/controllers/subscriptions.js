@@ -2,6 +2,7 @@ const conekta = require('../../bin/conexion_conekta');
 const Customer = require('../models/Customer');
 module.exports={
     async searchSubscritions(req, res){
+        console.log(req.body);
         let data = req.body
         if(data.method=='OXXO'){
             let oxxo = await conekta.Orden.find(data.reference)
