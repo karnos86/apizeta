@@ -30,7 +30,8 @@ router.post('/api/customer/personal/oxxo', ctrl.customer.personalOxxo);
 
 //web
 router.get('/subscription/index', ctrl.authy.validateCookieWorpress, ctrl.customer.indexSubscription);
-router.get('/customer/search/worpress/:id',ctrl.authy.validateCookieWorpress,ctrl.customer.SearchWorpressCustomer)
+router.get('/customer/search/worpress/:id',ctrl.authy.validateCookieWorpress,ctrl.customer.SearchWorpressCustomer);
+router.post('/subscriptions/Conekta', ctrl.authy.validateCookieWorpress, ctrl.suscriptions.searchSubscritions);
 
 /*Authy manejo de session*/
 router.post('/api/customer/login', ctrl.authy.loginApp);

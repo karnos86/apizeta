@@ -34,10 +34,41 @@
 			</tbody>
 		</table>
 		<modal name="dialog">
-  			<button class="delete" v-on:click="close()"></button>
+  			<header class="modal-card-head">
+    			<p class="modal-card-title">Detalle de Suscripción</p>
+    			<button class="delete" aria-label="close" v-on:click="close()"></button>
+    		</header>
+    		<section class="modal-card-body">
+      			<div class="customer">
+					<div class="columns">
+						<div class="column has-text-centered">
+							<span class="title is-5">Informacion del Suscriptor</span>
+						</div>
+					</div>
+					<div class="columns">
+						<div class="column is-4">
+  							<label class="label">Id worpress</label>
+    						<input class="input" type="text" disabled v-model="details_Wordpress.id" >
+						</div>
+						<div class="column is-4">
+  							<label class="label">Usuario</label>
+    						<input class="input" type="text" disabled v-model="details_Wordpress.nickname" >
+						</div>
+						<div class="column is-4">
+  							<label class="label">Display Name</label>
+    						<input class="input" type="text" disabled v-model="details_Wordpress.displayname" >
+						</div>
+					</div>
+					  
+
+				</div> 
+    		</section>
+    		<footer class="modal-card-foot">
+    		  <button class="button is-success">Save changes</button>
+    		  <button class="button">Cancel</button>
+    		</footer>	
 		</modal>
-		<!-- <button class="button is-primary" v-on:click="show()"> abrir</button> -->
-	</div>
+		</div>
 </template>
 <script>
 	import axios from 'axios'
@@ -48,7 +79,19 @@
 			return{
 				memberships:[],
 				index:null,
-				details:null
+				details_Wordpress:{
+					avatar: null,
+					displayname: null,
+					firstname: null,
+					id: null,
+					lastname: null,
+					nicename: null,
+					nickname: null,
+					status: null,
+					url: null,
+				},
+				details_oxxo:{},
+				details_tdc:{}
 
 			}
 		},
@@ -88,13 +131,26 @@
       					'Authorization': 'Bearer ' + localStorage.cookie
     				}
   				}
-				axios.get(url+'/customer/search/worpress/'+id, config)
+				axios.get(url+'/customer/search/worpress/'+id , config)
 				.then(done=>{
-					this.details= done;
-					console.log(this.details)
+					this.details_Wordpress = done.data;
 					this.$modal.show('dialog');
 				})
 				.catch(error=>console.log(error))
+			},
+			conekta(info){
+				let config = {
+    				headers: {
+      					'Authorization': 'Bearer ' + localStorage.cookie
+    				}
+  				}
+				axios.post(url+'/subscriptions/Conekta',info,config)
+				.then(done=>{
+					console.log(done.data);
+					// this.$modal.show('dialog');
+				})
+				.catch(error=>console.log(error))
+
 			}
 
 		}
