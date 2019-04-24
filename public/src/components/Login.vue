@@ -49,7 +49,7 @@ import bus from '../bus.js'
       login () {
         this.$toastr.info('Valiadando Información!', 'por favor espere ...!');
         let data = {username:this.username, password: this.password}
-        axios.get('https://zetatijuana.com//api/user/generate_auth_cookie/?username='+this.username+'&password'+this.password)
+        axios.get('https://zetatijuana.com//api/user/generate_auth_cookie/?username='+this.username+'&password='+this.password)
         .then(done=>{
           console.log(done)
 
