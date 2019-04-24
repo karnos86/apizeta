@@ -48,13 +48,21 @@ import bus from '../bus.js'
     methods: {
       login () {
         this.$toastr.info('Valiadando Información!', 'por favor espere ...!');
+        let config = {
+            headers: {
+              'Access-Control-Allow-Origin': '*'
+
+            }
+          };
         let data = {username:this.username, password: this.password}
-        axios.get('https://zetatijuana.com//api/user/generate_auth_cookie/?username='+this.username+'&password='+this.password)
+        axios.post('https://zetatijuana.com/wp-json/jwt-auth/v1/token',data)
         .then(done=>{
           console.log(done)
+          this.$toastr.success('Valiación Exitosa!', 'Información de acceso correctos');
 
         })
         .catch(error=>{
+          this.$toastr.error('Upps !', 'Información de acceso incorrectos');
           console.log(error)
 
         })
