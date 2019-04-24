@@ -6,8 +6,7 @@ module.exports={
             console.log(req.body);
             let data = req.body
             if(data.method=='TDC'){
-                let customer = await Customer.findById(data.idWordPress);
-                let tdc = await conekta.Customer.find(customer.idConekt);
+                let tdc = await conekta.Customer.find(data.idConekt);
                 res.json(tdc)
             }else{
                 let oxxo = await conekta.Orden.find(data.reference)

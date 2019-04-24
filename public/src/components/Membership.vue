@@ -145,7 +145,7 @@
       					'Authorization': 'Bearer ' + localStorage.cookie
     				}
 				  }
-				  var data = {idConekt:info.customer.idConekt, method:info.method}
+				  var data = {idConekt:info.customer.idConekt, method:info.method, reference:info.reference}
 				  console.log(data)
 				axios.post(url+'/subscriptions/conekta',data,config)
 				.then(done=>{
