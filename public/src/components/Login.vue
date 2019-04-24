@@ -57,7 +57,7 @@ import bus from '../bus.js'
             }
           };
         let data = {username:this.username, password: this.password}
-        axios.post('https://zetatijuana.com/wp-json/jwt-auth/v1/token',data, confi)
+        axios.post('https://zetatijuana.com/wp-json/jwt-auth/v1/token',data, config)
         .then(done=>{
           console.log(done)
           this.$toastr.success('Valiación Exitosa!', 'Información de acceso correctos');
