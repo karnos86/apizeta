@@ -23,23 +23,26 @@ module.exports={
                var name = data.name.split(' ').join('%20')
                console.log(process.env.CNAME_EXTERNAL+'/api/user/register/?username='+data.username+'&email='+data.email+'&nonce='+nonce.nonce+'&display_name='+name+'&notify=both&user_pass='+data.password)
                 var result = await asyn_request(process.env.CNAME_EXTERNAL+'/api/user/register/?username='+data.username+'&email='+data.email+'&nonce='+nonce.nonce+'&display_name='+data.name+'&notify=both&user_pass='+data.password,{method: 'GET'});
-                res.json(result);
-                wordpress = JSON.parse(result.body);
-                if(wordpress.status =='ok'){
-                    let api_rest = await Customer.create({idWordPress:wordpress.user_id, email:data.email, username:data.username});
-                    console.log(api_rest)
-                    var customer_Conekta =  await conekta.Customer.create({
-                        name: data.name,
-                        email: data.email,
-                        phone: '+52'+data.phone,
-                        plan_id: data.plan,
-                        payment_sources: data.payment_sources
-                    });
-                    await api_rest.update({idConekt:customer_Conekta._id , active: true})
-                    res.json(customer_Conekta.subscription._json);
+                if(result.statusCode == 200){
+                    wordpress = JSON.parse(result.body);
+                    if(wordpress.status =='ok'){
+                        let api_rest = await Customer.create({idWordPress:wordpress.user_id, email:data.email, username:data.username});
+                        console.log(api_rest)
+                        var customer_Conekta =  await conekta.Customer.create({
+                            name: data.name,
+                            email: data.email,
+                            phone: '+52'+data.phone,
+                            plan_id: data.plan,
+                            payment_sources: data.payment_sources
+                        });
+                        await api_rest.update({idConekt:customer_Conekta._id , active: true})
+                        res.json(customer_Conekta.subscription._json);
+                    }else{
+                        res.status(400).json(wordpress)
+                    }
                 }else{
-                    res.status(400).json(wordpress)
-                }
+                    res.status(500).json({message:'No se pudo procesar... Soporte fue notificado'})
+                } 
            }else{
               res.status(400).json(nonce)
            }
