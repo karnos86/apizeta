@@ -119,6 +119,7 @@
 				console.log(detalle);
 				console.log(posicion);
 				this.customer(detalle.idWordPress)
+				this.conekta(detalle)
 				
 			},
 			close(){
@@ -147,7 +148,6 @@
 				axios.post(url+'/subscriptions/Conekta',info,config)
 				.then(done=>{
 					console.log(done.data);
-					// this.$modal.show('dialog');
 				})
 				.catch(error=>console.log(error))
 
