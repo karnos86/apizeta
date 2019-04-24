@@ -144,8 +144,10 @@
     				headers: {
       					'Authorization': 'Bearer ' + localStorage.cookie
     				}
-  				}
-				axios.post(url+'/subscriptions/Conekta',info,config)
+				  }
+				  var data = {idConekt:info.customer.idConekt, method:info.method}
+				  console.log(data)
+				axios.post(url+'/subscriptions/conekta',data,config)
 				.then(done=>{
 					console.log(done.data);
 				})
