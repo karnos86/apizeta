@@ -50,12 +50,14 @@ import bus from '../bus.js'
         this.$toastr.info('Valiadando Información!', 'por favor espere ...!');
         let config = {
             headers: {
-              'Access-Control-Allow-Origin': '*'
+              'Access-Control-Allow-Origin': '*',
+              'Content-Type':'application/json',
+              'charset':'UTF-8'
 
             }
           };
         let data = {username:this.username, password: this.password}
-        axios.post('https://zetatijuana.com/wp-json/jwt-auth/v1/token',data)
+        axios.post('https://zetatijuana.com/wp-json/jwt-auth/v1/token',data, confi)
         .then(done=>{
           console.log(done)
           this.$toastr.success('Valiación Exitosa!', 'Información de acceso correctos');
