@@ -19,7 +19,8 @@ module.exports={
            let nonce = JSON.parse(generar_nonce.body);
            console.log(nonce);
            if(nonce.status=="ok"){
-               var name = data.name.split(' ')
+               var name = data.name.split(' ').join('%20')
+            
                console.log(name)
                res.json()
             //    console.log(process.env.CNAME_EXTERNAL+'/api/user/register/?username='+data.username+'&email='+data.email+'&nonce='+nonce.nonce+'&display_name='+name+'&notify=both&user_pass='+data.password)
