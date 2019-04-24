@@ -295,12 +295,13 @@ module.exports={
     },
     async SearchWorpressCustomer(req, res){
         try {
-            let id=res.params.id;
+            let id=req.params.id;
             let user_Wordpress = await asyn_request(process.env.CNAME_EXTERNAL+'/api/user/get_userinfo/?user_id='+id,
             {method: 'GET'}, 
             {headers: {'Accept': 'application/json','Accept-Charset': 'utf-8',}});
             if(user_Wordpress.statusCode == 200){
-                res.json(JSON.parse(user_Wordpress.body))
+                let result =JSON.parse(user_Wordpress.body)
+                res.json(result)
             }else{
                 res.status(500).json({message:'Problemas de conxion con worpress'});
             }
