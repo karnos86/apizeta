@@ -48,53 +48,49 @@ import bus from '../bus.js'
     methods: {
       login () {
         this.$toastr.info('Valiadando Información!', 'por favor espere ...!');
-        let config = {
-            headers: {
-              'Access-Control-Allow-Origin': '*',
-              'Content-Type':'application/json',
-              'charset':'UTF-8'
+        // let config = {
+        //     headers: {
+        //       'Access-Control-Allow-Origin': '*',
+        //       'Content-Type':'application/json',
+        //       'charset':'UTF-8'
 
-            }
-          };
+        //     }
+        //   };
         let data = {username:this.username, password: this.password}
-        axios.post('https://zetatijuana.com/wp-json/jwt-auth/v1/token',data, config)
-        .then(done=>{
-          console.log(done)
-          this.$toastr.success('Valiación Exitosa!', 'Información de acceso correctos');
+        // axios.post('https://zetatijuana.com/wp-json/jwt-auth/v1/token',data, config)
+        // .then(done=>{
+        //   console.log(done)
+        //   this.$toastr.success('Valiación Exitosa!', 'Información de acceso correctos');
 
-        })
-        .catch(error=>{
-          this.$toastr.error('Upps !', 'Información de acceso incorrectos');
-          console.log(error)
+        // })
+        // .catch(error=>{
+        //   this.$toastr.error('Upps !', 'Información de acceso incorrectos');
+        //   console.log(error)
 
-        })
+        // })
 
-
-
-
-
-      	// axios.post(url+'/ctl/login', data)
-      	// .then((done)=>{
-       //    if(done.data.status === 'error'){
-       //      this.$toastr.error('Upps !', 'Información de acceso incorrectos');
-       //      this.error = true;
-       //      this.message = done.data.message;
-       //    }else{
-       //      console.log('done',done.data.message)
-       //      let cookie = done.data.cookie
-       //      localStorage.cookie=cookie
-       //      bus.$emit("login");
-       //      this.$toastr.success('Valiación Exitosa!', 'Información de acceso correctos');
-       //      this.$router.push('/')
-       //    }
-      	// })
-      	// .catch((err)=>{
-       //    this.$toastr.error('Upps !', err.message);
-       //    console.log(err);
-      	// 	this.message =err.message;
-      	// 	this.error = true;
-       //    setTimeout(()=>{ this.error = false; }, 6000);	
-      	// })
+      	axios.post(url+'/ctl/login', data)
+      	.then((done)=>{
+          if(done.data.status === 'error'){
+            this.$toastr.error('Upps !', 'Información de acceso incorrectos');
+            this.error = true;
+            this.message = done.data.message;
+          }else{
+            console.log('done',done.data.message)
+            let cookie = done.data.cookie
+            localStorage.cookie=cookie
+            bus.$emit("login");
+            this.$toastr.success('Valiación Exitosa!', 'Información de acceso correctos');
+            this.$router.push('/')
+          }
+      	})
+      	.catch((err)=>{
+          this.$toastr.error('Upps !', err.message);
+          console.log(err);
+      		this.message =err.message;
+      		this.error = true;
+          setTimeout(()=>{ this.error = false; }, 6000);	
+      	})
       }
     }
   };
