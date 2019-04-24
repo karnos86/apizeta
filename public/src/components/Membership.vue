@@ -3,17 +3,20 @@
 		<table class="table is-striped">
 			<thead>
 				<tr>
-					<td><b>Code</b></td>
+					<td><b>Usuario</b></td>
+					<td><b>Refencia</b></td>
 					<td><b>Pago</b></td>
-					<td><b>Suscripción</b></td>
-					<td><b>Inicio</b></td>
-					<td><b>Fin</b></td>
+					<!--<td><b>Suscripción</b></td>
+					 <td><b>Inicio</b></td>
+					<td><b>Fin</b></td> -->
 					<td><b>Estado</b></td>
+					
 				</tr>
 			</thead>
 			<tbody>
 				<tr v-for="(membership, index) in memberships">
-					<td><span>{{membership.idConekt}}</span></td>
+					<td><span>{{membership.idWordPress}}</span></td>
+					<td><span>{{membership.reference}}</span></td>
 					<td>
 						<figure class="image is-64x64" v-show="membership.method==='OXXO'">
   								<img src="../assets/imagen/oxxo.png">
@@ -22,17 +25,18 @@
   								<img src="../assets/imagen/mastercard.png">
 						</figure>
 					</td>
-					<td>{{membership.subscription}}</td>
+					<!-- <td>{{membership.subscription}}</td>
 					<td >{{ membership.start | moment("DD/MM/YYYY, h:mm:ss a") }}</td>
-					<td >{{ membership.end | moment("DD/MM/YYYY, h:mm:ss a") }}</td>
+					<td >{{ membership.end | moment("DD/MM/YYYY, h:mm:ss a") }}</td> -->
 					<td >{{membership.status}}</td>
+					<td ><button class="button is-info" v-on:click="info(membership, index)"> detalle</button></td>
 				</tr>
 			</tbody>
 		</table>
 		<modal name="dialog">
   			<button class="delete" v-on:click="close()"></button>
 		</modal>
-		<button class="button is-primary" v-on:click="show()"> abrir</button>
+		<!-- <button class="button is-primary" v-on:click="show()"> abrir</button> -->
 	</div>
 </template>
 <script>
@@ -67,12 +71,29 @@
 
 				})
 			},
-			show(){
-				this.$modal.show('dialog');
+			info(detalle, posicion){
+				console.log(detalle);
+				console.log(posicion);
+				this.customer(detalle.idWordPress)
+				
 			},
 			close(){
 				this.$modal.hide('dialog');
+			},
+			customer(id){
+				let config = {
+    				headers: {
+      					'Authorization': 'Bearer ' + localStorage.cookie
+    				}
+  				}
+				axios.get('/customer/search/worpress/'+id, config)
+				.then(done=>{
+					console.log(done)
+					this.$modal.show('dialog');
+				})
+				.catch(error=>console.log(error))
 			}
+
 		}
 		
 	};

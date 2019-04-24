@@ -59,7 +59,6 @@ module.exports={
             
         }
     },
-    //ojo revisar
     async personalTdc(req, res){
         try{
             let data = req.body;
@@ -293,6 +292,17 @@ module.exports={
         }catch(error){
             console.log(error)
             res.status(500).json(error)
+        }
+    },
+    async SearchWorpressCustomer(req, res){
+        try {
+            let id=res.params.id;
+            let user_Wordpress = await asyn_request(process.env.CNAME_EXTERNAL+'/api/user/get_userinfo/?user_id='+id,
+            {method: 'GET'}, 
+            {headers: {'Accept': 'application/json','Accept-Charset': 'utf-8',}});
+            
+        } catch (error) {
+            
         }
     }
 
