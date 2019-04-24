@@ -6,9 +6,11 @@ module.exports={
             console.log(req.body);
             let data = req.body
             if(data.method=='TDC'){
+                console.log(data.idConekt)
                 let tdc = await conekta.Customer.find(data.idConekt);
                 res.json(tdc)
             }else{
+                console.log(data.reference)
                 let oxxo = await conekta.Orden.find(data.reference)
                 console.log(oxxo);
                 res.json(oxxo)
