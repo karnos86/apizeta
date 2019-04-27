@@ -311,6 +311,16 @@ module.exports={
             console.log(error)
             res.status(500).json(error)
         }
+    }, 
+    async indexCustomer(req, res){
+        try {
+            let customers = await Customer.findAll({include:[{all: true}],})
+            res.json(customers)
+
+        }catch(error){
+            console.log(error)
+            res.status(500).json(error)
+        }
     }
     
 

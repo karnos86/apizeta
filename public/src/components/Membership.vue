@@ -59,9 +59,14 @@
     						<input class="input" type="text" disabled v-model="details_Wordpress.displayname" >
 						</div>
 					</div>
-					  
-
 				</div> 
+				<div class="subscriptions">
+					<div class="columns">
+						<div class="column has-text-centered">
+							<span class="title is-5">Información de la Subscripción</span>
+						</div>
+					</div>
+				</div>
     		</section>
     		<footer class="modal-card-foot">
     		  <button class="button is-success">Save changes</button>
@@ -116,10 +121,11 @@
 				})
 			},
 			info(detalle, posicion){
-				console.log(detalle);
-				console.log(posicion);
-				this.customer(detalle.idWordPress)
-				this.conekta(detalle)
+				// console.log(detalle);
+				// console.log(posicion);
+				// this.customer(detalle.idWordPress)
+				// this.conekta(detalle)
+				this.$router.push('/details')
 				
 			},
 			close(){

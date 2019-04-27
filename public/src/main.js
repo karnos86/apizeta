@@ -27,6 +27,7 @@ import Newspaper from './components/Newspaper.vue'
 import Pay from './components/Pay.vue'
 import User from './components/User.vue'
 import Login from './components/Login.vue'
+import DetailS from './components/detailSubscription'
 import bus from './bus.js'
 
 function requireAuth (to, from, next) {
@@ -50,6 +51,7 @@ const router = new VueRouter({
     { path: '/newspaper', component: Newspaper, beforeEnter: requireAuth },
     { path: '/pay', component: Pay, beforeEnter: requireAuth },
     { path: '/users', component: User, beforeEnter: requireAuth },
+    { path: '/details', component: DetailS, beforeEnter: requireAuth },
     { path: '/login', component: Login },
     { path: '/logout',
       beforeEnter (to, from, next) {

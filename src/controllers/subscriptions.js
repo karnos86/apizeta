@@ -11,7 +11,7 @@ module.exports={
                 res.json(tdc)
             }else{
                 console.log(data.reference)
-                let oxxo = await conekta.Orden.find(data.reference)
+                let oxxo = await conekta.Order.find(data.reference)
                 console.log(oxxo);
                 res.json(oxxo)
             }
