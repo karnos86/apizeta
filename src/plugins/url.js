@@ -1,6 +1,6 @@
 module.exports = {
-    backend:'https://backendapp.zetatijuana.com',
+    // backend:'https://backendapp.zetatijuana.com',
     worpress:'https://zetatijuana.com',
-    // backend:'http://localhost:3000',
+    backend:'http://localhost:3000',
 
 }

@@ -69,27 +69,26 @@ export default {
     },
     methods:{
         login(){
-            this.alert={value:true, type:"info", message:"validando información}"}
+            this.alert={value:true, type:"info", message:"validando información"}
             let data = {username:this.username, password: this.password}
-            axios.post(backend+'/ctl/login', data, basic)
-      	    .then((done)=>{ 
+            axios.post(backend+'/ctl/login', data, basic).then((done)=>{ 
                 if(done.data.status === 'error'){
                     this.alert={value:true, type:"error", message:"Información de acceso incorrectos"}
                     this.resetear()
                 }else{
                     this.alert={value:true, type:"success", message:"Información de acceso correctos"}
-                    this.resetear()
-                    this.password=null
-                    this.username=null
-                    let cookie = done.data.cookie
-                    localStorage.cookie=cookie
-                    this.$router.push('/')
+                    this.resetear();
+                    this.password=null;
+                    this.username=null;
+                    let cookie = done.data.cookie;
+                    localStorage.cookie=cookie;
+                    this.$router.push('/');
                 }
-      	    })
-      	    .catch(()=>{
-                this.alert={value:true, type:"error", message: "Se presento un error al ingresar"}
-                this.resetear()
-      	    })
+      	    }).catch(()=>{
+                this.alert={value:true, type:"error", message: "Se presento un error al ingresar"};
+                localStorage.cookie="a"
+                this.resetear();
+      	    });
         },
         resetear(){
             

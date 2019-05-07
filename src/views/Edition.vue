@@ -269,7 +269,7 @@ export default {
       const data = e.target.files[0]
       if(data.type == "application/pdf"){
       	this.datafile = data;
-        this.filename = data.name;
+        this.filename = data["name"];
       }
     },
     upload(code){ 
@@ -277,11 +277,11 @@ export default {
       this.document=this.reset
       let file = new FormData();
       file.append('file', this.datafile);
+      this.datafile={}
+      this.filename=null;
       axios.post(backend+'/uploadFile/'+code,file,authFile)
       .then(()=>{
-        this.sendAlert('success', 'El archivo se cargo exitosamente!')
-        this.datafile={}
-        this.filename=null;
+        this.sendAlert('success', 'El archivo se cargo exitosamente!');
         this.listNewspaper()
       })
       .catch(()=>this.sendAlert('error', 'Problemas al cargar el archivo!'))
