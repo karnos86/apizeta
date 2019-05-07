@@ -86,7 +86,6 @@ export default {
                 }
       	    }).catch(()=>{
                 this.alert={value:true, type:"error", message: "Se presento un error al ingresar"};
-                localStorage.cookie="a"
                 this.resetear();
       	    });
         },
