@@ -52,7 +52,7 @@
         </v-layout>
       </v-card>
       <v-layout row wrap justify-center>
-        <v-flex xs12 md8>
+        <v-flex xs12 sm10 md8 >
           <v-data-table :headers="headers" :items="desserts"  class="elevation-1" :search="search" :key="username">
             <template v-slot:items="props">
               <td>{{ props.item.code }}</td>
@@ -212,7 +212,7 @@ export default {
     },
     createdNews(){
         this.loading = !this.loading
-        let data = {code:this.semanario, date:this.date};
+        let data = {code:this.semanario, date:this.formatDate(this.date)};
         axios.post(backend+'/create/edition', data, auth)
         .then(()=>{
           this.semanario=null
