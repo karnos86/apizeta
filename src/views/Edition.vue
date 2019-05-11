@@ -109,9 +109,8 @@
     <!-- modal de carga de imagenes y pdf -->
     <v-dialog v-model="front.value" max-width="600" :key="code">
       <v-card>
-        <v-card-title class="headline">Seleccione la imagen de la Portada</v-card-title>
+        <v-card-title class="headline">Seleccione la imagen de la Portada {{front.code}}</v-card-title>
         <v-card-text>
-         {{front.code}}
          <v-text-field label="Seleccione imagenes .JPG .PNG .JPEG " prepend-icon="attach_file" v-model="filename" @click="$refs.front.click()"></v-text-field>
           <input v-show="false" ref="front" type="file" @change="handleFrontUpload" accept="image/*">
         </v-card-text>
