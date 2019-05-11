@@ -9,42 +9,40 @@ module.exports={
   async loginApp(req, res){
     try {
       var login = req.body;
-      console.log(login)
-      res.status(200)
-      // var data = await asyn_request('https://zetatijuana.com/wp-json/jwt-auth/v1/token',{method: 'POST', data: login});
-      // if(data.statusCode==200){
-      //   data=JSON.parse(data.body);
-      //   let customer = await Customer.findOne({include:[{all: true}], where:{email: data.user_email}});
-      //   if(customer){
-      //     let subscription = await validateSubscrition(customer.subcriptions) ;
-      //     if(subscription){
-      //       let access = await Access.findOne({where:{uuii:login.UUII}});
-      //       if(access != null){
-      //         await access.update({'authorized':true, 'idWordPress':customer.idWordPress});
-      //         res.json({status:200, authorized:true, token:data.token});
-      //       }else{
-      //         await Access.create({'uuii':login.UUII,'authorized':true, 'idWordPress':customer.idWordPress});
-      //         res.json({status: 200, authorized: true});
-      //       }
-      //       let listAccess = await Access.findAll({where:{idWordPress:customer.idWordPress}});
-      //       for(let i in listAccess){
-      //         if(listAccess[i].uuii != login.UUII){ 
-      //           await listAccess[i].update({authorized:false});
-      //         }
-      //       }
-      //     }else{
-      //       res.json({status: 402, message:'Suscripción no debitada! Seleccione un metodo de pago', idConekt:customer.idConekt, authorized:false});
-      //     }  
-      //   }else{
-      //     console.log(login)
-      //     var info = await asyn_request('https://zetatijuana.com//api/user/generate_auth_cookie/?username='+login.username+'&password='+login.password,{method: 'GET'});
-      //     info=JSON.parse(info.body);
-      //     res.json({status: 404, message:'No tiene subscripción, seleccione una!', idWordPress:info, authorized:false});
-      //   }
-      // }
-      // if(data.statusCode==403){
-      //   res.status(403).json({ message:'Usuario y/o Contrase\u00f1a incorrectos', authorized:false});
-      // }
+      var data = await asyn_request('https://zetatijuana.com/wp-json/jwt-auth/v1/token',{method: 'POST', data: login});
+      if(data.statusCode==200){
+        data=JSON.parse(data.body);
+        let customer = await Customer.findOne({include:[{all: true}], where:{email: data.user_email}});
+        if(customer){
+          let subscription = await validateSubscrition(customer.subcriptions) ;
+          if(subscription){
+            let access = await Access.findOne({where:{uuii:login.UUII}});
+            if(access != null){
+              await access.update({'authorized':true, 'idWordPress':customer.idWordPress});
+              res.json({status:200, authorized:true, token:data.token});
+            }else{
+              await Access.create({'uuii':login.UUII,'authorized':true, 'idWordPress':customer.idWordPress});
+              res.json({status: 200, authorized: true});
+            }
+            let listAccess = await Access.findAll({where:{idWordPress:customer.idWordPress}});
+            for(let i in listAccess){
+              if(listAccess[i].uuii != login.UUII){ 
+                await listAccess[i].update({authorized:false});
+              }
+            }
+          }else{
+            res.json({status: 402, message:'Suscripción no debitada! Seleccione un metodo de pago', idConekt:customer.idConekt, authorized:false});
+          }  
+        }else{
+          console.log(login)
+          var info = await asyn_request('https://zetatijuana.com//api/user/generate_auth_cookie/?username='+login.username+'&password='+login.password,{method: 'GET'});
+          info=JSON.parse(info.body);
+          res.json({status: 404, message:'No tiene subscripción, seleccione una!', idWordPress:info, authorized:false});
+        }
+      }
+      if(data.statusCode==403){
+        res.status(403).json({ message:'Usuario y/o Contrase\u00f1a incorrectos', authorized:false});
+      }
     } catch (error) {
         console.log('error',error)
         res.status(500).json(error);
