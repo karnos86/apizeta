@@ -14,15 +14,16 @@ module.exports={
 	},
 	async indexNewspaper(req, res){
 		try{
-			let index = await Newspaper.findAll({where:{front:{[Op.ne]: null}, document:{[Op.ne]: null}} , order:[['code','DESC']], limit: 4 });
+			let index = await Newspaper.findAll({where:{front:{$ne: null}, document:{$ne: null}} , order:[['code','DESC']], limit: 4 });
 			res.json(index)
 		}catch(error){
+			console.log(error)
 			res.status(500).json(error)
 		}
 	},
 	async imagenSplash(req, res){
 		try{
-			let imagen = await Newspaper.findAll({attributes: {exclude:['document'] },order:[['code','DESC']], limit: 1 });
+			let imagen = await Newspaper.findAll({where:{front:{$ne: null}}, attributes: {exclude:['document'] },order:[['code','DESC']], limit: 1 });
 			res.json(imagen)
 		}catch(error){
 			res.status(500).json(error)
@@ -31,7 +32,7 @@ module.exports={
 	async searchMonth(req, res){
 		try{
 			let data = req.body
-			let index = await Newspaper.findAll({where:{date:data.date}, order:[['code','ASC']]});
+			let index = await Newspaper.findAll({where:{date:data.date, front:{$ne: null}, document:{$ne: null}}, order:[['code','ASC']]});
 			res.json(index)
 		}catch(error){
 			res.status(500).json(error)
@@ -54,8 +55,7 @@ module.exports={
 				var fileName = newspaper.front.split("/");
 				var file =  path.join(path.resolve("."), 'documents/imagen/',fileName.pop())
 				if(fileExists(file)) {
-    				fs.unlinkSync(file);
-    				
+    				fs.unlinkSync(file);	
   				}
 			}
 			if(newspaper.document != null){
