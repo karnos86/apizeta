@@ -78,10 +78,10 @@ module.exports={
   // },
   async accessApp(req, res, next){
     try{
-      if(req.headers["uuii"] == null){
+      if(req.headers["authorization"] == null){
         res.status(401).send({message:"Operacion no permitida"})
       }
-      let data = req.headers["uuii"];
+      let data = req.headers["authorization"];
       let result = await Access.findOne({where:{uuii:data}})
       if(result == null){
         res.status(401).send({message:"Operacion no permitida"})
