@@ -14,7 +14,7 @@ module.exports={
 	},
 	async indexNewspaper(req, res){
 		try{
-			let index = await Newspaper.findAll({order:[['code','DESC']], limit: 4 });
+			let index = await Newspaper.findAll({where:{front:{[Op.ne]: null}, document:{[Op.ne]: null}} , order:[['code','DESC']], limit: 4 });
 			res.json(index)
 		}catch(error){
 			res.status(500).json(error)
