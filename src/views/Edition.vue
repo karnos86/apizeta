@@ -18,10 +18,10 @@
       </v-card>
       <v-card v-show="create==true" >
         <v-layout row wrap justify-center>
-          <v-flex  xs12 md4 class="pl-2">
+          <v-flex  xs12 md4 sm4 class="pl-2">
             <v-text-field v-model="semanario" :counter="10" label="Numero de semanario" required onkeyup="javascript:this.value=this.value.toUpperCase();"></v-text-field>
           </v-flex>
-          <v-flex xs12  md4 class="pl-2">
+          <v-flex xs12  md4 sm4 class="pl-2">
             <v-menu ref="menu" v-model="menu"  :close-on-content-click="false"  :nudge-right="40" :return-value.sync="date" lazy
               transition="scale-transition"  offset-y  full-width  max-width="290px"  min-width="290px" >
               <template v-slot:activator="{ on }">
@@ -35,7 +35,7 @@
               </v-date-picker>
             </v-menu>
           </v-flex>
-          <v-flex xs12  md2 class="pl-2">
+          <v-flex xs12  md2 sm2class="pl-2">
               <v-btn color="success" :loading="loading"  :disabled="loading"  @click="createdNews()" >
                 <v-icon class="pr-1 font-weight-thin">save</v-icon>
                 <span class="caption font-weight-thin"> Guardar</span>
@@ -45,14 +45,14 @@
       </v-card >
       <v-card flat>
         <v-layout row wrap justify-end>
-          <v-flex  xs12 md4 class="pl-2">
+          <v-flex  xs12 md4 sm4 class="pl-2">
             <v-text-field class="px-3" v-model="search"   label="busqueda de semanario" single-line append-icon="search" clearable>
             </v-text-field>
           </v-flex>
         </v-layout>
       </v-card>
       <v-layout row wrap justify-center>
-        <v-flex xs12 sm10 md8 >
+        <v-flex xs12 sm10 md10 >
           <v-data-table :headers="headers" :items="desserts"  class="elevation-1" :search="search" :key="username">
             <template v-slot:items="props">
               <td>{{ props.item.code }}</td>
