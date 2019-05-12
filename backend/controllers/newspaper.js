@@ -14,7 +14,7 @@ module.exports={
 	},
 	async indexNewspaper(req, res){
 		try{
-			let index = await Newspaper.findAll({where:{front:{$ne: null}, document:{$ne: null}} , order:[['code','DESC']], limit: 4 });
+			let index = await Newspaper.findAll({where:{$and:{front:{$ne: null}, document:{$ne:null}}} , order:[['code','DESC']], limit: 4 });
 			res.json(index)
 		}catch(error){
 			console.log(error)
@@ -32,7 +32,7 @@ module.exports={
 	async searchMonth(req, res){
 		try{
 			let data = req.body
-			let index = await Newspaper.findAll({where:{date:data.date, front:{$ne: null}, document:{$ne: null}}, order:[['code','ASC']]});
+			let index = await Newspaper.findAll({where:{date:data.date, $and:{front:{$ne: null}, document:{$ne:null}}}, order:[['code','ASC']]});
 			res.json(index)
 		}catch(error){
 			res.status(500).json(error)
