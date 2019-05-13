@@ -141,7 +141,7 @@ module.exports={
     },
     async searchCustomer(req, res){
         try{
-            let data = req.headers["uuii"];
+            let data = req.headers["authorization"];
             let result = await Access.findOne({where:{uuii:data}})
             let api_rest = await Customer.findOne({where:{idWordPress:result.idWordPress}})
             let customer = await conekta.Customer.find(api_rest.idConekt);  
