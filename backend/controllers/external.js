@@ -233,7 +233,7 @@ module.exports={
         try{
             var data = await asyn_request('https://www.googleapis.com/youtube/v3/playlistItems?key=AIzaSyBYYx0g6DgwDeZYVM4dDuW9hq4b-VlIiYA&playlistId=UU-NHHkALnId41yENpdCuLKQ&part=snippet,id&maxResults=12',{method: 'GET'})
             var json = JSON.parse(data.body)
-            conosle.log(json["items"])
+            console.log(json["items"])
             res.json(json["items"]);
         }catch(error){
             res.status(500).json(error)
