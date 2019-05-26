@@ -259,7 +259,15 @@ module.exports={
           console.log(error)
           res.status(500).json(error)
         }
-    } 
+    },
+    async emailForm(req, res){
+        try {
+            var results = await transporter.loadTemplate('charge_paid', 'ronald')
+            console.log(results)
+        } catch (error) {
+            console.log('error:',error)
+        }
+    }
  
 }
 
@@ -283,28 +291,5 @@ async function CalculeTimeSubcription(type, start){
     }    
 }
 
-async function bodyEmail(from, data){
-    try{
-        let mailOptions = {
-            from: from,
-            to: process.env.USER_MAIL,
-            subject: data.subect,
-            html: '<h1>Hola mundo!</h1>' 
-        };
-    }catch(error){
-        return error
-    }
-}
 
-
-// 
-
-//         transporter.sendMail(mailOptions, (error, info) => {
-//             if (error) {
-//                 console.log('Error', error);
-//             }
-//             else{
-//                 console.log('Success', info);
-//             }
-//         });
 
