@@ -20,7 +20,7 @@ const EmailTemplate = require('email-templates').EmailTemplate,
         }))
     },
     loadTemplate (templateName, contexts) {
-        return  new EmailTemplate(path.join(__dirname, 'backend/emails/', templateName));
+        return EmailTemplate(path.join(__dirname, 'backend/emails/', templateName));
         // return Promise.all(contexts.map((context) => {
         //     return new Promise((resolve, reject) => {
         //         template.render(context, (err, result) => {
