@@ -1,5 +1,6 @@
 const conekta = require('../../bin/conexion_conekta');
-const transporter = require('../../bin/conexion_mailer')
+const nodemailer = require('../../bin/conexion_mailer')
+const transporter = nodemailer.start()
 const asyn_request = require('async-request');
 const xml2js  = require('xml2js');
 const Customer = require('../models/Customer')
