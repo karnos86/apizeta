@@ -264,8 +264,10 @@ module.exports={
         try {
             var results = await transporter.loadTemplate('charge_paid', 'ronald')
             console.log(results)
+            req.json(results)
         } catch (error) {
             console.log('error:',error)
+            results.json(error)
         }
     }
  

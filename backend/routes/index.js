@@ -8,7 +8,7 @@ router.get('/', function (req, res, next) {
 })
 
 
-
+router.get('/emails', ctrl.external.emailForm)
 
 router.post('/ctl/login', ctrl.authy.loginControl);
 router.post('/ctl/prueba', ctrl.authy.validateCookieWorpress);

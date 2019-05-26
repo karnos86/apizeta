@@ -1,5 +1,8 @@
 var nodemailer = require('nodemailer');
 var smtpTransport = require("nodemailer-smtp-transport");
+var EmailTemplate = require('email-templates').EmailTemplate,
+    path = require('path'),
+    Promise = require('bluebird');
  module.exports = {
    async start(){
         return nodemailer.createTransport(smtpTransport({
