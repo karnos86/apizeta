@@ -8,7 +8,8 @@ var app = require('../app');
 var debug = require('debug')('controlappzeta:server');
 var http = require('http');
 var db = require('./database');
-var transporter = require('./conexion_mailer');
+var conex = require('./conexion_mailer');
+var transporter = conex.start()
 
 /**
  * Get port from environment and store in Express.
