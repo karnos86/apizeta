@@ -1,6 +1,6 @@
 var nodemailer = require('nodemailer');
 var smtpTransport = require("nodemailer-smtp-transport");
-var EmailTemplate = require('email-templates').EmailTemplate,
+const EmailTemplate = require('email-templates').EmailTemplate,
     path = require('path'),
     Promise = require('bluebird');
  module.exports = {
@@ -20,17 +20,17 @@ var EmailTemplate = require('email-templates').EmailTemplate,
         }))
     },
     loadTemplate (templateName, contexts) {
-        let template = new EmailTemplate(path.join(__dirname, 'backend/emails', templateName));
-        return Promise.all(contexts.map((context) => {
-            return new Promise((resolve, reject) => {
-                template.render(context, (err, result) => {
-                    if (err) reject(err);
-                    else resolve({
-                        email: result,
-                        context,
-                    });
-                });
-            });
-        }));
+        return  new EmailTemplate(path.join(__dirname, 'backend/emails/', templateName));
+        // return Promise.all(contexts.map((context) => {
+        //     return new Promise((resolve, reject) => {
+        //         template.render(context, (err, result) => {
+        //             if (err) reject(err);
+        //             else resolve({
+        //                 email: result,
+        //                 context,
+        //             });
+        //         });
+        //     });
+        // }));
     }
  } 
