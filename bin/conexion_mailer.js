@@ -4,7 +4,7 @@ var EmailTemplate = require('email-templates').EmailTemplate,
     path = require('path'),
     Promise = require('bluebird');
  module.exports = {
-   async start(){
+    start(){
         return nodemailer.createTransport(smtpTransport({
             service : process.env.HOST_MAIL,
             port:  process.env.PORT_MAIL,
