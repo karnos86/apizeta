@@ -40,9 +40,17 @@ module.exports={
     },
     async moneyZeta(req, res){
         try { 
-            var data = await asyn_request('https://forex.1forge.com/1.0.3/quotes?pairs=USDMXN,%20MXNUSD&api_key=h5pNjJV5gg40EyGsMcYPdbB8agpWFCkw',{method:'GET'})
-            res.json(JSON.parse(data.body))
+            // https://forex.1forge.com/1.0.3/quotes?pairs=USDMXN,%20MXNUSD&api_key=h5pNjJV5gg40EyGsMcYPdbB8agpWFCkw
+            var data = await asyn_request('http://www.apilayer.net/api/live?access_key=a41df98ac122790e6dc0b7e0ef7b09b4',{method:'GET'})
+            if(data.statusCode == 200){
+                let rates= JSON.parse(data.body);
+                let venta = rates.quotes.USDMXN.toFixed(2)
+                res.json({compra:parseFloat(venta)-2, venta:parseFloat(venta)})
+            }else{
+                res.status(500).json({message:'Problemas con el proveedor de tasas'})
+            } 
         } catch (error) {
+            console.log(error)
             res.status(500).json(error)
         }
     },
