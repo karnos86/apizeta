@@ -45,6 +45,9 @@ module.exports={
       if(data.statusCode==403){
         res.status(403).json({ message:'Usuario y/o Contrase\u00f1a incorrectos', authorized:false});
       }
+      if(data.statusCode==503){
+        res.status(503).json({ message:'Solicitud no autorizada Zetatijuana.com', authorized:false});
+      }
     } catch (error) {
         console.log('error',error)
         res.status(500).json(error);
