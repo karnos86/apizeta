@@ -9,7 +9,6 @@ router.get('/', function (req, res, next) {
 
 
 
-
 router.post('/ctl/login', ctrl.authy.loginControl);
 router.post('/ctl/prueba', ctrl.authy.validateCookieWorpress);
 
@@ -43,9 +42,9 @@ router.get('/api/plan/index', ctrl.plan.indexPlan);
 /* Get Feed transform Xml a Json */
 router.get('/api/feed', ctrl.authy.accessApp ,ctrl.external.feedZeta);
 
-/*Get de clima de openweathermap */
+// ctrl.authy.accessApp
 router.get('/api/widget',ctrl.authy.accessApp, ctrl.external.weatherZeta);
-router.get('/api/money', ctrl.authy.accessApp,ctrl.external.moneyZeta);
+router.get('/api/money',ctrl.external.moneyZeta);
 router.get('/api/multimedia',ctrl.authy.accessApp, ctrl.external.listVideo);
 router.get('/api/resendMail',ctrl.authy.accessApp, ctrl.external.resendMail);
 
