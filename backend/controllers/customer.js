@@ -75,6 +75,7 @@ module.exports={
         try {
             var data = req.body
             let generar_nonce = await asyn_request(process.env.CNAME_EXTERNAL+'/api/get_nonce/?json=get_nonce&controller=user&method=register',{method: 'GET'});
+            console.log(generar_nonce)
             let nonce = JSON.parse(generar_nonce.body);
             console.log(nonce);
             if(nonce.status=="ok"){
