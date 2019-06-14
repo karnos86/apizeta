@@ -27,7 +27,7 @@ module.exports={
                console.log(process.env.CNAME_EXTERNAL+'/api/user/register/?username='+data.username+'&email='+data.email+'&nonce='+nonce.nonce+'&display_name='+name+'&notify=both&user_pass='+data.password)
                 var result = await asyn_request(process.env.CNAME_EXTERNAL+'/api/user/register/?username='+data.username+'&email='+data.email+'&nonce='+nonce.nonce+'&display_name='+data.name+'&notify=both&user_pass='+data.password,{method: 'GET'});
                 
-                   
+                   console.log(result)
                 if(result.statusCode==503){
                     res.status(503).json({ message:'Solicitud no autorizada Zetatijuana.com', authorized:false});
                 }
@@ -49,11 +49,13 @@ module.exports={
                         res.status(420).json(wordpress)
                     }
                 }else{
-                    if(result.statusCode == 404){
+                   if(result.statusCode == 404){
                        var data = JSON.parse(result.body)
                       res.status(420).json(data.error);
+                   }else{
+                       res.status(500).json({message:'Soporte ya fue notificado'});
                    }
-                   res.status(500).json({message:'Soporte ya fue notificado'});
+                   
                 } 
            }else{
               res.status(400).json(nonce)
