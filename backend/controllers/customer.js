@@ -17,12 +17,18 @@ module.exports={
                {method: 'GET'}, 
                {headers: {'Accept': 'application/json','Accept-Charset': 'utf-8',}},
                {maxRedirects:1000});
+                if(generar_nonce.statusCode==503){
+                    res.status(503).json({ message:'Solicitud no autorizada Zetatijuana.com', authorized:false});
+                }
            let nonce = JSON.parse(generar_nonce.body);
            console.log(nonce);
            if(nonce.status=="ok"){
                var name = data.name.split(' ').join('%20')
                console.log(process.env.CNAME_EXTERNAL+'/api/user/register/?username='+data.username+'&email='+data.email+'&nonce='+nonce.nonce+'&display_name='+name+'&notify=both&user_pass='+data.password)
                 var result = await asyn_request(process.env.CNAME_EXTERNAL+'/api/user/register/?username='+data.username+'&email='+data.email+'&nonce='+nonce.nonce+'&display_name='+data.name+'&notify=both&user_pass='+data.password,{method: 'GET'});
+                if(result.statusCode==503){
+                    res.status(503).json({ message:'Solicitud no autorizada Zetatijuana.com', authorized:false});
+                }
                 if(result.statusCode == 200){
                     wordpress = JSON.parse(result.body);
                     if(wordpress.status =='ok'){
@@ -38,7 +44,7 @@ module.exports={
                         await api_rest.update({idConekt:customer_Conekta._id , active: true})
                         res.json(customer_Conekta.subscription._json);
                     }else{
-                        res.status(400).json(wordpress)
+                        res.status(420).json(wordpress)
                     }
                 }else{
                     res.status(500).json({message:'No se pudo procesar... Soporte fue notificado'})
@@ -75,13 +81,18 @@ module.exports={
         try {
             var data = req.body
             let generar_nonce = await asyn_request(process.env.CNAME_EXTERNAL+'/api/get_nonce/?json=get_nonce&controller=user&method=register',{method: 'GET'});
-            console.log(generar_nonce)
+            if(generar_nonce.statusCode == 503){
+                res.status(503).json({ message:'Solicitud no autorizada Zetatijuana.com'});
+            }
             let nonce = JSON.parse(generar_nonce.body);
             console.log(nonce);
             if(nonce.status=="ok"){
                 var name = data.name.split(' ').join('%20');
                console.log(process.env.CNAME_EXTERNAL+'/api/user/register/?username='+data.username+'&email='+data.email+'&nonce='+nonce.nonce+'&display_name='+name+'&notify=both&user_pass='+data.password)
                 var result = await asyn_request(process.env.CNAME_EXTERNAL+'/api/user/register/?username='+data.username+'&email='+data.email+'&nonce='+nonce.nonce+'&display_name='+name+'&notify=both&user_pass='+data.password,{method: 'GET'});
+                if(result.statusCode==503 ){
+                    res.status(503).json({ message:'Solicitud no autorizada Zetatijuana.com'});
+                }
                 wordpress = JSON.parse(result.body);
                 if(wordpress.status =='ok'){
                     let api_rest = await Customer.create({idWordPress:wordpress.user_id, email:data.email, username:data.username});
