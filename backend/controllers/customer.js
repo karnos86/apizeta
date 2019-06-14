@@ -26,6 +26,8 @@ module.exports={
                var name = data.name.split(' ').join('%20')
                console.log(process.env.CNAME_EXTERNAL+'/api/user/register/?username='+data.username+'&email='+data.email+'&nonce='+nonce.nonce+'&display_name='+name+'&notify=both&user_pass='+data.password)
                 var result = await asyn_request(process.env.CNAME_EXTERNAL+'/api/user/register/?username='+data.username+'&email='+data.email+'&nonce='+nonce.nonce+'&display_name='+data.name+'&notify=both&user_pass='+data.password,{method: 'GET'});
+                
+                   console.log(result)
                 if(result.statusCode==503){
                     res.status(503).json({ message:'Solicitud no autorizada Zetatijuana.com', authorized:false});
                 }
