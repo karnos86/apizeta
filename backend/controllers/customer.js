@@ -245,8 +245,11 @@ module.exports={
         try{
             let data = req.headers["authorization"] ;
             let result = await Access.findOne({where:{uuii:data}})
+            console.log(result)
             let api_rest = await Customer.findOne({where:{idWordPress:result.idWordPress}})
+            console.log(api_rest)
             let subscription = await Subscription.find({where:{idWordPress:result.idWordPress}});
+            console.log(subscription)
             let customer =  await conekta.Customer.find(api_rest.idConekt);
             console.log(customer);
             await customer.payment_sources.get(0).delete()
