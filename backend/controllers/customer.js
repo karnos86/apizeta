@@ -250,7 +250,7 @@ module.exports={
             console.log(api_rest)
             let subscription = await Subscription.find({where:{idWordPress:result.idWordPress}});
             console.log(subscription)
-            if(susbscrition.method=='TDC'){
+            if(subscription.method == 'TDC'){
              let customer =  await conekta.Customer.find(api_rest.idConekt);
                 console.log(customer);   
             }
