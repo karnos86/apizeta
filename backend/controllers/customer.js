@@ -206,6 +206,7 @@ module.exports={
         try{
             let data = req.headers["uuii"];
             let result = await Access.findOne({where:{uuii:data}})
+            console.log(result)
             let api_rest = await Customer.findOne({where:{idWordPress:result.idWordPress}})
             let subscription = await Subscription.find({where:{idWordPress:result.idWordPress}});
             let plan = await conekta.Plan.find(subscription.subscription);
