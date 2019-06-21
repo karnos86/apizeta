@@ -205,6 +205,7 @@ module.exports={
     async renovarOxxo(req, res){
         try{
             let data = req.headers["uuii"];
+            console.log(data)
             let result = await Access.findOne({where:{uuii:data}})
             console.log(result)
             let api_rest = await Customer.findOne({where:{idWordPress:result.idWordPress}})
