@@ -186,9 +186,9 @@ module.exports={
     },
     async updateCustomer(req, res){
         try{
-            let UUII = req.headers["uuii"];
+            // let UUII = req.headers["authorization"]
             let auth = req.headers["authorization"]
-            let result = await Access.findOne({where:{uuii:UUII}})
+            // let result = await Access.findOne({where:{uuii:UUII}})
             let data = req.body
             let wordpress = await asyn_request('https://zetatijuana.com/wp-json/wp/v2/users/'+result.idWordPress,{method: 'POST', data:data,
                 headers:{'Content-Type':'application/json', 'Authorization':auth}})
@@ -204,7 +204,7 @@ module.exports={
     },
     async renovarOxxo(req, res){
         try{
-            let data = req.headers["uuii"];
+            let data = req.headers["authorization"];
             console.log(data)
             let result = await Access.findOne({where:{uuii:data}})
             console.log(result)
@@ -243,7 +243,7 @@ module.exports={
     }, 
     async renovarTdc(req, res){
         try{
-            let data = req.headers["uuii"];
+            let data = req.headers["authorization"] ;
             let result = await Access.findOne({where:{uuii:data}})
             let api_rest = await Customer.findOne({where:{idWordPress:result.idWordPress}})
             let subscription = await Subscription.find({where:{idWordPress:result.idWordPress}});
