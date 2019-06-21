@@ -248,6 +248,7 @@ module.exports={
             let api_rest = await Customer.findOne({where:{idWordPress:result.idWordPress}})
             let subscription = await Subscription.find({where:{idWordPress:result.idWordPress}});
             let customer =  await conekta.Customer.find(api_rest.idConekt);
+            console.log(customer);
             await customer.payment_sources.get(0).delete()
             await customer.createPaymentSource({ type: "card", token_id: req.body.token })
             let subscriptionConeckt = await customer.createSubscription({plan:subscription.subscription});  
