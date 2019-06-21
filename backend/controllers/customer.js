@@ -250,11 +250,11 @@ module.exports={
             console.log(api_rest)
             let subscription = await Subscription.find({where:{idWordPress:result.idWordPress}});
             console.log(subscription)
-            if(subscription.method == 'TDC'){
              let customer =  await conekta.Customer.find(api_rest.idConekt);
-                console.log(customer);   
+            if(subscription.method == 'TDC'){
+                await customer.payment_sources.get(0).delete()  
             }
-            await customer.payment_sources.get(0).delete()
+            
             await customer.createPaymentSource({ type: "card", token_id: req.body.token })
             let subscriptionConeckt = await customer.createSubscription({plan:subscription.subscription});  
             res.json(subscriptionConeckt);      
