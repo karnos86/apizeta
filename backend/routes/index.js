@@ -19,7 +19,7 @@ router.post('/api/customer/oxxo', ctrl.customer.createOxxo);
 router.post('/api/customer/ckeck/username', ctrl.customer.ckeckUsename);
 router.post('/api/customer/ckeck/email', ctrl.customer.ckeckEmail);
 router.get('/api/customer/find', ctrl.authy.accessApp, ctrl.customer.searchCustomer);
-router.post('/api/customer/update', ctrl.customer.updateCustomer);
+router.post('/api/customer/update', ctrl.authy.accessApp, ctrl.customer.updateCustomer);
 router.post('/api/customer/renovate/oxxo', ctrl.authy.accessApp, ctrl.customer.renovarOxxo);
 router.post('/api/customer/renovate/tdc', ctrl.authy.accessApp, ctrl.customer.renovarTdc);
 router.post('/api/customer/change/tdc', ctrl.customer.changeTdc);
