@@ -188,6 +188,7 @@ module.exports={
         try{
             let UUII = req.headers["authorization"]
             let auth = req.body.token
+            delete req.body.token;
             let result = await Access.findOne({where:{uuii:UUII}})
             let data = req.body
             let wordpress = await asyn_request('https://zetatijuana.com/wp-json/wp/v2/users/'+result.idWordPress,{method: 'POST', data:data,
