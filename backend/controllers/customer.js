@@ -193,6 +193,7 @@ module.exports={
             let data = req.body
             let wordpress = await asyn_request('https://zetatijuana.com/wp-json/wp/v2/users/'+result.idWordPress,{method: 'POST', data:data,
                 headers:{'Content-Type':'application/json', 'Authorization':auth}})
+            console.log(wordpress)
             let rest_api = await Customer.find({where:{idWordPress:result.idWordPress}});
             let conekt = await conekta.Customer.find(result.idConekt);           
             let rebac= await rest_api.update(data);
