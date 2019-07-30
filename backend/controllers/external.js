@@ -101,22 +101,27 @@ module.exports={
                 break;
                 case 'order.paid':
                     console.log('order.paid',  new Date()) 
-                    console.log(req.body)                   
-                    // let expired_order_paid, active_order_paid;
-                    // let info_order_paid = req.body.data.object;
-                    // let customer_order_paid = await Customer.findOne({where:{idConekt:info_order_paid.customer_info.customer_id}})
-                    // let cancel_order_paid = await Subscription.findAll({where:{idWordPress:customer_order_paid.idWordPress}})
-                    // cancel_order_paid.forEach( function(elemento, indice, array) {
-                    // if(elemento.status == 'active'){
-                    //      expired_order_paid = elemento;
-                    //      expired_order_paid.update({status:'expired'})
-                    //     }
-                    //     if( elemento.status == 'pending_payment'){
-                    //         active_order_paid = elemento;
-                    //         active_order_paid.update({status:'active', paid:true})
-                    //     }
-                    // });
+                    if(req.body.data != null) {
+                         let expired_order_paid, active_order_paid;
+                    let info_order_paid = req.body.data.object;
+                    let customer_order_paid = await Customer.findOne({where:{idConekt:info_order_paid.customer_info.customer_id}})
+                    let cancel_order_paid = await Subscription.findAll({where:{idWordPress:customer_order_paid.idWordPress}})
+                    cancel_order_paid.forEach( function(elemento, indice, array) {
+                    if(elemento.status == 'active'){
+                         expired_order_paid = elemento;
+                         expired_order_paid.update({status:'expired'})
+                        }
+                        if( elemento.status == 'pending_payment'){
+                            active_order_paid = elemento;
+                            active_order_paid.update({status:'active', paid:true})
+                        }
+                    });
                     res.json({status:200, message:"operacion exitosa"})
+                    }  else{
+                         res.json({status:200, message:"operacion exitosa"})
+                    }               
+                   
+                   
                     break;
                 case 'charge.created':
                     console.log('charge.created',  new Date())
