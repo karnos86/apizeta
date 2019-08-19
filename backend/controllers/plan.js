@@ -3,6 +3,7 @@ module.exports={
     async indexPlan(req, res){
         try {
             let plan = await conekta.Plan.find();
+            console.log(plan);
              var array= plan["_json"].data
              array.forEach(element => {
                 element["amount"]= parseFloat(element["amount"])/100;
