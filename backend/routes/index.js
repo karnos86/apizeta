@@ -81,5 +81,12 @@ router.get('/api/downloadFile/:file',  ctrl.file.downloadFile)
 router.get('/api/downloadImagen/:filename',  ctrl.file.downloadImagen)
 
 
+/* servicios de cargos de tarjeta  de credito */
+
+router.post('/api/pregistry', ctrl.checkout.createTempRegistry);
+router.get('/checkout/searchToken/:token', ctrl.checkout.searchToken);
+router.get('/checkout/losingToken/:token', ctrl.checkout.losingToken);
+
+
 
 module.exports = router;
