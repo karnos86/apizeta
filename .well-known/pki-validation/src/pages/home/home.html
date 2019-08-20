@@ -1,0 +1,90 @@
+<ion-header>
+  <ion-toolbar transparent [ngClass]="ios == true ?  'bajar':''">
+  <ion-row >
+    <ion-col class="logo">
+      <img src="./assets/imgs/ZETA_Logo.png">
+    </ion-col>
+  </ion-row>
+</ion-toolbar>
+</ion-header>
+<ion-content padding class="tdc">
+  <ion-grid>
+    <ion-row>
+      <ion-col class="error">
+        <p>Ingrese los datos de tu tarjeta de crédito o debito</p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid>
+    <form action="" method="POST" id="payment-form">
+      <ion-row>
+        <ion-col text-center class="error">
+          <p id="payment-errors"></p>
+        </ion-col>
+      </ion-row>
+      <ion-row style="display: flex; justify-content: center;">
+        <ion-col col-10>
+          <ion-item >
+                <ion-label floating>Nombre en Tarjeta</ion-label>
+                <ion-input type="text" data-conekta="card[name]"></ion-input>
+              </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row style="display: flex; justify-content: center;">
+        <ion-col col-10>
+          <ion-item >
+                <ion-label floating>Numero en Tarjeta</ion-label>
+                <ion-input type="number" data-conekta="card[number]" size="18"></ion-input>
+              </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row style="display: flex; justify-content: center;">
+        <ion-col col-5>
+          <ion-item >
+                <ion-label stacked>Vencimento</ion-label>
+                <ion-input type="number" placeholder="MM" text-center data-conekta="card[exp_month]"></ion-input>
+              </ion-item>
+        </ion-col>
+        <ion-col col-5>
+          <ion-item >
+                <ion-label stacked>Vencimento</ion-label>
+                <ion-input type="number" placeholder="AAAA" text-center  data-conekta="card[exp_year]"></ion-input>
+              </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row style="display: flex; justify-content: center;">
+        <ion-col col-10>
+          <ion-item >
+                <ion-label floating>CVV</ion-label>
+                <ion-input type="number" data-conekta="card[cvc]"></ion-input>
+              </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col offset-2 col-8>
+          <button  ion-button color="rojo" round full >Realizar Pago</button>
+        </ion-col>
+      </ion-row>
+    </form>
+  </ion-grid>
+</ion-content>
+<ion-footer>
+  <ion-toolbar transparent>
+    <ion-grid>
+      <ion-row justify-content-center >
+        <ion-col col-5>
+            <!-- (click)="presentActionSheet()" mailto:soporte@zetatijuana.com?Subject=My%20Custom%20Subject-->
+          <a href="javascript:;" onclick="window.open('mailto:soporte@zetatijuana.com', '_system'); return false;" >Soporte Técnico</a>
+        </ion-col>
+        <ion-col col-5 text-right>
+          <a href="https://zetatijuana.com/politicas-de-uso/" >Politícas de privacidad</a>
+        </ion-col>
+      </ion-row>
+      <ion-row justify-content-around >
+        <ion-col col-11 text-center>
+          <p>A todo momento al momento 2018 &copy; Derechos Reservados</p>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-footer>

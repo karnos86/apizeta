@@ -1,0 +1,92 @@
+page-home {
+	ion-header{
+		ion-toolbar {
+  		  background: color($colors, fondo, base);
+  		  color: color($colors, light, base);
+  		  font-family: Arial, Helvetica, sans-serif;
+  		  margin-top: 0.5rem;
+  		  .hide{
+  		    display : none !important; 
+  		  }
+  		  button{
+  		    padding-top: 0.5rem;
+  		    background: color($colors, fondo, base) !important;
+  		    ion-icon{
+  		      color: color($colors, light, base);
+  		      zoom:2.3;
+  		    }
+  		  }   
+  		  .logo{
+  		    margin-top: 0.5rem;
+  		    $grid-columns:6;
+  		    img{
+  		      max-width: 40%;
+  		    }
+  		  }
+  		  .logoHide{
+  		    margin-top: 0.5rem;
+  		    text-align:center;
+  		    $grid-columns:12;
+  		    img{
+  		      max-width: 35%;
+  		    }
+  		  }
+  		}
+	}
+
+
+
+
+	ion-footer{
+		ion-toolbar{
+    color: color($colors, light, base);
+    font-family: Arial, Helvetica, sans-serif; 
+    ion-col{
+      margin: 0px 1rem;
+      a{
+        color: color($colors, light, base);
+        text-decoration: none;
+        font-size: small;
+        font-weight: 100;
+      }
+      p{
+        margin:  1px;
+        margin-top: 1rem;
+        font-size: x-small;
+      }
+    }
+  }
+  .action-sheet-group{
+    background: color($colors, fondo, base) !important;
+  }
+
+	}
+	
+  .tdc{
+		background: #000;
+		font-family: helvetica;
+		font-weight: lighter;
+		color: #fff; 
+		button{
+			margin-top: 4.3rem;
+			text-transform: capitalize;
+		}
+		ion-grid{
+			margin-top: 0;
+			margin-bottom: 0;
+		}
+		.error{
+			margin-top: 0;
+			margin-bottom: 0;
+			p{
+				margin-bottom: 0;
+			}
+		}
+		#payment-errors{
+			color:red;
+			margin-top: 0;
+			margin-bottom: 0;
+		}
+	}
+
+}
