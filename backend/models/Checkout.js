@@ -9,7 +9,8 @@ const Checkout = db.define('temp_registi',{
 	},
 	token:{
 		type:Sequelize.STRING,
-		allowNull: true
+		allowNull: true,
+		// defaultValue:token()
 	},
 	phone:{
 		type:Sequelize.STRING,
@@ -29,4 +30,7 @@ const Checkout = db.define('temp_registi',{
       	defaultValue: true
 	}
 });
+
+ 
+
 module.exports = Checkout;
