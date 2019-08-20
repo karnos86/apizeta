@@ -11,7 +11,8 @@ module.exports={
 	async createTempRegistry(req , res){
 		try{
 			var data = req.body
-			var save = await Checkout.create(data);
+			data["token"]=token();
+			var save = await Checkout.create(req.body);
 			res.status(200).json(save);
 		}catch(error){
 			res.status(420).json(error);
@@ -46,3 +47,12 @@ module.exports={
 		}
 	}
 }
+
+function random() {
+    return Math.random().toString(36).substr(2); // Eliminar `0.`
+};
+ 
+function token() {
+    return random() + random()+ random()+ random(); // Para hacer el token más largo
+};
+ 
