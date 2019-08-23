@@ -7,7 +7,6 @@ import Membership from './views/Membership.vue'
 import User_Details from './views/User_Details.vue'
 import Pay_Details from './views/Pay_Details.vue'
 import Login from './views/Login.vue'
-import Tokenizar from './views/Tokenizar.vue'
 import App from './App.vue'
 
 
@@ -85,11 +84,6 @@ export default new Router({
       name: '',  
       component: App 
     },    
-    {
-      path: '/secureAuthPay', 
-      name: 'tokenizar',  
-      component: Tokenizar 
-    },
     { 
       path: '/logout', 
       name: 'logout', 
