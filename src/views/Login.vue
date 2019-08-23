@@ -37,7 +37,7 @@
                         ></v-text-field>
                     </v-card-text>
                     <v-card-accion>
-                        <v-btn class="info text-none" block large @click="login">Iniciar sessión</v-btn>
+                        <v-btn class="info text-none" block large @click="login()">Iniciar sessión</v-btn>
                     </v-card-accion>
                      
                 </v-card>
@@ -87,7 +87,7 @@ export default {
       	    }).catch(()=>{
                 this.alert={value:true, type:"error", message: "Se presento un error al ingresar"};
                 this.resetear();
-      	    });
+      	    })
         },
         resetear(){
             
