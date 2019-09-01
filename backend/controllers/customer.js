@@ -57,6 +57,7 @@ module.exports={
                     res.status(400).json(nonce)
                 } 
             }else{
+                console.log(customer["idConeckt"])
                 let customer_conekta = await conekta.Customer.find(customer["idConeckt"]);
                 console.log(data.payment_sources[0]);
                 let payment = await customer_conekta.createPaymentSource(data.payment_sources[0]);
