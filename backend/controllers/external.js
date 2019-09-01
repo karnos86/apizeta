@@ -298,8 +298,9 @@ async function CalculeTimeSubcription(type, start){
 }
 
 async function bodyEmail(data){
- return "<table>"+
-            "<tr> <td> <h3><strong>Comporbante de pago </strong></h3><td></tr>"+
+
+ return "<table style='border:1px solid black'>"+
+            "<tr style='background: #2a2a2a; color: white;text-align: center;'> <td> <h3><strong>Comporbante de pago </strong></h3><td></tr>"+
             "<tr><td> <h4><strong>Transación Numero :</strong></h4>"+ data["id"]+"</td></tr>"+
             "<tr><td> <h4><strong>Fecha :</strong></h4>"+ new Date(data["created_at"]*1000)+"</td></tr>"+
             "<tr><td> <h4><strong>Descripcion :</strong></h4>"+ data["description"]+"</td></tr>"+
