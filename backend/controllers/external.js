@@ -137,7 +137,7 @@ module.exports={
                                     from: process.env.USER_MAIL,
                                     to: customer_charge_created.email,
                                     subject: 'Cargo Oxxo',
-                                    text: JSON.stringify(info_charge_created)
+                                    html:respuesta
                                 }
                                 let done_charge_created = await transporter.sendMail(mailOptions_charge_created);
                                 await Mail.create({id:done_charge_created.messageId, status:done_charge_created.response, message:respuesta,idWordPress:customer_charge_created.idWordPress})
