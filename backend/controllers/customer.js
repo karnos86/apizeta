@@ -108,7 +108,7 @@ module.exports={
                 if(result.statusCode==503 ){
                     res.status(503).json({ message:'Solicitud no autorizada Zetatijuana.com'});
                 }
-                console.log(result.body)
+                console.log()
                 wordpress = JSON.parse(result.body);
                 if(wordpress.status =='ok'){
                     let api_rest = await Customer.create({idWordPress:wordpress.user_id, email:data.email, username:data.username});
@@ -264,8 +264,8 @@ module.exports={
             if(subscription.method == 'TDC'){
                 await customer.payment_sources.get(0).delete()  
             }
-            await customer.createPaymentSource({ type: "card", token_id: req.body.token })
-            let subscriptionConeckt = await customer.createSubscription({plan:subscription.subscription});  
+            let result = await customer.createPaymentSource({ type: "card", token_id: req.body.token });
+            let subscriptionConeckt = await customer.createSubscription({plan:subscription.subscription, card:result["id"]});
             res.json(subscriptionConeckt);      
         }catch(error){
             console.log(error)
