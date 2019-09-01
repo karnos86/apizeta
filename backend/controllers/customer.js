@@ -61,7 +61,9 @@ module.exports={
                 console.log(data.payment_sources[0]);
                 let payment = await customer_conekta.createPaymentSource(data.payment_sources[0]);
                 console.log("pago",payment)
-                res.status(200).send(customer);
+                let result = await customer_conekta.subscription.update({ plan: data["plan"], card:payment["id"]});
+                console.log(result)
+                res.status(200).send(result);
             }
         }catch(error){
             console.log(error)
