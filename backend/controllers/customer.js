@@ -58,11 +58,8 @@ module.exports={
                 } 
             }else{
                 let customer_conekta = await conekta.Customer.find(customer["idConeckt"]);
-
-                console.log(customer_conekta );
                 let payment = await customer_conekta.createPaymentSource(data.payment_sources[0]);
                 console.log("pago",payment)
-                console.log(customer_conekta)
                 res.status(200).send(customer_conekta);
             }
         }catch(error){
