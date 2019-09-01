@@ -303,7 +303,7 @@ async function bodyEmail(data){
             "<tr><td> <h4><strong>Transación Numero :</strong></h4>"+ data["id"]+"</td></tr>"+
             "<tr><td> <h4><strong>Fecha :</strong></h4>"+ new Date(data["created_at"]*1000)+"</td></tr>"+
             "<tr><td> <h4><strong>Descripcion :</strong></h4>"+ data["description"]+"</td></tr>"+
-            "<tr><td> <h4><strong>Monto :</strong></h4>"+ data["amount"]/2 + data["currency"]+"</td></tr>"+
+            "<tr><td> <h4><strong>Monto :</strong></h4>"+ data["amount"]/100 + data["currency"]+"</td></tr>"+
         "</table>"
 }
 
