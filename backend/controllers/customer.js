@@ -9,67 +9,81 @@ const Access = require('../models/Access');
 
 
 module.exports={
-    async create(req, res){
-        try {
-            var data = req.body;
-            console.log(data)
-            let generar_nonce = await asyn_request(process.env.CNAME_EXTERNAL+'/api/get_nonce/?json=get_nonce&controller=user&method=register',
-               {method: 'GET'}, 
-               {headers: {'Accept': 'application/json','Accept-Charset': 'utf-8',}},
-               {maxRedirects:1000});
+    async newCustumerTDC (req, res){
+        try{
+            var data  = req.body;
+            var customer = await Customer.findOne({where:{username:data["username"], email:data["email"]}})
+            if(!customer){
+                let generar_nonce = await asyn_request(process.env.CNAME_EXTERNAL+'/api/get_nonce/?json=get_nonce&controller=user&method=register',
+                    {method: 'GET'}, 
+                    {headers: {'Accept': 'application/json','Accept-Charset': 'utf-8',}},
+                    {maxRedirects:1000});
                 if(generar_nonce.statusCode==503){
                     res.status(503).json({ message:'Solicitud no autorizada Zetatijuana.com', authorized:false});
                 }
-           let nonce = JSON.parse(generar_nonce.body);
-           console.log(nonce);
-           if(nonce.status=="ok"){
-               var name = data.name.split(' ').join('%20')
-               console.log(process.env.CNAME_EXTERNAL+'/api/user/register/?username='+data.username+'&email='+data.email+'&nonce='+nonce.nonce+'&display_name='+name+'&notify=both&user_pass='+data.password)
-                var result = await asyn_request(process.env.CNAME_EXTERNAL+'/api/user/register/?username='+data.username+'&email='+data.email+'&nonce='+nonce.nonce+'&display_name='+data.name+'&notify=both&user_pass='+data.password,{method: 'GET'});
-                
-                   console.log(result)
-                if(result.statusCode==503){
-                    res.status(503).json({ message:'Solicitud no autorizada Zetatijuana.com', authorized:false});
-                }
-                if(result.statusCode == 200){
-                    wordpress = JSON.parse(result.body);
-                    if(wordpress.status =='ok'){
-                        let api_rest = await Customer.create({idWordPress:wordpress.user_id, email:data.email, username:data.username});
-                        console.log(api_rest)
-                        var customer_Conekta =  await conekta.Customer.create({
-                            name: data.name,
-                            email: data.email,
-                            phone: '+52'+data.phone,
-                            plan_id: data.plan,
-                            payment_sources: data.payment_sources
-                        });
-                        await api_rest.update({idConekt:customer_Conekta._id , active: true})
-                        res.json(customer_Conekta.subscription._json);
-                    }else{
-                        res.status(420).json(wordpress)
+                let nonce = JSON.parse(generar_nonce.body);
+                if(nonce.status=="ok"){
+                    var name = data.name.split(' ').join('%20')
+                    var result = await asyn_request(process.env.CNAME_EXTERNAL+'/api/user/register/?username='+data.username+'&email='+data.email+'&nonce='+nonce.nonce+'&display_name='+data.name+'&notify=both&user_pass='+data.password,{method: 'GET'});
+                    if(result.statusCode==503){
+                        res.status(503).json({ message:'Solicitud no autorizada Zetatijuana.com', authorized:false});
                     }
+                    if(result.statusCode == 200){
+                        wordpress = JSON.parse(result.body);
+                        if(wordpress.status =='ok'){
+                            let api_rest = await Customer.create({idWordPress:wordpress.user_id, email:data.email, username:data.username});
+                            var customer_Conekta =  await conekta.Customer.create({
+                                name: data.name,
+                                email: data.email,
+                                phone: '+52'+data.phone,
+                                plan_id: data.plan,
+                                payment_sources: data.payment_sources
+                            });
+                            await api_rest.update({idConekt:customer_Conekta._id , active: true})
+                            res.json(customer_Conekta.subscription._json);
+                        }else{
+                            res.status(420).json(wordpress)
+                        }
+                    }else{
+                        if(result.statusCode == 404){
+                        var data = JSON.parse(result.body)
+                        res.status(420).json(data.error);
+                        }else{
+                        res.status(500).json({message:'Soporte ya fue notificado'});
+                        }
+                    } 
                 }else{
-                   if(result.statusCode == 404){
-                       var data = JSON.parse(result.body)
-                      res.status(420).json(data.error);
-                   }else{
-                       res.status(500).json({message:'Soporte ya fue notificado'});
-                   }
-                   
+                    res.status(400).json(nonce)
                 } 
-           }else{
-              res.status(400).json(nonce)
-           }
-        } catch (error) {
+            }else{
+                let customer_conekta = await conekta.Customer.find("cus_zzmjKsnM9oacyCwV3")
+                await customer_conekta.subscription.update({payment_sources: data.payment_sources})
+                res.status(200).send(customer_conekta);
+            }
+        }catch(error){
             switch (error.http_code) {
                 case 402:  
                     res.status(402).json(error.details[0].message);
                     break;
                 default:
-                console.log(error)
-                    res.status(500).json(error)
+                    res.status(500).json(error);
                     break;
             }
+        }
+    },
+    async newCustumerOXXO(req, res){
+        try{
+
+        }catch(error){
+
+        }
+    },
+    async create(req, res){
+        try {
+            var data = req.body;
+            console.log(data)
+            
+        } catch (error) {
             
         }
     },
@@ -323,8 +337,5 @@ module.exports={
             res.status(500).json(error)
         }
     }
-    
-
-
 }
 

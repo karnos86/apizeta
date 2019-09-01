@@ -14,7 +14,7 @@ router.post('/ctl/prueba', ctrl.authy.validateCookieWorpress);
 
 /*CRUD Customer */
 //app
-router.post('/api/customer/tdc', ctrl.customer.create);
+router.post('/api/customer/tdc', ctrl.customer.newCustumerTDC);
 router.post('/api/customer/oxxo', ctrl.customer.createOxxo);
 router.post('/api/customer/ckeck/username', ctrl.customer.ckeckUsename);
 router.post('/api/customer/ckeck/email', ctrl.customer.ckeckEmail);
