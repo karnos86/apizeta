@@ -126,6 +126,7 @@ module.exports={
                 case 'charge.created':
                     console.log('charge.created',  new Date())
                     let info_charge_created = req.body.data.object;
+                    var respuesta = await mailOxxo(info_charge_created)
                     if(info_charge_created.payment_method.service_name=='OxxoPay'){
                         interval(async (iteration, stop) => {
                             let subscription_charge_created = await Subscription.findOne({where:{reference:info_charge_created.order_id}});
@@ -139,7 +140,7 @@ module.exports={
                                     text: JSON.stringify(info_charge_created)
                                 }
                                 let done_charge_created = await transporter.sendMail(mailOptions_charge_created);
-                                await Mail.create({id:done_charge_created.messageId, status:done_charge_created.response, message:JSON.stringify(info_charge_created),idWordPress:customer_charge_created.idWordPress})
+                                await Mail.create({id:done_charge_created.messageId, status:done_charge_created.response, message:respuesta,idWordPress:customer_charge_created.idWordPress})
                                 res.json(done_charge_created);
                             } 
                         }, 1000);
@@ -168,7 +169,7 @@ module.exports={
                     }
                 
                     let done_charge_paid = await transporter.sendMail(mailOptions_charge_paid);
-                    await Mail.create({id:done_charge_paid.messageId, status:done_charge_paid.response, message:JSON.stringify(info_charge_paid),idWordPress:customer_charge_paid.idWordPress})
+                    await Mail.create({id:done_charge_paid.messageId, status:done_charge_paid.response, message:respuesta,idWordPress:customer_charge_paid.idWordPress})
                     res.json(done_charge_paid);
                     break;
                 case 'subscription.created':
@@ -300,12 +301,23 @@ async function CalculeTimeSubcription(type, start){
 async function bodyEmail(data){
 
  return "<table style='border:1px solid black'>"+
-            "<tr style='background: #2a2a2a; color: white;text-align: center;'> <td> <h3><strong>Comporbante de pago </strong></h3><td></tr>"+
+            "<tr style='background: #2a2a2a; color: white;text-align: center;'> <td> <h3><strong>Detalle de pago </strong></h3><td></tr>"+
             "<tr><td> <h4><strong>Transación Numero :</strong></h4>"+ data["id"]+"</td></tr>"+
             "<tr><td> <h4><strong>Fecha :</strong></h4>"+ new Date(data["created_at"]*1000)+"</td></tr>"+
             "<tr><td> <h4><strong>Descripcion :</strong></h4>"+ data["description"]+"</td></tr>"+
             "<tr><td> <h4><strong>Monto :</strong></h4>"+ data["amount"]/100 + data["currency"]+"</td></tr>"+
         "</table>"
+}
+
+async function mailOxxo(data){
+    return "<table style='border:1px solid black'>"+
+    "<tr style='background: #2a2a2a; color: white;text-align: center;'> <td> <h3><strong>Información de pago OXXO</strong></h3><td></tr>"+
+    "<tr><td> <h4><strong>Transación Numero :</strong></h4>"+ data["payment_method"]["reference"]+"</td></tr>"+
+    "<tr><td> <h4><strong>Fecha de vencimento :</strong></h4>"+ new Date(data["payment_method"]["expires_at"]*1000)+"</td></tr>"+
+    "<tr><td> <h4><strong>Descripcion :</strong></h4>"+ data["description"]+"</td></tr>"+
+    "<tr><td> <h4><strong>Monto :</strong></h4>"+ data["amount"]/100 + data["currency"]+"</td></tr>"+
+    "<tr><td> <h4><strong>Codigo :</strong></h4><img src='"+ data["payment_method"]["barcode_url"]+"'></td></tr>"+
+    "</table>"
 }
 
 
