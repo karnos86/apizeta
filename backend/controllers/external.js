@@ -259,6 +259,7 @@ module.exports={
 
             let data = req.headers["UUII"];
             let result = await Access.findOne({where:{uuii:data}})
+            console.log(result)
             let api_rest = await Customer.findOne({where:{idWordPress:result.idWordPress}})
             let mail = await Mail.findAll({where:{idWordPress:result.idWordPress}, order:[['createdAt','DESC']],})
             var ultimo = mail[0];
