@@ -12,8 +12,7 @@ module.exports={
     async newCustumerTDC (req, res){
         try{
             var data  = req.body;
-            var customer = await Customer.findOne({where:{username:data["username"], email:data["email"]}})
-            
+            var customer = await Customer.findOne({where:{username:data["username"], email:data["email"]}});
             if(!customer){
                 let generar_nonce = await asyn_request(process.env.CNAME_EXTERNAL+'/api/get_nonce/?json=get_nonce&controller=user&method=register',
                     {method: 'GET'}, 
@@ -79,22 +78,6 @@ module.exports={
                     res.status(500).json(error);
                     break;
             }
-        }
-    },
-    async newCustumerOXXO(req, res){
-        try{
-
-        }catch(error){
-
-        }
-    },
-    async create(req, res){
-        try {
-            var data = req.body;
-            console.log(data)
-            
-        } catch (error) {
-            
         }
     },
     async personalTdc(req, res){

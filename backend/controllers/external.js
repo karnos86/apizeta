@@ -151,6 +151,7 @@ module.exports={
                 case 'charge.paid':
                     console.log('charge.paid',  new Date())
                     let info_charge_paid = req.body.data.object;
+                    var respuesta = this.bodyEmail(req.body.data.object);
                     let customer_charge_paid
                     if(info_charge_paid.customer_id != ''){
                         customer_charge_paid = await Customer.findOne({where:{idConekt:info_charge_paid.customer_id}});
@@ -163,7 +164,7 @@ module.exports={
                         from: process.env.USER_MAIL,
                         to: customer_charge_paid.email,
                         subject: 'Comprobante de Pago',
-                        text: JSON.stringify(info_charge_paid)
+                        text: respuesta
                     }
                 
                     let done_charge_paid = await transporter.sendMail(mailOptions_charge_paid);
@@ -296,17 +297,10 @@ async function CalculeTimeSubcription(type, start){
     }    
 }
 
-async function bodyEmail(from, data){
-    try{
-        let mailOptions = {
-            from: from,
-            to: process.env.USER_MAIL,
-            subject: data.subect,
-            html: '<h1>Hola mundo!</h1>' 
-        };
-    }catch(error){
-        return error
-    }
+function bodyEmail(data){
+ return "<table>"+
+            "<tr> <td>Comporbante de pago<td</tr>"+
+        "</table>"
 }
 
 
