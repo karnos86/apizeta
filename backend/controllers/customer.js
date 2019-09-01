@@ -264,8 +264,8 @@ module.exports={
             if(subscription.method == 'TDC'){
                 await customer.payment_sources.get(0).delete()  
             }
-            let result = await customer.createPaymentSource({ type: "card", token_id: req.body.token });
-            let subscriptionConeckt = await customer.createSubscription({plan:subscription.subscription, card:result["id"]});
+            let tdc = await customer.createPaymentSource({ type: "card", token_id: req.body.token });
+            let subscriptionConeckt = await customer.createSubscription({plan:subscription.subscription, card:tdc["id"]});
             res.json(subscriptionConeckt);      
         }catch(error){
             console.log(error)
