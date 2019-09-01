@@ -256,8 +256,9 @@ module.exports={
     },
     async resendMail(req, res){
         try{
-
+            console.log("cabezera", req.headers["UUII"])
             let data = req.headers["UUII"];
+            console.log(data)
             let result = await Access.findOne({where:{uuii:data}})
             console.log(result)
             let api_rest = await Customer.findOne({where:{idWordPress:result.idWordPress}})
