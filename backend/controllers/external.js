@@ -266,7 +266,7 @@ module.exports={
               from: process.env.USER_MAIL,
               to: api_rest.email,
               subject: 'renvio',
-              text: ultimo.message
+              html: ultimo.message
             }
             let done = await transporter.sendMail(mailOptions)
             res.json(done)
