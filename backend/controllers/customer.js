@@ -108,6 +108,7 @@ module.exports={
                 if(result.statusCode==503 ){
                     res.status(503).json({ message:'Solicitud no autorizada Zetatijuana.com'});
                 }
+                console.log(result.body)
                 wordpress = JSON.parse(result.body);
                 if(wordpress.status =='ok'){
                     let api_rest = await Customer.create({idWordPress:wordpress.user_id, email:data.email, username:data.username});
