@@ -13,7 +13,7 @@ module.exports={
         try{
             var data  = req.body;
             var customer = await Customer.findOne({where:{username:data["username"], email:data["email"]}})
-            console.log(customer);
+            
             if(!customer){
                 let generar_nonce = await asyn_request(process.env.CNAME_EXTERNAL+'/api/get_nonce/?json=get_nonce&controller=user&method=register',
                     {method: 'GET'}, 
@@ -57,7 +57,8 @@ module.exports={
                     res.status(400).json(nonce)
                 } 
             }else{
-                let customer_conekta = await conekta.Customer.find(customer["idConeckt"])
+                let customer_conekta = await conekta.Customer.find(customer["idConeckt"]);
+                console.log(customer_conekta );
                 await customer_conekta.subscription.update({payment_sources: data.payment_sources})
                 console.log(customer_conekta)
                 res.status(200).send(customer_conekta);
