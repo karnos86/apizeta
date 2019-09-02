@@ -222,10 +222,8 @@ module.exports={
             let subscription = await Subscription.find({where:{idWordPress:result.idWordPress}});
             let plan = await conekta.Plan.find(subscription.subscription);
             let customer = await conekta.Customer.find(api_rest.idConekt) 
-            if(customer._json.subscription.status =='active'){
+            if(susbscrition.method == "TDC"){
                 await customer.subscription.cancel()
-            }
-            if(customer._json.payment_sources){
                 await customer.payment_sources.get(0).delete()
             }
             let oxxo = new Object();
