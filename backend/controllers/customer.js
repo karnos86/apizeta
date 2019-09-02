@@ -222,9 +222,12 @@ module.exports={
             let subscription = await Subscription.find({where:{idWordPress:result.idWordPress}});
             let plan = await conekta.Plan.find(subscription.subscription);
             let customer = await conekta.Customer.find(api_rest.idConekt) 
-            console.log(subscription)
-            if(subscription.method == "TDC"){
+            console.log('primer if',customer._json.subscription.status)
+            if(customer._json.subscription.status =='active'){
                 await customer.subscription.cancel()
+            }
+            console.log('segundo if',customer._json.payment_sources)
+            if(customer._json.payment_sources){
                 await customer.payment_sources.get(0).delete()
             }
             let oxxo = new Object();
