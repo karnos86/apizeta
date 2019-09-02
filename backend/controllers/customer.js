@@ -222,7 +222,7 @@ module.exports={
             let subscription = await Subscription.find({where:{idWordPress:result.idWordPress}});
             let plan = await conekta.Plan.find(subscription.subscription);
             let customer = await conekta.Customer.find(api_rest.idConekt) 
-            if(susbscrition.method == "TDC"){
+            if(subscription.method == "TDC"){
                 await customer.subscription.cancel()
                 await customer.payment_sources.get(0).delete()
             }
