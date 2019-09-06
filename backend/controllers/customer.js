@@ -172,23 +172,24 @@ module.exports={
             let data = req.headers["authorization"];
             let result = await Access.findOne({where:{uuii:data}})
             let api_rest = await Customer.findOne({where:{idWordPress:result.idWordPress}})
-            let customer = await conekta.Customer.find(api_rest.idConekt);  
-            let info = new Object();
-            if(customer.payment_sources==null){
-                let oxxo = await Subscription.find({where:{idWordPress:result.idWordPress, status:'active'}});
-                info["method"]=oxxo.method
-                info["subscription"]=oxxo.subscription
-                info["end"]=oxxo.end
-                info["last4"]=null
+            let subscripcion = await Subscription.findOne({where:{idWordPress:result.idWordPress, $or: [{status:'active'},{status:'pending_payment'}]}});
+            let info = {method:null,subscription:null,end:null,last4:null};
+            if(subscripcion.method === "OXXO"){
+                info["method"]=subscripcion.method;
+                info["subscription"]=subscripcion.subscription;
+                info["end"]=subscripcion.end;
+                info["last4"]=subscripcion.status;
                 res.json(info);
             }else{
+                let customer = await conekta.Customer.find(api_rest.idConekt)
                 info["method"]=customer.payment_sources._json.data[0].brand
                 info["subscription"]=customer._json.subscription.plan_id
                 info["end"]=customer._json.subscription.billing_cycle_end
                 info["last4"]=customer.payment_sources._json.data[0].last4
                 res.json(info);
-            }  
+            }
         }catch(error){
+            console.log(error)
             res.status(500).json(error);
         }
     },

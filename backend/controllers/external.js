@@ -259,7 +259,6 @@ module.exports={
     
             let data = req.params.order;
             let result = await Subscription.findOne({where:{reference:data}})
-           
             let api_rest = await Customer.findOne({where:{idWordPress:result.idWordPress}})
             let mail = await Mail.findAll({where:{idWordPress:result.idWordPress}, order:[['createdAt','DESC']],})
             var ultimo = mail[0];
