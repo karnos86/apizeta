@@ -256,8 +256,9 @@ module.exports={
     },
     async resendMail(req, res){
         try{
-    
+            
             let data = req.params.order;
+            console.log(data);
             let result = await Subscription.findOne({where:{reference:data}})
             let api_rest = await Customer.findOne({where:{idWordPress:result.idWordPress}})
             let mail = await Mail.findAll({where:{idWordPress:result.idWordPress}, order:[['createdAt','DESC']],})
