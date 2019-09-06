@@ -8,7 +8,7 @@ module.exports = nodemailer.createTransport(smtpTransport({
     secure: false,
     requireTLS: true, //Force TLS
     tls: {  
-        rejectUnauthorized: false
+       rejectUnauthorized: false
     },
     auth : {
         user : process.env.USER_MAIL,

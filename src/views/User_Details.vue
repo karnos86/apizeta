@@ -151,9 +151,9 @@
   </div>
 </template>
 <script>
-// import axios from 'axios'
-// import {auth} from '../plugins/headers'
-// import {backend} from '../plugins/url'
+ import axios from 'axios'
+ import {auth} from '../plugins/headers'
+ import {backend} from '../plugins/url'
 export default {
   props:['info'],
     data(){
