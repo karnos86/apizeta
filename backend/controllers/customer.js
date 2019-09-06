@@ -172,13 +172,13 @@ module.exports={
             let data = req.headers["authorization"];
             let result = await Access.findOne({where:{uuii:data}})
             let api_rest = await Customer.findOne({where:{idWordPress:result.idWordPress}})
-            let subscripcion = await Subscription.findOne({where:{idWordPress:result.idWordPress, $or: [{status:'active'},{status:'pending_payment'}]}});
+            let subscripcion = await Subscription.findAll({where:{idWordPress:result.idWordPress, $or: [{status:'active'},{status:'pending_payment'}]},order: [['createdAt', 'DESC']]});
             let info = {method:null,subscription:null,end:null,last4:null};
-            if(subscripcion.method === "OXXO"){
-                info["method"]=subscripcion.method;
-                info["subscription"]=subscripcion.subscription;
-                info["end"]=subscripcion.end;
-                info["last4"]=subscripcion.status;
+            if(subscripcion[0].method === "OXXO"){
+                info["method"]=subscripcion[0].method;
+                info["subscription"]=subscripcion[0].subscription;
+                info["end"]=subscripcion[0].end;
+                info["last4"]=subscripcion[0].status;
                 res.json(info);
             }else{
                 let customer = await conekta.Customer.find(api_rest.idConekt)
