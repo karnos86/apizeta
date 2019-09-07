@@ -182,6 +182,8 @@ module.exports={
                 res.json(info);
             }else{
                 let customer = await conekta.Customer.find(api_rest.idConekt)
+                console.log(customer)
+                
                 info["method"]=customer.payment_sources._json.data[0].brand
                 info["subscription"]=customer._json.subscription.plan_id
                 info["end"]=customer._json.subscription.billing_cycle_end
