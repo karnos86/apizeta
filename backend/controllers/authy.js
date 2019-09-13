@@ -61,7 +61,7 @@ module.exports={
       }
       let data = req.headers["authorization"];
       let result = await Access.findOne({where:{uuii:data}})
-      let subcription = await Subscription.findOne({where:{idWordPress:result.idWordPress}})
+      let subscription = await Subscription.findOne({where:{idWordPress:result.idWordPress}})
       if(result == null){
         res.status(401).send({message:"Operación no permitida"})
       }
