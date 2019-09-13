@@ -136,7 +136,7 @@ module.exports={
                                 var mailOptions_charge_created= {
                                     from: process.env.USER_MAIL,
                                     to: customer_charge_created.email,
-                                    subject: 'Completa tususcripción a Semanario Zeta - Ficha de pago OXXO',
+                                    subject: 'Completa tu suscripción a Semanario Zeta - Ficha de pago OXXO',
                                     html:respuesta
                                 }
                                 let done_charge_created = await transporter.sendMail(mailOptions_charge_created);
@@ -266,7 +266,7 @@ module.exports={
             var mailOptions = {
               from: process.env.USER_MAIL,
               to: api_rest.email,
-              subject: 'Completa tususcripción a Semanario Zeta - Ficha de pago OXXO',
+              subject: 'Completa tu suscripción a Semanario Zeta - Ficha de pago OXXO',
               html: ultimo.message
             }
             let done = await transporter.sendMail(mailOptions)
@@ -317,7 +317,7 @@ async function mailOxxo(data){
     "<tr><td> <h4><strong>Fecha de vencimento :</strong></h4>"+ new Date(data["payment_method"]["expires_at"]*1000)+"</td></tr>"+
     "<tr><td> <h4><strong>Descripción :</strong></h4>"+ data["description"]+"</td></tr>"+
     "<tr><td> <h4><strong>Monto :</strong></h4>"+ data["amount"]/100 + data["currency"]+"</td></tr>"+
-    "<tr><td> <h4><strong>Código :</strong></h4><img src='"+ data["payment_method"]["barcode_url"]+"' width='100%'></td></tr>"+
+    "<tr><td> <h4><strong>Código :</strong></h4><img src='"+ data["payment_method"]["barcode_url"]+"' width='45%'></td></tr>"+
     "</table>"
 }
 
