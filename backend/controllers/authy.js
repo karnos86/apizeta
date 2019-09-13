@@ -53,51 +53,27 @@ module.exports={
         res.status(500).json(error);
     }
   },
-  // Login consultado directo a  tijuana
-  // async loginApp(req, res){
-  //   login = req.body;
-  //   let customer = await Customer.findOne({include:[{all: true}], where:{email: login.user_email}});
-  //   if(customer){
-  //        let subscription = await validateSubscrition(customer.subcriptions) ;
-  //        if(subscription){
-  //            let access = await Access.findOne({where:{uuii:login.UUII}});
-  //            if(access != null){
-  //                await access.update({'authorized':true, 'idWordPress':customer.idWordPress});
-  //                res.json({status:200, authorized:true});
-  //            }else{
-  //                await Access.create({'uuii':login.UUII,'authorized':true, 'idWordPress':customer.idWordPress});
-  //                res.json(true);
-  //            }
-  //            let listAccess = await Access.findAll({where:{idWordPress:customer.idWordPress}});
-  //            for(let i in listAccess){
-  //                if(listAccess[i].uuii != login.UUII){ 
-  //                    await listAccess[i].update({authorized:false});
-  //                }
-  //            }
-  //          }else{
-  //             res.json({status: 402, message:'Suscripción no debitada! Seleccione un metodo de pago', idConekt:customer.idConekt, authorized:false});
-  //          }  
-  //   }else{
-  //     res.json({status: 404, message:'No tiene subscripción, seleccione una!', idWordPress:done.user, authorized:false});
-  //   }
-  // },
   async accessApp(req, res, next){
     try{
       console.log(req.headers)
       if(req.headers["authorization"] == null){
-        res.status(401).send({message:"Operacion no permitida"})
+        res.status(401).send({message:"Operación no permitida"})
       }
       let data = req.headers["authorization"];
       let result = await Access.findOne({where:{uuii:data}})
+      let subcription = await Subscription.findOne({where:{idWordPress:result.idWordPress}})
       if(result == null){
-        res.status(401).send({message:"Operacion no permitida"})
+        res.status(401).send({message:"Operación no permitida"})
       }
-      if(result.authorized){
+      if(subscription.status == 'active'){
+        if(result.authorized){
           next()
+        }else{
+          res.status(403).json({message:"Se permite una sesión por dispositivo", page:"LoginPage"})
+        } 
       }else{
-        res.status(403).json({message:"Se permite una session por dispositivo", page:"LoginPage"})
+        res.status(401).send({message:"Operación no permitida"})
       }
-
     }catch(error){
        console.log(error).
        res.status(500).json(error)
@@ -129,7 +105,7 @@ module.exports={
   async validateCookieWorpress(req, res, next){
     try{
       if(req.headers["authorization"] == null){
-        res.status(401).send({message:"Operacion no permitida"})
+        res.status(401).send({message:"Operación no permitida"})
       }
       let cookie = req.headers["authorization"].split(" ");
       let data = await asyn_request('https://zetatijuana.com/api/user/validate_auth_cookie/?cookie='+cookie[1],{method: 'GET'})

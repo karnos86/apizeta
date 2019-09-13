@@ -136,7 +136,7 @@ module.exports={
                                 var mailOptions_charge_created= {
                                     from: process.env.USER_MAIL,
                                     to: customer_charge_created.email,
-                                    subject: 'Cargo Oxxo',
+                                    subject: 'Completa tususcripción a Semanario Zeta - Ficha de pago OXXO',
                                     html:respuesta
                                 }
                                 let done_charge_created = await transporter.sendMail(mailOptions_charge_created);
@@ -266,7 +266,7 @@ module.exports={
             var mailOptions = {
               from: process.env.USER_MAIL,
               to: api_rest.email,
-              subject: 'renvio',
+              subject: 'Completa tususcripción a Semanario Zeta - Ficha de pago OXXO',
               html: ultimo.message
             }
             let done = await transporter.sendMail(mailOptions)
@@ -303,9 +303,9 @@ async function bodyEmail(data){
 
  return "<table style='border:1px solid black'>"+
             "<tr style='background: #2a2a2a; color: white;text-align: center;'> <td> <h3><strong>Detalle de pago </strong></h3><td></tr>"+
-            "<tr><td> <h4><strong>Transación Numero :</strong></h4>"+ data["id"]+"</td></tr>"+
+            "<tr><td> <h4><strong>Transación Número :</strong></h4>"+ data["id"]+"</td></tr>"+
             "<tr><td> <h4><strong>Fecha :</strong></h4>"+ new Date(data["created_at"]*1000)+"</td></tr>"+
-            "<tr><td> <h4><strong>Descripcion :</strong></h4>"+ data["description"]+"</td></tr>"+
+            "<tr><td> <h4><strong>Descripción :</strong></h4>"+ data["description"]+"</td></tr>"+
             "<tr><td> <h4><strong>Monto :</strong></h4>"+ data["amount"]/100 + data["currency"]+"</td></tr>"+
         "</table>"
 }
@@ -313,11 +313,11 @@ async function bodyEmail(data){
 async function mailOxxo(data){
     return "<table style='border:1px solid black'>"+
     "<tr style='background: #2a2a2a; color: white;text-align: center;'> <td> <h3><strong>Información de pago OXXO</strong></h3><td></tr>"+
-    "<tr><td> <h4><strong>Transación Numero :</strong></h4>"+ data["payment_method"]["reference"]+"</td></tr>"+
+    "<tr><td> <h4><strong>Transación Número :</strong></h4>"+ data["payment_method"]["reference"]+"</td></tr>"+
     "<tr><td> <h4><strong>Fecha de vencimento :</strong></h4>"+ new Date(data["payment_method"]["expires_at"]*1000)+"</td></tr>"+
-    "<tr><td> <h4><strong>Descripcion :</strong></h4>"+ data["description"]+"</td></tr>"+
+    "<tr><td> <h4><strong>Descripción :</strong></h4>"+ data["description"]+"</td></tr>"+
     "<tr><td> <h4><strong>Monto :</strong></h4>"+ data["amount"]/100 + data["currency"]+"</td></tr>"+
-    "<tr><td> <h4><strong>Codigo :</strong></h4><img src='"+ data["payment_method"]["barcode_url"]+"'></td></tr>"+
+    "<tr><td> <h4><strong>Código :</strong></h4><img src='"+ data["payment_method"]["barcode_url"]+"' width='100%'></td></tr>"+
     "</table>"
 }
 
