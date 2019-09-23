@@ -39,6 +39,7 @@ module.exports={
                                 plan_id: data.plan,
                                 payment_sources: data.payment_sources
                             });
+                            console.log(customer_Conekta)
                             await api_rest.update({idConekt:customer_Conekta._id , active: true})
                             res.json(customer_Conekta.subscription._json);
                         }else{
