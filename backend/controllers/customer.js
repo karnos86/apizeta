@@ -32,6 +32,13 @@ module.exports={
                         wordpress = JSON.parse(result.body);
                         if(wordpress.status =='ok'){
                             let api_rest = await Customer.create({idWordPress:wordpress.user_id, email:data.email, username:data.username});
+                            console.log({
+                                name: data.name,
+                                email: data.email,
+                                phone: '+52'+data.phone,
+                                plan_id: data.plan,
+                                payment_sources: data.payment_sources
+                            })
                             var customer_Conekta =  await conekta.Customer.create({
                                 name: data.name,
                                 email: data.email,
